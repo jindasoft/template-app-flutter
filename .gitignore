@@ -46,7 +46,6 @@ app.*.map.json
 
 # Environment files
 *.env
-*.env.prod
 *.env.tmp
 
 # Firebase (generated from FlutterFire CLI)
