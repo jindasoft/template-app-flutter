@@ -1,3 +1,8 @@
 {
-  "app_title": "Flutter Template"
+  "app_title": "Flutter Template",
+  "navigation": {
+    "home": "Home",
+    "center": "Gator",
+    "profile": "Profile"
+  }
 }

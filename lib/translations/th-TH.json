@@ -1,3 +1,8 @@
 {
-  "app_title": "เทมเพลต Flutter"
+  "app_title": "เทมเพลต Flutter",
+  "navigation": {
+    "home": "หน้าแรก",
+    "center": "เกเตอร์",
+    "profile": "โปรไฟล์"
+  }
 }

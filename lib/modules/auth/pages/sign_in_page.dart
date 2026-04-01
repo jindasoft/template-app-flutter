@@ -9,7 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:template_app_flutter/core/widgets/language_widget.dart';
+import 'package:template_app_flutter/core/widgets/language/language_widget.dart';
 
 import '../blocs/apple_provider_bloc.dart';
 import '../blocs/apple_provider_event.dart';
