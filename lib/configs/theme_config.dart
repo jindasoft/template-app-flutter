@@ -37,19 +37,21 @@ class ThemeConfig {
   static const Color colorInfo = Color(0xFF5AC8FA);
   static const Color colorError = Color(0xFFFF3B30);
 
-  // Colors - Light Theme
-  static const Color colorLightBgPrimary = Color(0xFFFFFFFF);
-  static const Color colorLightBgSecondary = Color(0xFFF2F2F7);
-  static const Color colorLightTextPrimary = Color(0xFF000000);
-  static const Color colorLightTextSecondary = Color(0xFF626262);
-  static const Color colorLightBorder = Color(0xFFD1D5DB);
+  // Colors - Background
+  static const Color colorBgLightPrimary = Color(0xFFFFFFFF);
+  static const Color colorBgLightSecondary = Color(0xFFF2F2F7);
+  static const Color colorBgDarkPrimary = Color(0xFF1E293B);
+  static const Color colorBgDarkSecondary = Color(0xFF0F172A);
 
-  // Colors - Dark Theme
-  static const Color colorDarkBgPrimary = Color(0xFF1E293B);
-  static const Color colorDarkBgSecondary = Color(0xFF0F172A);
-  static const Color colorDarkTextPrimary = Color(0xFFFFFFFF);
-  static const Color colorDarkTextSecondary = Color(0xFFE0E0E0);
-  static const Color colorDarkBorder = Color(0xFF374151);
+  // Colors - Border
+  static const Color colorBorderLight = Color(0xFFD1D5DB);
+  static const Color colorBorderDark = Color(0xFF374151);
+
+  // Colors - Text
+  static const Color colorTextLightPrimary = Color(0xFF000000);
+  static const Color colorTextLightSecondary = Color(0xFF626262);
+  static const Color colorTextDarkPrimary = Color(0xFFFFFFFF);
+  static const Color colorTextDarkSecondary = Color(0xFFE0E0E0);
 
   // Text Theme - Light
   static TextTheme get lightTextTheme {
@@ -57,72 +59,72 @@ class ThemeConfig {
       displayLarge: TextStyle(
         fontSize: fontSizeHuge,
         fontWeight: FontWeight.w700,
-        color: colorLightTextPrimary,
+        color: colorTextLightPrimary,
       ),
       displayMedium: TextStyle(
         fontSize: fontSizeExtraLarge,
         fontWeight: FontWeight.w700,
-        color: colorLightTextPrimary,
+        color: colorTextLightPrimary,
       ),
       displaySmall: TextStyle(
         fontSize: fontSizeLarge,
         fontWeight: FontWeight.w600,
-        color: colorLightTextPrimary,
+        color: colorTextLightPrimary,
       ),
       headlineMedium: TextStyle(
         fontSize: fontSizeBase,
         fontWeight: FontWeight.w600,
-        color: colorLightTextPrimary,
+        color: colorTextLightPrimary,
       ),
       headlineSmall: TextStyle(
         fontSize: fontSizeMedium,
         fontWeight: FontWeight.w600,
-        color: colorLightTextPrimary,
+        color: colorTextLightPrimary,
       ),
       titleLarge: TextStyle(
         fontSize: fontSizeBase,
         fontWeight: FontWeight.w600,
-        color: colorLightTextPrimary,
+        color: colorTextLightPrimary,
       ),
       titleMedium: TextStyle(
         fontSize: fontSizeMedium,
         fontWeight: FontWeight.w500,
-        color: colorLightTextPrimary,
+        color: colorTextLightPrimary,
       ),
       titleSmall: TextStyle(
         fontSize: fontSizeSmall,
         fontWeight: FontWeight.w500,
-        color: colorLightTextPrimary,
+        color: colorTextLightPrimary,
       ),
       bodyLarge: TextStyle(
         fontSize: fontSizeBase,
         fontWeight: FontWeight.w400,
-        color: colorLightTextPrimary,
+        color: colorTextLightPrimary,
       ),
       bodyMedium: TextStyle(
         fontSize: fontSizeMedium,
         fontWeight: FontWeight.w400,
-        color: colorLightTextPrimary,
+        color: colorTextLightPrimary,
       ),
       bodySmall: TextStyle(
         fontSize: fontSizeSmall,
         fontWeight: FontWeight.w400,
-        color: colorLightTextSecondary,
+        color: colorTextLightSecondary,
       ),
       labelLarge: TextStyle(
         fontSize: fontSizeSmall,
         fontWeight: FontWeight.w600,
-        color: colorLightTextPrimary,
+        color: colorTextLightPrimary,
       ),
       labelMedium: TextStyle(
         fontSize: fontSizeExtraSmall,
         fontWeight: FontWeight.w500,
-        color: colorLightTextSecondary,
+        color: colorTextLightSecondary,
       ),
       labelSmall: TextStyle(
         fontSize: fontSizeExtraSmall,
         fontWeight: FontWeight.w400,
-        color: colorLightTextSecondary,
+        color: colorTextLightSecondary,
       ),
     );
   }
@@ -133,72 +135,72 @@ class ThemeConfig {
       displayLarge: TextStyle(
         fontSize: fontSizeHuge,
         fontWeight: FontWeight.w700,
-        color: colorDarkTextPrimary,
+        color: colorTextDarkPrimary,
       ),
       displayMedium: TextStyle(
         fontSize: fontSizeExtraLarge,
         fontWeight: FontWeight.w700,
-        color: colorDarkTextPrimary,
+        color: colorTextDarkPrimary,
       ),
       displaySmall: TextStyle(
         fontSize: fontSizeLarge,
         fontWeight: FontWeight.w600,
-        color: colorDarkTextPrimary,
+        color: colorTextDarkPrimary,
       ),
       headlineMedium: TextStyle(
         fontSize: fontSizeBase,
         fontWeight: FontWeight.w600,
-        color: colorDarkTextPrimary,
+        color: colorTextDarkPrimary,
       ),
       headlineSmall: TextStyle(
         fontSize: fontSizeMedium,
         fontWeight: FontWeight.w600,
-        color: colorDarkTextPrimary,
+        color: colorTextDarkPrimary,
       ),
       titleLarge: TextStyle(
         fontSize: fontSizeBase,
         fontWeight: FontWeight.w600,
-        color: colorDarkTextPrimary,
+        color: colorTextDarkPrimary,
       ),
       titleMedium: TextStyle(
         fontSize: fontSizeMedium,
         fontWeight: FontWeight.w500,
-        color: colorDarkTextPrimary,
+        color: colorTextDarkPrimary,
       ),
       titleSmall: TextStyle(
         fontSize: fontSizeSmall,
         fontWeight: FontWeight.w500,
-        color: colorDarkTextPrimary,
+        color: colorTextDarkPrimary,
       ),
       bodyLarge: TextStyle(
         fontSize: fontSizeBase,
         fontWeight: FontWeight.w400,
-        color: colorDarkTextPrimary,
+        color: colorTextDarkPrimary,
       ),
       bodyMedium: TextStyle(
         fontSize: fontSizeMedium,
         fontWeight: FontWeight.w400,
-        color: colorDarkTextPrimary,
+        color: colorTextDarkPrimary,
       ),
       bodySmall: TextStyle(
         fontSize: fontSizeSmall,
         fontWeight: FontWeight.w400,
-        color: colorDarkTextSecondary,
+        color: colorTextDarkSecondary,
       ),
       labelLarge: TextStyle(
         fontSize: fontSizeSmall,
         fontWeight: FontWeight.w600,
-        color: colorDarkTextPrimary,
+        color: colorTextDarkPrimary,
       ),
       labelMedium: TextStyle(
         fontSize: fontSizeExtraSmall,
         fontWeight: FontWeight.w500,
-        color: colorDarkTextSecondary,
+        color: colorTextDarkSecondary,
       ),
       labelSmall: TextStyle(
         fontSize: fontSizeExtraSmall,
         fontWeight: FontWeight.w400,
-        color: colorDarkTextSecondary,
+        color: colorTextDarkSecondary,
       ),
     );
   }

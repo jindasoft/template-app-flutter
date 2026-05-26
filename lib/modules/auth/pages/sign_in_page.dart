@@ -104,8 +104,8 @@ class _SignInPageState extends State<SignInPage> {
                         fontSize: ThemeConfig.fontSizeBase,
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).brightness == Brightness.dark
-                            ? ThemeConfig.colorDarkTextPrimary
-                            : ThemeConfig.colorLightTextPrimary,
+                            ? ThemeConfig.colorTextDarkPrimary
+                            : ThemeConfig.colorTextLightPrimary,
                       ),
                     ),
                   ),
@@ -138,8 +138,8 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                       fontWeight: FontWeight.w400,
                       color: Theme.of(context).brightness == Brightness.dark
-                          ? ThemeConfig.colorDarkTextSecondary
-                          : ThemeConfig.colorLightTextSecondary,
+                          ? ThemeConfig.colorTextDarkSecondary
+                          : ThemeConfig.colorTextLightSecondary,
                     ),
                   ),
                   SizedBox(height: 5),
@@ -154,8 +154,8 @@ class _SignInPageState extends State<SignInPage> {
                       letterSpacing: -0.5,
                       wordSpacing: 1,
                       color: Theme.of(context).brightness == Brightness.dark
-                          ? ThemeConfig.colorDarkTextPrimary
-                          : ThemeConfig.colorLightTextPrimary,
+                          ? ThemeConfig.colorTextDarkPrimary
+                          : ThemeConfig.colorTextLightPrimary,
                     ),
                   ),
                 ],
@@ -178,8 +178,8 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).brightness == Brightness.dark
-                            ? ThemeConfig.colorDarkTextSecondary
-                            : ThemeConfig.colorLightTextSecondary,
+                            ? ThemeConfig.colorTextDarkSecondary
+                            : ThemeConfig.colorTextLightSecondary,
                       ),
                     ),
                   ),
@@ -247,8 +247,8 @@ class _SignInPageState extends State<SignInPage> {
                                     color:
                                         Theme.of(context).brightness ==
                                             Brightness.dark
-                                        ? ThemeConfig.colorDarkTextPrimary
-                                        : Colors.black87,
+                                        ? ThemeConfig.colorTextDarkPrimary
+                                        : ThemeConfig.colorTextLightPrimary,
                                   ),
                                 ),
                               ],

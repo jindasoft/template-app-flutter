@@ -42,16 +42,16 @@ class _AppState extends State<App> {
           textTheme: ThemeConfig.lightTextTheme,
           iconTheme: IconThemeData(color: ThemeConfig.colorGreyDark),
           fontFamily: 'Manrope',
-          scaffoldBackgroundColor: ThemeConfig.colorLightBgSecondary,
+          scaffoldBackgroundColor: ThemeConfig.colorBgLightSecondary,
           appBarTheme: AppBarTheme(
-            backgroundColor: ThemeConfig.colorLightBgPrimary,
+            backgroundColor: ThemeConfig.colorBgLightPrimary,
             elevation: 0,
             iconTheme: IconThemeData(color: ThemeConfig.colorGreyDark),
             titleTextStyle: TextStyle(
               fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
               fontWeight: FontWeight.w600,
               fontFamily: 'Manrope',
-              color: ThemeConfig.colorLightTextPrimary,
+              color: ThemeConfig.colorTextLightPrimary,
             ),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
@@ -93,16 +93,16 @@ class _AppState extends State<App> {
           textTheme: ThemeConfig.darkTextTheme,
           iconTheme: IconThemeData(color: ThemeConfig.colorGreyLight),
           fontFamily: 'Manrope',
-          scaffoldBackgroundColor: ThemeConfig.colorDarkBgSecondary,
+          scaffoldBackgroundColor: ThemeConfig.colorBgDarkSecondary,
           appBarTheme: AppBarTheme(
-            backgroundColor: ThemeConfig.colorDarkBgPrimary,
+            backgroundColor: ThemeConfig.colorBgDarkPrimary,
             elevation: 0,
             iconTheme: IconThemeData(color: ThemeConfig.colorGreyLight),
             titleTextStyle: TextStyle(
               fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
               fontWeight: FontWeight.w600,
               fontFamily: 'Manrope',
-              color: ThemeConfig.colorDarkTextPrimary,
+              color: ThemeConfig.colorTextDarkPrimary,
             ),
           ),
           switchTheme: SwitchThemeData(
@@ -132,7 +132,7 @@ class _AppState extends State<App> {
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
-            fillColor: ThemeConfig.colorDarkBgPrimary,
+            fillColor: ThemeConfig.colorBgDarkPrimary,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           ),

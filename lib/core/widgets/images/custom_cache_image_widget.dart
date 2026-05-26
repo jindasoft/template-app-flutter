@@ -9,8 +9,8 @@ class CustomCacheImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final placeholderColor = Theme.of(context).brightness == Brightness.dark
-        ? ThemeConfig.colorDarkBgSecondary
-        : ThemeConfig.colorLightBgSecondary;
+        ? ThemeConfig.colorBgDarkSecondary
+        : ThemeConfig.colorBgLightSecondary;
     return CachedNetworkImage(
       imageUrl: imageUrl!,
       fit: BoxFit.cover,

@@ -25,7 +25,7 @@ class EmptyPage extends StatelessWidget {
             icon,
             size: 100,
             color: Theme.of(context).brightness == Brightness.dark
-                ? ThemeConfig.colorDarkTextSecondary
+                ? ThemeConfig.colorTextDarkSecondary
                 : ThemeConfig.colorGreyMedium,
           ),
           SizedBox(height: 20),
@@ -36,8 +36,8 @@ class EmptyPage extends StatelessWidget {
               fontSize: responsiveSize(context, ThemeConfig.fontSizeLarge),
               fontWeight: FontWeight.w500,
               color: Theme.of(context).brightness == Brightness.dark
-                  ? ThemeConfig.colorDarkTextPrimary
-                  : ThemeConfig.colorLightTextPrimary,
+                  ? ThemeConfig.colorTextDarkPrimary
+                  : ThemeConfig.colorTextLightPrimary,
             ),
           ),
           SizedBox(height: 5),
@@ -48,8 +48,8 @@ class EmptyPage extends StatelessWidget {
               fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
               fontWeight: FontWeight.w400,
               color: Theme.of(context).brightness == Brightness.dark
-                  ? ThemeConfig.colorDarkTextSecondary
-                  : ThemeConfig.colorLightTextSecondary,
+                  ? ThemeConfig.colorTextDarkSecondary
+                  : ThemeConfig.colorTextLightSecondary,
             ),
           ),
         ],

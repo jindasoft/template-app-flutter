@@ -26,8 +26,8 @@ class CustomTextButtonGrey extends StatelessWidget {
         style: TextStyle(
           fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
           color: Theme.of(context).brightness == Brightness.dark
-              ? ThemeConfig.colorDarkTextSecondary
-              : ThemeConfig.colorLightTextSecondary,
+              ? ThemeConfig.colorTextDarkSecondary
+              : ThemeConfig.colorTextLightSecondary,
           fontWeight: FontWeight.w500,
         ),
       ),

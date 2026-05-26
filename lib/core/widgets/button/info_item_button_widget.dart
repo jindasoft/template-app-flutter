@@ -18,8 +18,8 @@ class InfoItemButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).brightness == Brightness.dark
-        ? ThemeConfig.colorDarkTextPrimary
-        : ThemeConfig.colorLightTextPrimary;
+        ? ThemeConfig.colorTextDarkPrimary
+        : ThemeConfig.colorTextLightPrimary;
     return GestureDetector(
       onTap: onPressed,
       child: Column(
