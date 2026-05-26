@@ -6,8 +6,8 @@ class ThemeConfig {
   static const double fontSizeSmall = 14;
   static const double fontSizeMedium = 16;
   static const double fontSizeBase = 18;
-  static const double fontSizeLarge = 22;
-  static const double fontSizeExtraLarge = 26;
+  static const double fontSizeLarge = 20;
+  static const double fontSizeExtraLarge = 24;
   static const double fontSizeHuge = 32;
 
   // Icon Sizes
@@ -27,10 +27,9 @@ class ThemeConfig {
   static const Color colorSecondary = Color(0xFFFF2D55);
 
   // Colors - Neutral/Grey
-  static const Color colorGreyLight = Color(0xFFEEEEEE);
-  static const Color colorGreyMedium = Color(0xFFBDBDBD);
-  static const Color colorGreyDark = Color(0xFF616161);
-  static const Color colorTextGrey = Color(0xFF9E9E9E);
+  static const Color colorGreyLight = Color(0xFFF5F5F5);
+  static const Color colorGreyMedium = Color(0xFF9CA3AF);
+  static const Color colorGreyDark = Color(0xFF606060);
 
   // Colors - Status
   static const Color colorSuccess = Color(0xFF34C759);
@@ -38,15 +37,19 @@ class ThemeConfig {
   static const Color colorInfo = Color(0xFF5AC8FA);
   static const Color colorError = Color(0xFFFF3B30);
 
-  // Colors - Background & Text
+  // Colors - Light Theme
   static const Color colorLightBgPrimary = Color(0xFFFFFFFF);
   static const Color colorLightBgSecondary = Color(0xFFF2F2F7);
   static const Color colorLightTextPrimary = Color(0xFF000000);
   static const Color colorLightTextSecondary = Color(0xFF626262);
+  static const Color colorLightBorder = Color(0xFFD1D5DB);
+
+  // Colors - Dark Theme
   static const Color colorDarkBgPrimary = Color(0xFF1E293B);
   static const Color colorDarkBgSecondary = Color(0xFF0F172A);
   static const Color colorDarkTextPrimary = Color(0xFFFFFFFF);
   static const Color colorDarkTextSecondary = Color(0xFFE0E0E0);
+  static const Color colorDarkBorder = Color(0xFF374151);
 
   // Text Theme - Light
   static TextTheme get lightTextTheme {

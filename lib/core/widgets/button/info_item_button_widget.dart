@@ -17,27 +17,30 @@ class InfoItemButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = Theme.of(context).brightness == Brightness.dark
+        ? ThemeConfig.colorDarkTextPrimary
+        : ThemeConfig.colorLightTextPrimary;
     return GestureDetector(
       onTap: onPressed,
       child: Column(
         children: [
           Text(
             title.toUpperCase(),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
-              color: ThemeConfig.colorGreyDark,
+              color: textColor,
               fontWeight: FontWeight.w600,
               letterSpacing: 1.2,
             ),
           ),
           const SizedBox(height: 6),
-          Icon(icon, size: 32, color: ThemeConfig.colorGreyDark),
+          Icon(icon, size: 32, color: textColor),
           const SizedBox(height: 2),
           Text(
             value,
             style: TextStyle(
               fontSize: 16,
-              color: ThemeConfig.colorGreyDark,
+              color: textColor,
               fontWeight: FontWeight.w500,
             ),
           ),

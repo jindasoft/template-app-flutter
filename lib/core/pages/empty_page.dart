@@ -21,7 +21,13 @@ class EmptyPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(icon, size: 100, color: ThemeConfig.colorGreyMedium),
+          Icon(
+            icon,
+            size: 100,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? ThemeConfig.colorDarkTextSecondary
+                : ThemeConfig.colorGreyMedium,
+          ),
           SizedBox(height: 20),
           Text(
             message,
@@ -29,7 +35,9 @@ class EmptyPage extends StatelessWidget {
             style: TextStyle(
               fontSize: responsiveSize(context, ThemeConfig.fontSizeLarge),
               fontWeight: FontWeight.w500,
-              color: ThemeConfig.colorGreyDark,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? ThemeConfig.colorDarkTextPrimary
+                  : ThemeConfig.colorLightTextPrimary,
             ),
           ),
           SizedBox(height: 5),
@@ -39,7 +47,9 @@ class EmptyPage extends StatelessWidget {
             style: TextStyle(
               fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
               fontWeight: FontWeight.w400,
-              color: ThemeConfig.colorGreyDark,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? ThemeConfig.colorDarkTextSecondary
+                  : ThemeConfig.colorLightTextSecondary,
             ),
           ),
         ],

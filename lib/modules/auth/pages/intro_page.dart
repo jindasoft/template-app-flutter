@@ -122,7 +122,9 @@ class IntroView extends StatelessWidget {
                   ThemeConfig.fontSizeExtraLarge,
                 ),
                 fontWeight: FontWeight.w900,
-                color: ThemeConfig.colorGreyDark,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? ThemeConfig.colorDarkTextPrimary
+                    : ThemeConfig.colorLightTextPrimary,
                 letterSpacing: -0.7,
                 wordSpacing: 1,
               ),
@@ -147,7 +149,9 @@ class IntroView extends StatelessWidget {
               style: TextStyle(
                 fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
                 fontWeight: FontWeight.w500,
-                color: ThemeConfig.colorGreyDark,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? ThemeConfig.colorDarkTextSecondary
+                    : ThemeConfig.colorLightTextSecondary,
               ),
             ),
           ),

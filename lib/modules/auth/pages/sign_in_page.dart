@@ -103,6 +103,9 @@ class _SignInPageState extends State<SignInPage> {
                       style: TextStyle(
                         fontSize: ThemeConfig.fontSizeBase,
                         fontWeight: FontWeight.w500,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? ThemeConfig.colorDarkTextPrimary
+                            : ThemeConfig.colorLightTextPrimary,
                       ),
                     ),
                   ),
@@ -134,6 +137,9 @@ class _SignInPageState extends State<SignInPage> {
                         ThemeConfig.fontSizeBase,
                       ),
                       fontWeight: FontWeight.w400,
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? ThemeConfig.colorDarkTextSecondary
+                          : ThemeConfig.colorLightTextSecondary,
                     ),
                   ),
                   SizedBox(height: 5),
@@ -147,6 +153,9 @@ class _SignInPageState extends State<SignInPage> {
                       fontWeight: FontWeight.w900,
                       letterSpacing: -0.5,
                       wordSpacing: 1,
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? ThemeConfig.colorDarkTextPrimary
+                          : ThemeConfig.colorLightTextPrimary,
                     ),
                   ),
                 ],
@@ -168,6 +177,9 @@ class _SignInPageState extends State<SignInPage> {
                           ThemeConfig.fontSizeBase,
                         ),
                         fontWeight: FontWeight.w500,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? ThemeConfig.colorDarkTextSecondary
+                            : ThemeConfig.colorLightTextSecondary,
                       ),
                     ),
                   ),
@@ -232,7 +244,11 @@ class _SignInPageState extends State<SignInPage> {
                                       context,
                                       ThemeConfig.fontSizeBase,
                                     ),
-                                    color: Colors.black87,
+                                    color:
+                                        Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? ThemeConfig.colorDarkTextPrimary
+                                        : Colors.black87,
                                   ),
                                 ),
                               ],
