@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ThemeConfig {
   // Font Sizes
-  static const double fontSizeExtraSmall = 12;
+  static const double fontSizeExtraSmall = 10;
   static const double fontSizeSmall = 14;
   static const double fontSizeMedium = 16;
   static const double fontSizeBase = 18;
@@ -36,6 +36,7 @@ class ThemeConfig {
   static const Color colorWarning = Color(0xFFFF9500);
   static const Color colorInfo = Color(0xFF5AC8FA);
   static const Color colorError = Color(0xFFFF3B30);
+  static const Color colorDisabled = Color(0xFF9CA3AF);
 
   // Colors - Background
   static const Color colorBgLightPrimary = Color(0xFFFFFFFF);
@@ -44,8 +45,8 @@ class ThemeConfig {
   static const Color colorBgDarkSecondary = Color(0xFF0F172A);
 
   // Colors - Border
-  static const Color colorBorderLight = Color(0xFFD1D5DB);
   static const Color colorBorderDark = Color(0xFF374151);
+  static const Color colorBorderLight = Color(0xFFD1D5DB);
 
   // Colors - Text
   static const Color colorTextLightPrimary = Color(0xFF000000);

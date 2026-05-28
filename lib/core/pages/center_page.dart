@@ -19,10 +19,7 @@ class CenterPage extends StatelessWidget {
         color: isDark
             ? ThemeConfig.colorBgDarkPrimary
             : ThemeConfig.colorBgLightPrimary,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
         children: [
