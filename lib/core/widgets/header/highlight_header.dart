@@ -13,7 +13,7 @@ class HighlightHeader extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.only(top: 8),
+        margin: EdgeInsets.only(top: ThemeConfig.spacingBase),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
@@ -24,7 +24,7 @@ class HighlightHeader extends StatelessWidget {
                 context,
               ).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
             ),
-            SizedBox(width: 8),
+            SizedBox(width: ThemeConfig.spacingSmall),
             Transform.translate(
               offset: Offset(0, 0),
               child: Icon(

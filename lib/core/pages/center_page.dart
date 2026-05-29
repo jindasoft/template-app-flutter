@@ -8,28 +8,26 @@ class CenterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _widgetMore(context);
+    return _buildContent(context);
   }
 
-  Widget _widgetMore(BuildContext context) {
-    // final isDark = Theme.of(context).brightness == Brightness.dark;
+  Widget _buildContent(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        // color: isDark
-        //     ? ThemeConfig.colorBgDarkPrimary
-        //     : ThemeConfig.colorBgLightPrimary,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(ThemeConfig.spacingBase),
+        ),
       ),
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(ThemeConfig.spacingLarge),
+            padding: const EdgeInsets.all(ThemeConfig.spacingBase),
             child: GridView.count(
               crossAxisCount: 3,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: ThemeConfig.spacingLarge,
-              crossAxisSpacing: ThemeConfig.spacingLarge,
+              mainAxisSpacing: ThemeConfig.spacingMedium,
+              crossAxisSpacing: ThemeConfig.spacingMedium,
               children: [
                 _buildGridButton(
                   context,

@@ -47,7 +47,9 @@ class _AppState extends State<App> {
             backgroundColor: ThemeConfig.colorBgLightPrimary,
             elevation: 0,
             iconTheme: IconThemeData(color: ThemeConfig.colorGreyDark),
-            titleTextStyle: Theme.of(context).textTheme.titleLarge,
+            titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: ThemeConfig.colorTextLightPrimary,
+            ),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
@@ -131,7 +133,9 @@ class _AppState extends State<App> {
             backgroundColor: ThemeConfig.colorBgDarkPrimary,
             elevation: 0,
             iconTheme: IconThemeData(color: ThemeConfig.colorGreyLight),
-            titleTextStyle: Theme.of(context).textTheme.titleLarge,
+            titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: ThemeConfig.colorTextDarkPrimary,
+            ),
           ),
           switchTheme: SwitchThemeData(
             thumbColor: WidgetStateProperty.all(ThemeConfig.colorPrimary),

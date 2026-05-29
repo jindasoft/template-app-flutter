@@ -20,34 +20,18 @@ class EmptyPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(
-            icon,
-            size: 100,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? ThemeConfig.colorTextDarkSecondary
-                : ThemeConfig.colorGreyMedium,
-          ),
+          Icon(icon, size: 100),
           SizedBox(height: ThemeConfig.spacingMedium),
           Text(
             message,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-              fontWeight: FontWeight.w500,
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? ThemeConfig.colorTextDarkPrimary
-                  : ThemeConfig.colorTextLightPrimary,
-            ),
+            style: Theme.of(context).textTheme.displaySmall,
           ),
           SizedBox(height: ThemeConfig.spacingExtraSmall),
           Text(
             description,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? ThemeConfig.colorTextDarkSecondary
-                  : ThemeConfig.colorTextLightSecondary,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],
       ),

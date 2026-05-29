@@ -25,9 +25,14 @@ class _AppPageState extends State<AppPage> {
     if (index == _centerIndex) {
       showModalBottomSheet(
         context: context,
+        useSafeArea: true,
         isScrollControlled: true,
+        enableDrag: true,
+        useRootNavigator: false,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(ThemeConfig.spacingBase),
+          ),
         ),
         builder: (context) =>
             FractionallySizedBox(heightFactor: 0.4, child: CenterPage()),
@@ -81,8 +86,8 @@ class _AppPageState extends State<AppPage> {
           onTap: (index) => onTabTapped(index),
           iconSize: ThemeConfig.iconSizeLarge,
           type: BottomNavigationBarType.fixed,
-          selectedFontSize: ThemeConfig.fontSize14,
-          unselectedFontSize: ThemeConfig.fontSize10,
+          selectedFontSize: ThemeConfig.fontSize12,
+          unselectedFontSize: ThemeConfig.fontSize12,
           selectedItemColor: Theme.of(context).colorScheme.primary,
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           items: [
@@ -104,7 +109,7 @@ class _AppPageState extends State<AppPage> {
         ),
         body: PageView(
           controller: _pageController,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[HomePage(), ProfilePage()],
         ),
       ),

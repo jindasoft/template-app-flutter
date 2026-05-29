@@ -19,12 +19,12 @@ class ThemeConfig {
   static const double iconSizeExtraLarge = 32;
 
   // Spacing
-  static const double spacingExtraSmall = 4;
-  static const double spacingSmall = 8;
-  static const double spacingMedium = 12;
+  static const double spacingExtraSmall = 2;
+  static const double spacingSmall = 4;
+  static const double spacingMedium = 8;
   static const double spacingBase = 16;
-  static const double spacingLarge = 20;
-  static const double spacingExtraLarge = 24;
+  static const double spacingLarge = 32;
+  static const double spacingExtraLarge = 64;
 
   // Colors - Primary
   static const Color colorPrimary = Color(0xFF007AFF);

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:template_app_flutter/configs/theme_config.dart';
 
 class LoadingOverlay extends StatelessWidget {
   final Widget child;
@@ -55,14 +56,14 @@ class LoadingOverlay extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   if (onRetry != null) ...[
-                    const SizedBox(height: 8),
+                    SizedBox(height: ThemeConfig.spacingSmall),
                     ElevatedButton(
                       onPressed: onRetry,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: ThemeConfig.spacingMedium,
+                          vertical: ThemeConfig.spacingSmall,
                         ),
                       ),
                       child: Text(
