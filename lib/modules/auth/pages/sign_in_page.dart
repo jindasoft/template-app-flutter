@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:template_app_flutter/configs/app_config.dart';
 import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:template_app_flutter/core/utils/next_screen_util.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:template_app_flutter/app/app_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +100,9 @@ class _SignInPageState extends State<SignInPage> {
                     child: Text(
                       'sign_in.skip'.tr(),
                       style: TextStyle(
-                        fontSize: ThemeConfig.fontSizeBase,
+                        fontSize: Theme.of(
+                          context,
+                        ).textTheme.bodyLarge?.fontSize,
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).brightness == Brightness.dark
                             ? ThemeConfig.colorTextDarkPrimary
@@ -131,11 +132,7 @@ class _SignInPageState extends State<SignInPage> {
                 children: [
                   Text(
                     'sign_in.welcome_to'.tr(),
-                    style: TextStyle(
-                      fontSize: responsiveSize(
-                        context,
-                        ThemeConfig.fontSizeBase,
-                      ),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w400,
                       color: Theme.of(context).brightness == Brightness.dark
                           ? ThemeConfig.colorTextDarkSecondary
@@ -145,11 +142,7 @@ class _SignInPageState extends State<SignInPage> {
                   SizedBox(height: 5),
                   Text(
                     AppConfig.appName,
-                    style: TextStyle(
-                      fontSize: responsiveSize(
-                        context,
-                        ThemeConfig.fontSizeHuge,
-                      ),
+                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
                       fontWeight: FontWeight.w900,
                       letterSpacing: -0.5,
                       wordSpacing: 1,
@@ -171,11 +164,7 @@ class _SignInPageState extends State<SignInPage> {
                     child: Text(
                       'sign_in.welcome_message'.tr(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: responsiveSize(
-                          context,
-                          ThemeConfig.fontSizeBase,
-                        ),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).brightness == Brightness.dark
                             ? ThemeConfig.colorTextDarkSecondary
@@ -239,17 +228,14 @@ class _SignInPageState extends State<SignInPage> {
                                 SizedBox(width: 10),
                                 Text(
                                   'sign_in.sign_in_with_google'.tr(),
-                                  style: TextStyle(
-                                    fontSize: responsiveSize(
-                                      context,
-                                      ThemeConfig.fontSizeBase,
-                                    ),
-                                    color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? ThemeConfig.colorTextDarkPrimary
-                                        : ThemeConfig.colorTextLightPrimary,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                      ?.copyWith(
+                                        color:
+                                            Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? ThemeConfig.colorTextDarkPrimary
+                                            : ThemeConfig.colorTextLightPrimary,
+                                      ),
                                 ),
                               ],
                             )
@@ -294,13 +280,10 @@ class _SignInPageState extends State<SignInPage> {
                                       SizedBox(width: 10),
                                       Text(
                                         'sign_in.sign_in_with_apple'.tr(),
-                                        style: TextStyle(
-                                          fontSize: responsiveSize(
-                                            context,
-                                            ThemeConfig.fontSizeBase,
-                                          ),
-                                          color: Colors.white,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(color: Colors.white),
                                       ),
                                     ],
                                   )

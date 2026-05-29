@@ -1,4 +1,3 @@
-import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +50,7 @@ class LoadingOverlay extends StatelessWidget {
                     'shared.loading_overlay_widget.error_message'.tr(),
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: ThemeConfig.fontSizeSmall,
+                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -70,7 +69,9 @@ class LoadingOverlay extends StatelessWidget {
                         'shared.loading_overlay_widget.retry'.tr(),
                         style: TextStyle(
                           color: Colors.red,
-                          fontSize: ThemeConfig.fontSizeSmall,
+                          fontSize: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge?.fontSize,
                         ),
                       ),
                     ),

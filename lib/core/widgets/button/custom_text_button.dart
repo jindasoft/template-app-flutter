@@ -1,5 +1,4 @@
 import 'package:template_app_flutter/configs/theme_config.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {
@@ -23,8 +22,7 @@ class CustomTextButton extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(
-          fontSize: responsiveSize(context, ThemeConfig.fontSizeSmall),
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
           color: ThemeConfig.colorPrimary,
           fontWeight: FontWeight.w500,
         ),

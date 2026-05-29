@@ -1,5 +1,4 @@
 import 'package:template_app_flutter/configs/theme_config.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:flutter/material.dart';
 
 class EmptyPage extends StatelessWidget {
@@ -32,8 +31,7 @@ class EmptyPage extends StatelessWidget {
           Text(
             message,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: responsiveSize(context, ThemeConfig.fontSizeLarge),
+            style: Theme.of(context).textTheme.displaySmall?.copyWith(
               fontWeight: FontWeight.w500,
               color: Theme.of(context).brightness == Brightness.dark
                   ? ThemeConfig.colorTextDarkPrimary
@@ -44,8 +42,7 @@ class EmptyPage extends StatelessWidget {
           Text(
             description,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               fontWeight: FontWeight.w400,
               color: Theme.of(context).brightness == Brightness.dark
                   ? ThemeConfig.colorTextDarkSecondary

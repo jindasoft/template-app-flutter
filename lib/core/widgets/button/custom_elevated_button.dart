@@ -1,5 +1,4 @@
 import 'package:template_app_flutter/configs/theme_config.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
@@ -23,8 +22,7 @@ class CustomElevatedButton extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(
-          fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
           color: Colors.white,
           fontWeight: FontWeight.w600,
         ),

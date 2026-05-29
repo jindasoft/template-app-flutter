@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:template_app_flutter/configs/text_theme_config.dart';
 import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:template_app_flutter/core/notifiers/theme_notifier.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:template_app_flutter/modules/auth/blocs/auth_bloc.dart';
 import 'package:template_app_flutter/modules/auth/repositories/auth_repository.dart';
 
@@ -39,7 +39,7 @@ class _AppState extends State<App> {
           brightness: Brightness.light,
           primarySwatch: Colors.blue,
           primaryColor: ThemeConfig.colorPrimary,
-          textTheme: ThemeConfig.lightTextTheme,
+          textTheme: TextThemeConfig.lightTextTheme,
           iconTheme: IconThemeData(color: ThemeConfig.colorGreyDark),
           fontFamily: 'Manrope',
           scaffoldBackgroundColor: ThemeConfig.colorBgLightSecondary,
@@ -47,12 +47,7 @@ class _AppState extends State<App> {
             backgroundColor: ThemeConfig.colorBgLightPrimary,
             elevation: 0,
             iconTheme: IconThemeData(color: ThemeConfig.colorGreyDark),
-            titleTextStyle: TextStyle(
-              fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Manrope',
-              color: ThemeConfig.colorTextLightPrimary,
-            ),
+            titleTextStyle: Theme.of(context).textTheme.titleLarge,
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
@@ -103,9 +98,9 @@ class _AppState extends State<App> {
             space: ThemeConfig.spacingLarge,
           ),
           switchTheme: SwitchThemeData(
-            thumbColor: WidgetStateProperty.all(ThemeConfig.colorPrimary),
+            thumbColor: WidgetStateProperty.all(ThemeConfig.colorGreyMedium),
             trackColor: WidgetStateProperty.all(
-              ThemeConfig.colorPrimary.withAlpha((255 * 0.5).toInt()),
+              ThemeConfig.colorGreyMedium.withAlpha((255 * 0.5).toInt()),
             ),
           ),
           bottomSheetTheme: BottomSheetThemeData(
@@ -128,7 +123,7 @@ class _AppState extends State<App> {
           brightness: Brightness.dark,
           primarySwatch: Colors.blue,
           primaryColor: ThemeConfig.colorPrimary,
-          textTheme: ThemeConfig.darkTextTheme,
+          textTheme: TextThemeConfig.darkTextTheme,
           iconTheme: IconThemeData(color: ThemeConfig.colorGreyLight),
           fontFamily: 'Manrope',
           scaffoldBackgroundColor: ThemeConfig.colorBgDarkSecondary,
@@ -136,12 +131,7 @@ class _AppState extends State<App> {
             backgroundColor: ThemeConfig.colorBgDarkPrimary,
             elevation: 0,
             iconTheme: IconThemeData(color: ThemeConfig.colorGreyLight),
-            titleTextStyle: TextStyle(
-              fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Manrope',
-              color: ThemeConfig.colorTextDarkPrimary,
-            ),
+            titleTextStyle: Theme.of(context).textTheme.titleLarge,
           ),
           switchTheme: SwitchThemeData(
             thumbColor: WidgetStateProperty.all(ThemeConfig.colorPrimary),

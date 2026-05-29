@@ -1,5 +1,4 @@
 import 'package:template_app_flutter/configs/theme_config.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
@@ -71,19 +70,9 @@ class CenterPage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: responsiveSize(context, ThemeConfig.iconSizeExtraLarge),
-          ),
-          SizedBox(
-            height: responsiveSize(context, ThemeConfig.spacingExtraSmall),
-          ),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: responsiveSize(context, ThemeConfig.fontSizeExtraSmall),
-            ),
-          ),
+          Icon(icon, size: ThemeConfig.iconSizeExtraLarge),
+          SizedBox(height: ThemeConfig.spacingExtraSmall),
+          Text(label, style: Theme.of(context).textTheme.labelSmall),
         ],
       ),
     );

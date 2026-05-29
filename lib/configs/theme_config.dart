@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 class ThemeConfig {
   // Font Sizes
-  static const double fontSizeExtraSmall = 10;
-  static const double fontSizeSmall = 14;
-  static const double fontSizeMedium = 16;
-  static const double fontSizeBase = 18;
-  static const double fontSizeLarge = 20;
-  static const double fontSizeExtraLarge = 24;
-  static const double fontSizeHuge = 32;
+  static const double fontSize10 = 10;
+  static const double fontSize12 = 12;
+  static const double fontSize14 = 14;
+  static const double fontSize16 = 16;
+  static const double fontSize18 = 18;
+  static const double fontSize20 = 20;
+  static const double fontSize24 = 24;
+  static const double fontSize32 = 32;
 
   // Icon Sizes
   static const double iconSizeSmall = 16;
@@ -61,156 +62,4 @@ class ThemeConfig {
   static const Color colorTextLightSecondary = Color(0xFF626262);
   static const Color colorTextDarkPrimary = Color(0xFFFFFFFF);
   static const Color colorTextDarkSecondary = Color(0xFFE0E0E0);
-
-  // Text Theme - Light
-  static TextTheme get lightTextTheme {
-    return TextTheme(
-      displayLarge: TextStyle(
-        fontSize: fontSizeHuge,
-        fontWeight: FontWeight.w700,
-        color: colorTextLightPrimary,
-      ),
-      displayMedium: TextStyle(
-        fontSize: fontSizeExtraLarge,
-        fontWeight: FontWeight.w700,
-        color: colorTextLightPrimary,
-      ),
-      displaySmall: TextStyle(
-        fontSize: fontSizeLarge,
-        fontWeight: FontWeight.w600,
-        color: colorTextLightPrimary,
-      ),
-      headlineMedium: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w600,
-        color: colorTextLightPrimary,
-      ),
-      headlineSmall: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w600,
-        color: colorTextLightPrimary,
-      ),
-      titleLarge: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w600,
-        color: colorTextLightPrimary,
-      ),
-      titleMedium: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w500,
-        color: colorTextLightPrimary,
-      ),
-      titleSmall: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w500,
-        color: colorTextLightPrimary,
-      ),
-      bodyLarge: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w400,
-        color: colorTextLightPrimary,
-      ),
-      bodyMedium: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w400,
-        color: colorTextLightPrimary,
-      ),
-      bodySmall: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w400,
-        color: colorTextLightSecondary,
-      ),
-      labelLarge: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w600,
-        color: colorTextLightPrimary,
-      ),
-      labelMedium: TextStyle(
-        fontSize: fontSizeExtraSmall,
-        fontWeight: FontWeight.w500,
-        color: colorTextLightSecondary,
-      ),
-      labelSmall: TextStyle(
-        fontSize: fontSizeExtraSmall,
-        fontWeight: FontWeight.w400,
-        color: colorTextLightSecondary,
-      ),
-    );
-  }
-
-  // Text Theme - Dark
-  static TextTheme get darkTextTheme {
-    return TextTheme(
-      displayLarge: TextStyle(
-        fontSize: fontSizeHuge,
-        fontWeight: FontWeight.w700,
-        color: colorTextDarkPrimary,
-      ),
-      displayMedium: TextStyle(
-        fontSize: fontSizeExtraLarge,
-        fontWeight: FontWeight.w700,
-        color: colorTextDarkPrimary,
-      ),
-      displaySmall: TextStyle(
-        fontSize: fontSizeLarge,
-        fontWeight: FontWeight.w600,
-        color: colorTextDarkPrimary,
-      ),
-      headlineMedium: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w600,
-        color: colorTextDarkPrimary,
-      ),
-      headlineSmall: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w600,
-        color: colorTextDarkPrimary,
-      ),
-      titleLarge: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w600,
-        color: colorTextDarkPrimary,
-      ),
-      titleMedium: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w500,
-        color: colorTextDarkPrimary,
-      ),
-      titleSmall: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w500,
-        color: colorTextDarkPrimary,
-      ),
-      bodyLarge: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w400,
-        color: colorTextDarkPrimary,
-      ),
-      bodyMedium: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w400,
-        color: colorTextDarkPrimary,
-      ),
-      bodySmall: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w400,
-        color: colorTextDarkSecondary,
-      ),
-      labelLarge: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w600,
-        color: colorTextDarkPrimary,
-      ),
-      labelMedium: TextStyle(
-        fontSize: fontSizeExtraSmall,
-        fontWeight: FontWeight.w500,
-        color: colorTextDarkSecondary,
-      ),
-      labelSmall: TextStyle(
-        fontSize: fontSizeExtraSmall,
-        fontWeight: FontWeight.w400,
-        color: colorTextDarkSecondary,
-      ),
-    );
-  }
 }

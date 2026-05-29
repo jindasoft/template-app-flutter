@@ -1,6 +1,4 @@
 import 'package:template_app_flutter/configs/app_config.dart';
-import 'package:template_app_flutter/configs/theme_config.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
@@ -40,12 +38,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
       children: [
         ListTile(
           leading: Icon(LineIcons.language),
-          title: Text(
-            lang,
-            style: TextStyle(
-              fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
-            ),
-          ),
+          title: Text(lang, style: Theme.of(context).textTheme.bodyLarge),
           onTap: () async {
             if (lang == 'English') {
               context.setLocale(Locale('en', 'US'));

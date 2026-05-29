@@ -1,7 +1,6 @@
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:template_app_flutter/core/utils/next_screen_util.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:template_app_flutter/app/app_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -116,11 +115,7 @@ class IntroView extends StatelessWidget {
             padding: const EdgeInsets.only(left: 25, right: 25),
             child: Text(
               title.tr(),
-              style: TextStyle(
-                fontSize: responsiveSize(
-                  context,
-                  ThemeConfig.fontSizeExtraLarge,
-                ),
+              style: Theme.of(context).textTheme.displayMedium?.copyWith(
                 fontWeight: FontWeight.w900,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? ThemeConfig.colorTextDarkPrimary
@@ -146,8 +141,7 @@ class IntroView extends StatelessWidget {
             child: Text(
               description.tr(),
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 fontWeight: FontWeight.w500,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? ThemeConfig.colorTextDarkSecondary
