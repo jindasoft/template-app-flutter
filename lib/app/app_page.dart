@@ -19,10 +19,11 @@ class AppPage extends StatefulWidget {
 
 class _AppPageState extends State<AppPage> {
   int _currentIndex = 0;
+  final _centerIndex = 1;
   final PageController _pageController = PageController();
 
   void onTabTapped(int index) {
-    if (index == 1) {
+    if (index == _centerIndex) {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -36,7 +37,7 @@ class _AppPageState extends State<AppPage> {
       return;
     }
 
-    int pageIndex = index > 1 ? index - 1 : index;
+    int pageIndex = index > _centerIndex ? index - 1 : index;
     setState(() => _currentIndex = index);
     _pageController.animateToPage(
       pageIndex,

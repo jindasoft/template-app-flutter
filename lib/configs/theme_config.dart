@@ -17,6 +17,14 @@ class ThemeConfig {
   static const double iconSizeLarge = 28;
   static const double iconSizeExtraLarge = 32;
 
+  // Spacing
+  static const double spacingExtraSmall = 4;
+  static const double spacingSmall = 8;
+  static const double spacingMedium = 12;
+  static const double spacingBase = 16;
+  static const double spacingLarge = 20;
+  static const double spacingExtraLarge = 24;
+
   // Colors - Primary
   static const Color colorPrimary = Color(0xFF007AFF);
   static const Color colorPrimaryDark = Color(0xFF0051D5);

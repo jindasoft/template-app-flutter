@@ -59,9 +59,12 @@ class _AppState extends State<App> {
               backgroundColor: ThemeConfig.colorPrimary,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: EdgeInsets.symmetric(
+                horizontal: ThemeConfig.spacingLarge,
+                vertical: ThemeConfig.spacingMedium,
+              ),
             ),
           ),
           outlinedButtonTheme: OutlinedButtonThemeData(
@@ -69,20 +72,55 @@ class _AppState extends State<App> {
               foregroundColor: ThemeConfig.colorPrimary,
               side: BorderSide(color: ThemeConfig.colorPrimary),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
               ),
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
-            fillColor: ThemeConfig.colorGreyLight,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            fillColor: ThemeConfig.colorBgLightPrimary,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+              borderSide: BorderSide(color: ThemeConfig.colorBorderLight),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+              borderSide: BorderSide(color: ThemeConfig.colorPrimary),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: ThemeConfig.spacingLarge,
+              vertical: ThemeConfig.spacingMedium,
+            ),
+            hintStyle: TextStyle(color: ThemeConfig.colorGreyMedium),
+            labelStyle: TextStyle(color: ThemeConfig.colorTextLightSecondary),
           ),
           dividerTheme: DividerThemeData(
             color: ThemeConfig.colorGreyMedium,
             thickness: 1,
-            space: 16,
+            space: ThemeConfig.spacingLarge,
+          ),
+          switchTheme: SwitchThemeData(
+            thumbColor: WidgetStateProperty.all(ThemeConfig.colorPrimary),
+            trackColor: WidgetStateProperty.all(
+              ThemeConfig.colorPrimary.withAlpha((255 * 0.5).toInt()),
+            ),
+          ),
+          bottomSheetTheme: BottomSheetThemeData(
+            backgroundColor: ThemeConfig.colorBgLightPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(ThemeConfig.spacingMedium),
+              ),
+            ),
+          ),
+          dialogTheme: DialogThemeData(
+            backgroundColor: ThemeConfig.colorBgLightPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+            ),
           ),
         ),
         darkTheme: ThemeData(
@@ -116,9 +154,12 @@ class _AppState extends State<App> {
               backgroundColor: ThemeConfig.colorPrimary,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: EdgeInsets.symmetric(
+                horizontal: ThemeConfig.spacingLarge,
+                vertical: ThemeConfig.spacingMedium,
+              ),
             ),
           ),
           outlinedButtonTheme: OutlinedButtonThemeData(
@@ -126,20 +167,49 @@ class _AppState extends State<App> {
               foregroundColor: ThemeConfig.colorPrimary,
               side: BorderSide(color: ThemeConfig.colorPrimary),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
               ),
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: ThemeConfig.colorBgDarkPrimary,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+              borderSide: BorderSide(color: ThemeConfig.colorBorderDark),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+              borderSide: BorderSide(color: ThemeConfig.colorPrimary),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: ThemeConfig.spacingLarge,
+              vertical: ThemeConfig.spacingMedium,
+            ),
+            hintStyle: TextStyle(color: ThemeConfig.colorGreyMedium),
+            labelStyle: TextStyle(color: ThemeConfig.colorTextDarkSecondary),
           ),
           dividerTheme: DividerThemeData(
             color: ThemeConfig.colorGreyDark,
             thickness: 1,
-            space: 16,
+            space: ThemeConfig.spacingLarge,
+          ),
+          bottomSheetTheme: BottomSheetThemeData(
+            backgroundColor: ThemeConfig.colorBgDarkPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(ThemeConfig.spacingMedium),
+              ),
+            ),
+          ),
+          dialogTheme: DialogThemeData(
+            backgroundColor: ThemeConfig.colorBgDarkPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+            ),
           ),
         ),
         themeMode: themeNotifier.themeMode,

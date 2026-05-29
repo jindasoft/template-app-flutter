@@ -28,7 +28,7 @@ class EmptyPage extends StatelessWidget {
                 ? ThemeConfig.colorTextDarkSecondary
                 : ThemeConfig.colorGreyMedium,
           ),
-          SizedBox(height: 20),
+          SizedBox(height: ThemeConfig.spacingMedium),
           Text(
             message,
             textAlign: TextAlign.center,
@@ -40,7 +40,7 @@ class EmptyPage extends StatelessWidget {
                   : ThemeConfig.colorTextLightPrimary,
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: ThemeConfig.spacingExtraSmall),
           Text(
             description,
             textAlign: TextAlign.center,

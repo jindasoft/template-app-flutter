@@ -13,24 +13,24 @@ class CenterPage extends StatelessWidget {
   }
 
   Widget _widgetMore(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    // final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-        color: isDark
-            ? ThemeConfig.colorBgDarkPrimary
-            : ThemeConfig.colorBgLightPrimary,
+        // color: isDark
+        //     ? ThemeConfig.colorBgDarkPrimary
+        //     : ThemeConfig.colorBgLightPrimary,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(ThemeConfig.spacingLarge),
             child: GridView.count(
               crossAxisCount: 3,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
+              mainAxisSpacing: ThemeConfig.spacingLarge,
+              crossAxisSpacing: ThemeConfig.spacingLarge,
               children: [
                 _buildGridButton(
                   context,
@@ -75,7 +75,9 @@ class CenterPage extends StatelessWidget {
             icon,
             size: responsiveSize(context, ThemeConfig.iconSizeExtraLarge),
           ),
-          const SizedBox(height: 5),
+          SizedBox(
+            height: responsiveSize(context, ThemeConfig.spacingExtraSmall),
+          ),
           Text(
             label,
             style: TextStyle(

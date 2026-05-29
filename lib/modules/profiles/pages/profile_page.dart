@@ -19,6 +19,34 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(height: 16),
               _buildThemeToggle(context, themeNotifier),
               const SizedBox(height: 32),
+
+              ElevatedButton(
+                onPressed: () {
+                  // Handle logout logic here
+                },
+                child: const Text('Logout'),
+              ),
+              const SizedBox(height: 16),
+              OutlinedButton(
+                onPressed: () {
+                  // Handle delete account logic here
+                },
+                child: const Text('Delete Account'),
+              ),
+              const SizedBox(height: 32),
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Username',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Username',
+                  border: OutlineInputBorder(),
+                ),
+              ),
             ],
           );
         },
