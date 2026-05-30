@@ -29,11 +29,6 @@ class _AppPageState extends State<AppPage> {
         isScrollControlled: true,
         enableDrag: true,
         useRootNavigator: false,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(ThemeConfig.spacingBase),
-          ),
-        ),
         builder: (context) =>
             FractionallySizedBox(heightFactor: 0.4, child: CenterPage()),
       );

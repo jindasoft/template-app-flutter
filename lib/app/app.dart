@@ -109,14 +109,20 @@ class _AppState extends State<App> {
             backgroundColor: ThemeConfig.colorBgLightPrimary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
-                top: Radius.circular(ThemeConfig.spacingMedium),
+                top: Radius.circular(ThemeConfig.spacingBase),
               ),
             ),
           ),
           dialogTheme: DialogThemeData(
             backgroundColor: ThemeConfig.colorBgLightPrimary,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
+            ),
+          ),
+          cardTheme: CardThemeData(
+            color: ThemeConfig.colorBgLightPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
             ),
           ),
         ),
@@ -195,14 +201,20 @@ class _AppState extends State<App> {
             backgroundColor: ThemeConfig.colorBgDarkPrimary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
-                top: Radius.circular(ThemeConfig.spacingMedium),
+                top: Radius.circular(ThemeConfig.spacingBase),
               ),
             ),
           ),
           dialogTheme: DialogThemeData(
             backgroundColor: ThemeConfig.colorBgDarkPrimary,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
+            ),
+          ),
+          cardTheme: CardThemeData(
+            color: ThemeConfig.colorBgDarkPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
             ),
           ),
         ),

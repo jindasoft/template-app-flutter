@@ -48,6 +48,21 @@ class ProfilePage extends StatelessWidget {
                   border: OutlineInputBorder(),
                 ),
               ),
+              const SizedBox(height: ThemeConfig.spacingMedium),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: 'Language',
+                  border: OutlineInputBorder(),
+                ),
+                items: const [
+                  DropdownMenuItem(value: 'en', child: Text('English')),
+                  DropdownMenuItem(value: 'th', child: Text('Thai')),
+                ],
+                onChanged: (value) {
+                  // Handle language change logic here
+                },
+              ),
+              const SizedBox(height: ThemeConfig.spacingMedium),
             ],
           );
         },
