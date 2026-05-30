@@ -87,7 +87,7 @@ class _AppState extends State<App> {
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
-            fillColor: ThemeConfig.colorBgLightPrimary,
+            fillColor: ThemeConfig.colorGreyLight,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
             ),
@@ -103,8 +103,8 @@ class _AppState extends State<App> {
               horizontal: ThemeConfig.spacingLarge,
               vertical: ThemeConfig.spacingMedium,
             ),
-            hintStyle: TextStyle(color: ThemeConfig.colorGreyMedium),
-            labelStyle: TextStyle(color: ThemeConfig.colorTextLightSecondary),
+            labelStyle: TextStyle(color: ThemeConfig.colorTextLightPrimary),
+            hintStyle: TextStyle(color: ThemeConfig.colorTextLightSecondary),
           ),
           dividerTheme: DividerThemeData(
             color: ThemeConfig.colorGreyMedium,
@@ -213,8 +213,8 @@ class _AppState extends State<App> {
               horizontal: ThemeConfig.spacingLarge,
               vertical: ThemeConfig.spacingMedium,
             ),
-            hintStyle: TextStyle(color: ThemeConfig.colorGreyMedium),
-            labelStyle: TextStyle(color: ThemeConfig.colorTextDarkSecondary),
+            labelStyle: TextStyle(color: ThemeConfig.colorTextDarkPrimary),
+            hintStyle: TextStyle(color: ThemeConfig.colorTextDarkSecondary),
           ),
           dividerTheme: DividerThemeData(
             color: ThemeConfig.colorGreyDark,
