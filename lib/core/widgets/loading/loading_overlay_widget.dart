@@ -27,7 +27,7 @@ class LoadingOverlay extends StatelessWidget {
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.black26,
+                color: Theme.of(context).shadowColor.withValues(alpha: 0.26),
                 borderRadius: borderRadius ?? BorderRadius.circular(8),
               ),
               child: const Center(child: CircularProgressIndicator()),
@@ -40,7 +40,7 @@ class LoadingOverlay extends StatelessWidget {
             right: 0,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.red.withValues(alpha: 0.8),
+                color: ThemeConfig.colorError.withValues(alpha: 0.8),
                 borderRadius: borderRadius ?? BorderRadius.zero,
               ),
               padding: const EdgeInsets.all(12),
@@ -50,7 +50,7 @@ class LoadingOverlay extends StatelessWidget {
                   Text(
                     'shared.loading_overlay_widget.error_message'.tr(),
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
                     ),
                     textAlign: TextAlign.center,
@@ -60,7 +60,9 @@ class LoadingOverlay extends StatelessWidget {
                     ElevatedButton(
                       onPressed: onRetry,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: Theme.of(
+                          context,
+                        ).colorScheme.onPrimary,
                         padding: EdgeInsets.symmetric(
                           horizontal: ThemeConfig.spacingMedium,
                           vertical: ThemeConfig.spacingSmall,
@@ -69,7 +71,7 @@ class LoadingOverlay extends StatelessWidget {
                       child: Text(
                         'shared.loading_overlay_widget.retry'.tr(),
                         style: TextStyle(
-                          color: Colors.red,
+                          color: ThemeConfig.colorError,
                           fontSize: Theme.of(
                             context,
                           ).textTheme.bodyLarge?.fontSize,

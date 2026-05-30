@@ -256,7 +256,7 @@ class _SignInPageState extends State<SignInPage> {
                               ),
                               side: WidgetStateProperty.resolveWith(
                                 (states) => BorderSide(
-                                  color: Colors.grey.shade300,
+                                  color: ThemeConfig.colorGreyMedium,
                                   width: 1,
                                 ),
                               ),
@@ -276,7 +276,9 @@ class _SignInPageState extends State<SignInPage> {
                                     children: [
                                       Icon(
                                         LineIcons.apple,
-                                        color: Colors.white,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onPrimary,
                                         size: ThemeConfig.iconSizeExtraLarge,
                                       ),
                                       SizedBox(width: ThemeConfig.spacingSmall),
@@ -285,7 +287,11 @@ class _SignInPageState extends State<SignInPage> {
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge
-                                            ?.copyWith(color: Colors.white),
+                                            ?.copyWith(
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.onPrimary,
+                                            ),
                                       ),
                                     ],
                                   )

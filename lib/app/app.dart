@@ -37,7 +37,19 @@ class _AppState extends State<App> {
         theme: ThemeData(
           useMaterial3: false,
           brightness: Brightness.light,
-          primarySwatch: Colors.blue,
+          primarySwatch:
+              MaterialColor(ThemeConfig.colorPrimary.toARGB32(), <int, Color>{
+                50: ThemeConfig.colorPrimary.withValues(alpha: 0.05),
+                100: ThemeConfig.colorPrimary.withValues(alpha: 0.1),
+                200: ThemeConfig.colorPrimary.withValues(alpha: 0.2),
+                300: ThemeConfig.colorPrimary.withValues(alpha: 0.3),
+                400: ThemeConfig.colorPrimary.withValues(alpha: 0.4),
+                500: ThemeConfig.colorPrimary.withValues(alpha: 0.5),
+                600: ThemeConfig.colorPrimary.withValues(alpha: 0.6),
+                700: ThemeConfig.colorPrimary.withValues(alpha: 0.7),
+                800: ThemeConfig.colorPrimary.withValues(alpha: 0.8),
+                900: ThemeConfig.colorPrimary.withValues(alpha: 0.9),
+              }),
           primaryColor: ThemeConfig.colorPrimary,
           textTheme: TextThemeConfig.lightTextTheme,
           iconTheme: IconThemeData(color: ThemeConfig.colorGreyDark),
@@ -54,7 +66,7 @@ class _AppState extends State<App> {
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               backgroundColor: ThemeConfig.colorPrimary,
-              foregroundColor: Colors.white,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
               ),
@@ -129,7 +141,19 @@ class _AppState extends State<App> {
         darkTheme: ThemeData(
           useMaterial3: false,
           brightness: Brightness.dark,
-          primarySwatch: Colors.blue,
+          primarySwatch:
+              MaterialColor(ThemeConfig.colorPrimary.toARGB32(), <int, Color>{
+                50: ThemeConfig.colorPrimary.withValues(alpha: 0.05),
+                100: ThemeConfig.colorPrimary.withValues(alpha: 0.1),
+                200: ThemeConfig.colorPrimary.withValues(alpha: 0.2),
+                300: ThemeConfig.colorPrimary.withValues(alpha: 0.3),
+                400: ThemeConfig.colorPrimary.withValues(alpha: 0.4),
+                500: ThemeConfig.colorPrimary.withValues(alpha: 0.5),
+                600: ThemeConfig.colorPrimary.withValues(alpha: 0.6),
+                700: ThemeConfig.colorPrimary.withValues(alpha: 0.7),
+                800: ThemeConfig.colorPrimary.withValues(alpha: 0.8),
+                900: ThemeConfig.colorPrimary.withValues(alpha: 0.9),
+              }),
           primaryColor: ThemeConfig.colorPrimary,
           textTheme: TextThemeConfig.darkTextTheme,
           iconTheme: IconThemeData(color: ThemeConfig.colorGreyLight),
@@ -152,7 +176,7 @@ class _AppState extends State<App> {
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               backgroundColor: ThemeConfig.colorPrimary,
-              foregroundColor: Colors.white,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
               ),

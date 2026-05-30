@@ -68,7 +68,7 @@ class _IntroPageState extends State<IntroPage> {
               child: Text(
                 'intro.get_started'.tr(),
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
