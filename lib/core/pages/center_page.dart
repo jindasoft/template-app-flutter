@@ -1,5 +1,4 @@
 import 'package:template_app_flutter/configs/theme_config.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
@@ -9,21 +8,26 @@ class CenterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: _widgetMore(context)));
+    return _buildContent(context);
   }
 
-  Center _widgetMore(BuildContext context) {
-    return Center(
+  Widget _buildContent(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(ThemeConfig.spacingBase),
+        ),
+      ),
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(ThemeConfig.spacingBase),
             child: GridView.count(
               crossAxisCount: 3,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
+              mainAxisSpacing: ThemeConfig.spacingMedium,
+              crossAxisSpacing: ThemeConfig.spacingMedium,
               children: [
                 _buildGridButton(
                   context,
@@ -64,17 +68,9 @@ class CenterPage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: responsiveSize(context, ThemeConfig.iconSizeExtraLarge),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: responsiveSize(context, ThemeConfig.fontSizeExtraSmall),
-            ),
-          ),
+          Icon(icon, size: ThemeConfig.iconSizeExtraLarge),
+          SizedBox(height: ThemeConfig.spacingExtraSmall),
+          Text(label, style: Theme.of(context).textTheme.labelSmall),
         ],
       ),
     );

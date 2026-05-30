@@ -65,7 +65,9 @@ class _ImageViewerState extends State<ImageViewerWidget> {
                   ),
                 ),
               ),
-              backgroundDecoration: const BoxDecoration(color: Colors.black),
+              backgroundDecoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+              ),
               pageController: pageController,
               onPageChanged: (index) {},
             ),
@@ -120,11 +122,11 @@ class _ImageViewerState extends State<ImageViewerWidget> {
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () => Navigator.of(context).pop(),
-              child: const Padding(
-                padding: EdgeInsets.all(10),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
                 child: Icon(
                   LineIcons.timesCircle,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   size: 50,
                 ),
               ),

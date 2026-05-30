@@ -1,6 +1,5 @@
 import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:template_app_flutter/core/pages/center_page.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,13 +18,17 @@ class AppPage extends StatefulWidget {
 
 class _AppPageState extends State<AppPage> {
   int _currentIndex = 0;
+  final _centerIndex = 1;
   final PageController _pageController = PageController();
 
   void onTabTapped(int index) {
-    if (index == 1) {
+    if (index == _centerIndex) {
       showModalBottomSheet(
         context: context,
+        useSafeArea: true,
         isScrollControlled: true,
+        enableDrag: true,
+        useRootNavigator: false,
         builder: (context) =>
             FractionallySizedBox(heightFactor: 0.4, child: CenterPage()),
       );
@@ -33,7 +36,7 @@ class _AppPageState extends State<AppPage> {
       return;
     }
 
-    int pageIndex = index > 1 ? index - 1 : index;
+    int pageIndex = index > _centerIndex ? index - 1 : index;
     setState(() => _currentIndex = index);
     _pageController.animateToPage(
       pageIndex,
@@ -76,16 +79,10 @@ class _AppPageState extends State<AppPage> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (index) => onTabTapped(index),
-          iconSize: responsiveSize(context, ThemeConfig.iconSizeLarge),
+          iconSize: ThemeConfig.iconSizeLarge,
           type: BottomNavigationBarType.fixed,
-          selectedFontSize: responsiveSize(
-            context,
-            ThemeConfig.fontSizeExtraSmall,
-          ),
-          unselectedFontSize: responsiveSize(
-            context,
-            ThemeConfig.fontSizeExtraSmall,
-          ),
+          selectedFontSize: ThemeConfig.fontSize12,
+          unselectedFontSize: ThemeConfig.fontSize12,
           selectedItemColor: Theme.of(context).colorScheme.primary,
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           items: [
@@ -107,7 +104,7 @@ class _AppPageState extends State<AppPage> {
         ),
         body: PageView(
           controller: _pageController,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[HomePage(), ProfilePage()],
         ),
       ),

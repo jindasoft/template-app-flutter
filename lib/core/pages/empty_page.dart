@@ -1,5 +1,4 @@
 import 'package:template_app_flutter/configs/theme_config.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:flutter/material.dart';
 
 class EmptyPage extends StatelessWidget {
@@ -21,26 +20,18 @@ class EmptyPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(icon, size: 100, color: ThemeConfig.colorGreyMedium),
-          SizedBox(height: 20),
+          Icon(icon, size: 100),
+          SizedBox(height: ThemeConfig.spacingMedium),
           Text(
             message,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: responsiveSize(context, ThemeConfig.fontSizeLarge),
-              fontWeight: FontWeight.w500,
-              color: ThemeConfig.colorGreyDark,
-            ),
+            style: Theme.of(context).textTheme.displaySmall,
           ),
-          SizedBox(height: 5),
+          SizedBox(height: ThemeConfig.spacingExtraSmall),
           Text(
             description,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
-              fontWeight: FontWeight.w400,
-              color: ThemeConfig.colorGreyDark,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],
       ),

@@ -9,13 +9,16 @@ class LoadingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final skeletonColor = Theme.of(context).brightness == Brightness.dark
+        ? ThemeConfig.colorBgDarkSecondary
+        : ThemeConfig.colorBgLightSecondary;
     return SizedBox(
       height: height,
       child: SkeletonAnimation(
         child: Container(
           decoration: BoxDecoration(
-            color: ThemeConfig.colorGreyLight,
-            borderRadius: BorderRadius.circular(3),
+            color: skeletonColor,
+            borderRadius: BorderRadius.circular(ThemeConfig.spacingSmall),
           ),
           height: height,
           width: MediaQuery.of(context).size.width,

@@ -10,7 +10,7 @@ class SnackBarUtils {
         content: Text(
           message.tr(),
 
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: Theme.of(context).colorScheme.onError),
         ),
         backgroundColor: ThemeConfig.colorError,
       ),
@@ -23,7 +23,7 @@ class SnackBarUtils {
       SnackBar(
         content: Text(
           message.tr(),
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
         backgroundColor: ThemeConfig.colorSuccess,
       ),
@@ -36,7 +36,7 @@ class SnackBarUtils {
       SnackBar(
         content: Text(
           message.tr(),
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
         backgroundColor: ThemeConfig.colorInfo,
       ),
@@ -49,7 +49,7 @@ class SnackBarUtils {
       SnackBar(
         content: Text(
           message.tr(),
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
         backgroundColor: ThemeConfig.colorWarning,
       ),
@@ -68,7 +68,7 @@ class SnackBarUtils {
       SnackBar(
         content: Text(
           message.tr(),
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
         backgroundColor: backgroundColor,
         duration: duration,

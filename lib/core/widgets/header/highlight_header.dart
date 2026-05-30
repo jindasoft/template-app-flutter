@@ -1,5 +1,4 @@
 import 'package:template_app_flutter/configs/theme_config.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -14,24 +13,23 @@ class HighlightHeader extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.only(top: 8),
+        margin: EdgeInsets.only(top: ThemeConfig.spacingBase),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: <Widget>[
             Text(
               label,
-              style: TextStyle(
-                fontSize: responsiveSize(context, ThemeConfig.fontSizeLarge),
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
             ),
-            SizedBox(width: 8),
+            SizedBox(width: ThemeConfig.spacingSmall),
             Transform.translate(
               offset: Offset(0, 0),
               child: Icon(
                 LineIcons.angleDoubleRight,
-                size: responsiveSize(context, ThemeConfig.iconSizeMedium),
+                size: ThemeConfig.iconSizeMedium,
               ),
             ),
           ],

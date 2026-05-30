@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 class ThemeConfig {
   // Font Sizes
-  static const double fontSizeExtraSmall = 12;
-  static const double fontSizeSmall = 14;
-  static const double fontSizeMedium = 16;
-  static const double fontSizeBase = 18;
-  static const double fontSizeLarge = 22;
-  static const double fontSizeExtraLarge = 26;
-  static const double fontSizeHuge = 32;
+  static const double fontSize10 = 10;
+  static const double fontSize12 = 12;
+  static const double fontSize14 = 14;
+  static const double fontSize16 = 16;
+  static const double fontSize18 = 18;
+  static const double fontSize20 = 20;
+  static const double fontSize24 = 24;
+  static const double fontSize32 = 32;
 
   // Icon Sizes
   static const double iconSizeSmall = 16;
@@ -16,6 +17,14 @@ class ThemeConfig {
   static const double iconSizeBase = 24;
   static const double iconSizeLarge = 28;
   static const double iconSizeExtraLarge = 32;
+
+  // Spacing
+  static const double spacingExtraSmall = 2;
+  static const double spacingSmall = 4;
+  static const double spacingMedium = 8;
+  static const double spacingBase = 16;
+  static const double spacingLarge = 32;
+  static const double spacingExtraLarge = 64;
 
   // Colors - Primary
   static const Color colorPrimary = Color(0xFF007AFF);
@@ -27,176 +36,30 @@ class ThemeConfig {
   static const Color colorSecondary = Color(0xFFFF2D55);
 
   // Colors - Neutral/Grey
-  static const Color colorGreyLight = Color(0xFFEEEEEE);
-  static const Color colorGreyMedium = Color(0xFFBDBDBD);
-  static const Color colorGreyDark = Color(0xFF616161);
-  static const Color colorTextGrey = Color(0xFF9E9E9E);
+  static const Color colorGreyLight = Color(0xFFF5F5F5);
+  static const Color colorGreyMedium = Color(0xFF9CA3AF);
+  static const Color colorGreyDark = Color(0xFF606060);
 
   // Colors - Status
   static const Color colorSuccess = Color(0xFF34C759);
   static const Color colorWarning = Color(0xFFFF9500);
   static const Color colorInfo = Color(0xFF5AC8FA);
   static const Color colorError = Color(0xFFFF3B30);
+  static const Color colorDisabled = Color(0xFF9CA3AF);
 
-  // Colors - Background & Text
-  static const Color colorLightBgPrimary = Color(0xFFFFFFFF);
-  static const Color colorLightBgSecondary = Color(0xFFF2F2F7);
-  static const Color colorLightTextPrimary = Color(0xFF000000);
-  static const Color colorLightTextSecondary = Color(0xFF626262);
-  static const Color colorDarkBgPrimary = Color(0xFF1E293B);
-  static const Color colorDarkBgSecondary = Color(0xFF0F172A);
-  static const Color colorDarkTextPrimary = Color(0xFFFFFFFF);
-  static const Color colorDarkTextSecondary = Color(0xFFE0E0E0);
+  // Colors - Background
+  static const Color colorBgLightPrimary = Color(0xFFFFFFFF);
+  static const Color colorBgLightSecondary = Color(0xFFF2F2F7);
+  static const Color colorBgDarkPrimary = Color(0xFF1E293B);
+  static const Color colorBgDarkSecondary = Color(0xFF0F172A);
 
-  // Text Theme - Light
-  static TextTheme get lightTextTheme {
-    return TextTheme(
-      displayLarge: TextStyle(
-        fontSize: fontSizeHuge,
-        fontWeight: FontWeight.w700,
-        color: colorLightTextPrimary,
-      ),
-      displayMedium: TextStyle(
-        fontSize: fontSizeExtraLarge,
-        fontWeight: FontWeight.w700,
-        color: colorLightTextPrimary,
-      ),
-      displaySmall: TextStyle(
-        fontSize: fontSizeLarge,
-        fontWeight: FontWeight.w600,
-        color: colorLightTextPrimary,
-      ),
-      headlineMedium: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w600,
-        color: colorLightTextPrimary,
-      ),
-      headlineSmall: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w600,
-        color: colorLightTextPrimary,
-      ),
-      titleLarge: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w600,
-        color: colorLightTextPrimary,
-      ),
-      titleMedium: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w500,
-        color: colorLightTextPrimary,
-      ),
-      titleSmall: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w500,
-        color: colorLightTextPrimary,
-      ),
-      bodyLarge: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w400,
-        color: colorLightTextPrimary,
-      ),
-      bodyMedium: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w400,
-        color: colorLightTextPrimary,
-      ),
-      bodySmall: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w400,
-        color: colorLightTextSecondary,
-      ),
-      labelLarge: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w600,
-        color: colorLightTextPrimary,
-      ),
-      labelMedium: TextStyle(
-        fontSize: fontSizeExtraSmall,
-        fontWeight: FontWeight.w500,
-        color: colorLightTextSecondary,
-      ),
-      labelSmall: TextStyle(
-        fontSize: fontSizeExtraSmall,
-        fontWeight: FontWeight.w400,
-        color: colorLightTextSecondary,
-      ),
-    );
-  }
+  // Colors - Border
+  static const Color colorBorderDark = Color(0xFF374151);
+  static const Color colorBorderLight = Color(0xFFD1D5DB);
 
-  // Text Theme - Dark
-  static TextTheme get darkTextTheme {
-    return TextTheme(
-      displayLarge: TextStyle(
-        fontSize: fontSizeHuge,
-        fontWeight: FontWeight.w700,
-        color: colorDarkTextPrimary,
-      ),
-      displayMedium: TextStyle(
-        fontSize: fontSizeExtraLarge,
-        fontWeight: FontWeight.w700,
-        color: colorDarkTextPrimary,
-      ),
-      displaySmall: TextStyle(
-        fontSize: fontSizeLarge,
-        fontWeight: FontWeight.w600,
-        color: colorDarkTextPrimary,
-      ),
-      headlineMedium: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w600,
-        color: colorDarkTextPrimary,
-      ),
-      headlineSmall: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w600,
-        color: colorDarkTextPrimary,
-      ),
-      titleLarge: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w600,
-        color: colorDarkTextPrimary,
-      ),
-      titleMedium: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w500,
-        color: colorDarkTextPrimary,
-      ),
-      titleSmall: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w500,
-        color: colorDarkTextPrimary,
-      ),
-      bodyLarge: TextStyle(
-        fontSize: fontSizeBase,
-        fontWeight: FontWeight.w400,
-        color: colorDarkTextPrimary,
-      ),
-      bodyMedium: TextStyle(
-        fontSize: fontSizeMedium,
-        fontWeight: FontWeight.w400,
-        color: colorDarkTextPrimary,
-      ),
-      bodySmall: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w400,
-        color: colorDarkTextSecondary,
-      ),
-      labelLarge: TextStyle(
-        fontSize: fontSizeSmall,
-        fontWeight: FontWeight.w600,
-        color: colorDarkTextPrimary,
-      ),
-      labelMedium: TextStyle(
-        fontSize: fontSizeExtraSmall,
-        fontWeight: FontWeight.w500,
-        color: colorDarkTextSecondary,
-      ),
-      labelSmall: TextStyle(
-        fontSize: fontSizeExtraSmall,
-        fontWeight: FontWeight.w400,
-        color: colorDarkTextSecondary,
-      ),
-    );
-  }
+  // Colors - Text
+  static const Color colorTextLightPrimary = Color(0xFF000000);
+  static const Color colorTextLightSecondary = Color(0xFF626262);
+  static const Color colorTextDarkPrimary = Color(0xFFFFFFFF);
+  static const Color colorTextDarkSecondary = Color(0xFFE0E0E0);
 }

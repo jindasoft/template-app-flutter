@@ -1,6 +1,6 @@
-import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:template_app_flutter/configs/theme_config.dart';
 
 class LoadingOverlay extends StatelessWidget {
   final Widget child;
@@ -27,7 +27,7 @@ class LoadingOverlay extends StatelessWidget {
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.black26,
+                color: Theme.of(context).shadowColor.withValues(alpha: 0.26),
                 borderRadius: borderRadius ?? BorderRadius.circular(8),
               ),
               child: const Center(child: CircularProgressIndicator()),
@@ -40,7 +40,7 @@ class LoadingOverlay extends StatelessWidget {
             right: 0,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.red.withValues(alpha: 0.8),
+                color: ThemeConfig.colorError.withValues(alpha: 0.8),
                 borderRadius: borderRadius ?? BorderRadius.zero,
               ),
               padding: const EdgeInsets.all(12),
@@ -50,27 +50,31 @@ class LoadingOverlay extends StatelessWidget {
                   Text(
                     'shared.loading_overlay_widget.error_message'.tr(),
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: ThemeConfig.fontSizeSmall,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   if (onRetry != null) ...[
-                    const SizedBox(height: 8),
+                    SizedBox(height: ThemeConfig.spacingSmall),
                     ElevatedButton(
                       onPressed: onRetry,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
+                        backgroundColor: Theme.of(
+                          context,
+                        ).colorScheme.onPrimary,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: ThemeConfig.spacingMedium,
+                          vertical: ThemeConfig.spacingSmall,
                         ),
                       ),
                       child: Text(
                         'shared.loading_overlay_widget.retry'.tr(),
                         style: TextStyle(
-                          color: Colors.red,
-                          fontSize: ThemeConfig.fontSizeSmall,
+                          color: ThemeConfig.colorError,
+                          fontSize: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge?.fontSize,
                         ),
                       ),
                     ),

@@ -1,7 +1,6 @@
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:template_app_flutter/core/utils/next_screen_util.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:template_app_flutter/app/app_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +68,7 @@ class _IntroPageState extends State<IntroPage> {
               child: Text(
                 'intro.get_started'.tr(),
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
@@ -116,13 +115,11 @@ class IntroView extends StatelessWidget {
             padding: const EdgeInsets.only(left: 25, right: 25),
             child: Text(
               title.tr(),
-              style: TextStyle(
-                fontSize: responsiveSize(
-                  context,
-                  ThemeConfig.fontSizeExtraLarge,
-                ),
+              style: Theme.of(context).textTheme.displayMedium?.copyWith(
                 fontWeight: FontWeight.w900,
-                color: ThemeConfig.colorGreyDark,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? ThemeConfig.colorTextDarkPrimary
+                    : ThemeConfig.colorTextLightPrimary,
                 letterSpacing: -0.7,
                 wordSpacing: 1,
               ),
@@ -144,10 +141,11 @@ class IntroView extends StatelessWidget {
             child: Text(
               description.tr(),
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 fontWeight: FontWeight.w500,
-                color: ThemeConfig.colorGreyDark,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? ThemeConfig.colorTextDarkSecondary
+                    : ThemeConfig.colorTextLightSecondary,
               ),
             ),
           ),

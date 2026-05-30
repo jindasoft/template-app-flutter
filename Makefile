@@ -13,6 +13,11 @@ up:
 	@echo "Upgrading dependencies..."
 	@flutter pub upgrade
 
+clean:
+	@echo "Cleaning project..."
+	@flutter clean
+	@flutter pub get
+
 analyze:
 	@echo "Running static analysis..."
 	@flutter analyze

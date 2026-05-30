@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:template_app_flutter/configs/text_theme_config.dart';
 import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:template_app_flutter/core/notifiers/theme_notifier.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:template_app_flutter/modules/auth/blocs/auth_bloc.dart';
 import 'package:template_app_flutter/modules/auth/repositories/auth_repository.dart';
 
@@ -37,31 +37,43 @@ class _AppState extends State<App> {
         theme: ThemeData(
           useMaterial3: false,
           brightness: Brightness.light,
-          primarySwatch: Colors.blue,
+          primarySwatch:
+              MaterialColor(ThemeConfig.colorPrimary.toARGB32(), <int, Color>{
+                50: ThemeConfig.colorPrimary.withValues(alpha: 0.05),
+                100: ThemeConfig.colorPrimary.withValues(alpha: 0.1),
+                200: ThemeConfig.colorPrimary.withValues(alpha: 0.2),
+                300: ThemeConfig.colorPrimary.withValues(alpha: 0.3),
+                400: ThemeConfig.colorPrimary.withValues(alpha: 0.4),
+                500: ThemeConfig.colorPrimary.withValues(alpha: 0.5),
+                600: ThemeConfig.colorPrimary.withValues(alpha: 0.6),
+                700: ThemeConfig.colorPrimary.withValues(alpha: 0.7),
+                800: ThemeConfig.colorPrimary.withValues(alpha: 0.8),
+                900: ThemeConfig.colorPrimary.withValues(alpha: 0.9),
+              }),
           primaryColor: ThemeConfig.colorPrimary,
-          textTheme: ThemeConfig.lightTextTheme,
+          textTheme: TextThemeConfig.lightTextTheme,
           iconTheme: IconThemeData(color: ThemeConfig.colorGreyDark),
           fontFamily: 'Manrope',
-          scaffoldBackgroundColor: ThemeConfig.colorLightBgSecondary,
+          scaffoldBackgroundColor: ThemeConfig.colorBgLightSecondary,
           appBarTheme: AppBarTheme(
-            backgroundColor: ThemeConfig.colorLightBgPrimary,
+            backgroundColor: ThemeConfig.colorBgLightPrimary,
             elevation: 0,
             iconTheme: IconThemeData(color: ThemeConfig.colorGreyDark),
-            titleTextStyle: TextStyle(
-              fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Manrope',
-              color: ThemeConfig.colorLightTextPrimary,
+            titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: ThemeConfig.colorTextLightPrimary,
             ),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               backgroundColor: ThemeConfig.colorPrimary,
-              foregroundColor: Colors.white,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: EdgeInsets.symmetric(
+                horizontal: ThemeConfig.spacingLarge,
+                vertical: ThemeConfig.spacingMedium,
+              ),
             ),
           ),
           outlinedButtonTheme: OutlinedButtonThemeData(
@@ -69,40 +81,90 @@ class _AppState extends State<App> {
               foregroundColor: ThemeConfig.colorPrimary,
               side: BorderSide(color: ThemeConfig.colorPrimary),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
               ),
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: ThemeConfig.colorGreyLight,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+              borderSide: BorderSide(color: ThemeConfig.colorBorderLight),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+              borderSide: BorderSide(color: ThemeConfig.colorPrimary),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: ThemeConfig.spacingLarge,
+              vertical: ThemeConfig.spacingMedium,
+            ),
+            labelStyle: TextStyle(color: ThemeConfig.colorTextLightPrimary),
+            hintStyle: TextStyle(color: ThemeConfig.colorTextLightSecondary),
           ),
           dividerTheme: DividerThemeData(
             color: ThemeConfig.colorGreyMedium,
             thickness: 1,
-            space: 16,
+            space: ThemeConfig.spacingLarge,
+          ),
+          switchTheme: SwitchThemeData(
+            thumbColor: WidgetStateProperty.all(ThemeConfig.colorGreyMedium),
+            trackColor: WidgetStateProperty.all(
+              ThemeConfig.colorGreyMedium.withAlpha((255 * 0.5).toInt()),
+            ),
+          ),
+          bottomSheetTheme: BottomSheetThemeData(
+            backgroundColor: ThemeConfig.colorBgLightPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(ThemeConfig.spacingBase),
+              ),
+            ),
+          ),
+          dialogTheme: DialogThemeData(
+            backgroundColor: ThemeConfig.colorBgLightPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
+            ),
+          ),
+          cardTheme: CardThemeData(
+            color: ThemeConfig.colorBgLightPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
+            ),
           ),
         ),
         darkTheme: ThemeData(
           useMaterial3: false,
           brightness: Brightness.dark,
-          primarySwatch: Colors.blue,
+          primarySwatch:
+              MaterialColor(ThemeConfig.colorPrimary.toARGB32(), <int, Color>{
+                50: ThemeConfig.colorPrimary.withValues(alpha: 0.05),
+                100: ThemeConfig.colorPrimary.withValues(alpha: 0.1),
+                200: ThemeConfig.colorPrimary.withValues(alpha: 0.2),
+                300: ThemeConfig.colorPrimary.withValues(alpha: 0.3),
+                400: ThemeConfig.colorPrimary.withValues(alpha: 0.4),
+                500: ThemeConfig.colorPrimary.withValues(alpha: 0.5),
+                600: ThemeConfig.colorPrimary.withValues(alpha: 0.6),
+                700: ThemeConfig.colorPrimary.withValues(alpha: 0.7),
+                800: ThemeConfig.colorPrimary.withValues(alpha: 0.8),
+                900: ThemeConfig.colorPrimary.withValues(alpha: 0.9),
+              }),
           primaryColor: ThemeConfig.colorPrimary,
-          textTheme: ThemeConfig.darkTextTheme,
+          textTheme: TextThemeConfig.darkTextTheme,
           iconTheme: IconThemeData(color: ThemeConfig.colorGreyLight),
           fontFamily: 'Manrope',
-          scaffoldBackgroundColor: ThemeConfig.colorDarkBgSecondary,
+          scaffoldBackgroundColor: ThemeConfig.colorBgDarkSecondary,
           appBarTheme: AppBarTheme(
-            backgroundColor: ThemeConfig.colorDarkBgPrimary,
+            backgroundColor: ThemeConfig.colorBgDarkPrimary,
             elevation: 0,
             iconTheme: IconThemeData(color: ThemeConfig.colorGreyLight),
-            titleTextStyle: TextStyle(
-              fontSize: responsiveSize(context, ThemeConfig.fontSizeBase),
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Manrope',
-              color: ThemeConfig.colorDarkTextPrimary,
+            titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: ThemeConfig.colorTextDarkPrimary,
             ),
           ),
           switchTheme: SwitchThemeData(
@@ -114,11 +176,14 @@ class _AppState extends State<App> {
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               backgroundColor: ThemeConfig.colorPrimary,
-              foregroundColor: Colors.white,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: EdgeInsets.symmetric(
+                horizontal: ThemeConfig.spacingLarge,
+                vertical: ThemeConfig.spacingMedium,
+              ),
             ),
           ),
           outlinedButtonTheme: OutlinedButtonThemeData(
@@ -126,20 +191,55 @@ class _AppState extends State<App> {
               foregroundColor: ThemeConfig.colorPrimary,
               side: BorderSide(color: ThemeConfig.colorPrimary),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
               ),
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
-            fillColor: ThemeConfig.colorDarkBgPrimary,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            fillColor: ThemeConfig.colorBgDarkPrimary,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+              borderSide: BorderSide(color: ThemeConfig.colorBorderDark),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
+              borderSide: BorderSide(color: ThemeConfig.colorPrimary),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: ThemeConfig.spacingLarge,
+              vertical: ThemeConfig.spacingMedium,
+            ),
+            labelStyle: TextStyle(color: ThemeConfig.colorTextDarkPrimary),
+            hintStyle: TextStyle(color: ThemeConfig.colorTextDarkSecondary),
           ),
           dividerTheme: DividerThemeData(
             color: ThemeConfig.colorGreyDark,
             thickness: 1,
-            space: 16,
+            space: ThemeConfig.spacingLarge,
+          ),
+          bottomSheetTheme: BottomSheetThemeData(
+            backgroundColor: ThemeConfig.colorBgDarkPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(ThemeConfig.spacingBase),
+              ),
+            ),
+          ),
+          dialogTheme: DialogThemeData(
+            backgroundColor: ThemeConfig.colorBgDarkPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
+            ),
+          ),
+          cardTheme: CardThemeData(
+            color: ThemeConfig.colorBgDarkPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
+            ),
           ),
         ),
         themeMode: themeNotifier.themeMode,

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:template_app_flutter/configs/app_config.dart';
 import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:template_app_flutter/core/utils/next_screen_util.dart';
-import 'package:template_app_flutter/core/utils/responsive_util.dart';
 import 'package:template_app_flutter/app/app_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -101,8 +100,13 @@ class _SignInPageState extends State<SignInPage> {
                     child: Text(
                       'sign_in.skip'.tr(),
                       style: TextStyle(
-                        fontSize: ThemeConfig.fontSizeBase,
+                        fontSize: Theme.of(
+                          context,
+                        ).textTheme.bodyLarge?.fontSize,
                         fontWeight: FontWeight.w500,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? ThemeConfig.colorTextDarkPrimary
+                            : ThemeConfig.colorTextLightPrimary,
                       ),
                     ),
                   ),
@@ -128,25 +132,23 @@ class _SignInPageState extends State<SignInPage> {
                 children: [
                   Text(
                     'sign_in.welcome_to'.tr(),
-                    style: TextStyle(
-                      fontSize: responsiveSize(
-                        context,
-                        ThemeConfig.fontSizeBase,
-                      ),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w400,
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? ThemeConfig.colorTextDarkSecondary
+                          : ThemeConfig.colorTextLightSecondary,
                     ),
                   ),
                   SizedBox(height: 5),
                   Text(
                     AppConfig.appName,
-                    style: TextStyle(
-                      fontSize: responsiveSize(
-                        context,
-                        ThemeConfig.fontSizeHuge,
-                      ),
+                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
                       fontWeight: FontWeight.w900,
                       letterSpacing: -0.5,
                       wordSpacing: 1,
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? ThemeConfig.colorTextDarkPrimary
+                          : ThemeConfig.colorTextLightPrimary,
                     ),
                   ),
                 ],
@@ -162,12 +164,11 @@ class _SignInPageState extends State<SignInPage> {
                     child: Text(
                       'sign_in.welcome_message'.tr(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: responsiveSize(
-                          context,
-                          ThemeConfig.fontSizeBase,
-                        ),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w500,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? ThemeConfig.colorTextDarkSecondary
+                            : ThemeConfig.colorTextLightSecondary,
                       ),
                     ),
                   ),
@@ -224,23 +225,24 @@ class _SignInPageState extends State<SignInPage> {
                                   'assets/logo/google_logo.webp',
                                   height: ThemeConfig.iconSizeBase,
                                 ),
-                                SizedBox(width: 10),
+                                SizedBox(width: ThemeConfig.spacingSmall),
                                 Text(
                                   'sign_in.sign_in_with_google'.tr(),
-                                  style: TextStyle(
-                                    fontSize: responsiveSize(
-                                      context,
-                                      ThemeConfig.fontSizeBase,
-                                    ),
-                                    color: Colors.black87,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                      ?.copyWith(
+                                        color:
+                                            Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? ThemeConfig.colorTextDarkPrimary
+                                            : ThemeConfig.colorTextLightPrimary,
+                                      ),
                                 ),
                               ],
                             )
                           : Center(child: CircularProgressIndicator()),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: ThemeConfig.spacingSmall),
                   Platform.isAndroid
                       ? SizedBox()
                       : SizedBox(
@@ -254,13 +256,15 @@ class _SignInPageState extends State<SignInPage> {
                               ),
                               side: WidgetStateProperty.resolveWith(
                                 (states) => BorderSide(
-                                  color: Colors.grey.shade300,
+                                  color: ThemeConfig.colorGreyMedium,
                                   width: 1,
                                 ),
                               ),
                               shape: WidgetStateProperty.resolveWith(
                                 (states) => RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(
+                                    ThemeConfig.spacingSmall,
+                                  ),
                                 ),
                               ),
                             ),
@@ -272,26 +276,29 @@ class _SignInPageState extends State<SignInPage> {
                                     children: [
                                       Icon(
                                         LineIcons.apple,
-                                        color: Colors.white,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onPrimary,
                                         size: ThemeConfig.iconSizeExtraLarge,
                                       ),
-                                      SizedBox(width: 10),
+                                      SizedBox(width: ThemeConfig.spacingSmall),
                                       Text(
                                         'sign_in.sign_in_with_apple'.tr(),
-                                        style: TextStyle(
-                                          fontSize: responsiveSize(
-                                            context,
-                                            ThemeConfig.fontSizeBase,
-                                          ),
-                                          color: Colors.white,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.onPrimary,
+                                            ),
                                       ),
                                     ],
                                   )
                                 : Center(child: CircularProgressIndicator()),
                           ),
                         ),
-                  SizedBox(height: 20),
+                  SizedBox(height: ThemeConfig.spacingSmall),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 ],
               ),
