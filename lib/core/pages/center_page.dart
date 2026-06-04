@@ -26,8 +26,8 @@ class CenterPage extends StatelessWidget {
               crossAxisCount: 3,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: ThemeConfig.spacingMedium,
-              crossAxisSpacing: ThemeConfig.spacingMedium,
+              mainAxisSpacing: ThemeConfig.spacingMD,
+              crossAxisSpacing: ThemeConfig.spacingMD,
               children: [
                 _buildGridButton(
                   context,
@@ -69,7 +69,7 @@ class CenterPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: ThemeConfig.iconSizeExtraLarge),
-          SizedBox(height: ThemeConfig.spacingExtraSmall),
+          SizedBox(height: ThemeConfig.spacingXS),
           Text(label, style: Theme.of(context).textTheme.labelSmall),
         ],
       ),

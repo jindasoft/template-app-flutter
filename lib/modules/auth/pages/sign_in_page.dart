@@ -225,7 +225,7 @@ class _SignInPageState extends State<SignInPage> {
                                   'assets/logo/google_logo.webp',
                                   height: ThemeConfig.iconSizeBase,
                                 ),
-                                SizedBox(width: ThemeConfig.spacingSmall),
+                                SizedBox(width: ThemeConfig.spacingSM),
                                 Text(
                                   'sign_in.sign_in_with_google'.tr(),
                                   style: Theme.of(context).textTheme.bodyLarge
@@ -242,7 +242,7 @@ class _SignInPageState extends State<SignInPage> {
                           : Center(child: CircularProgressIndicator()),
                     ),
                   ),
-                  SizedBox(height: ThemeConfig.spacingSmall),
+                  SizedBox(height: ThemeConfig.spacingSM),
                   Platform.isAndroid
                       ? SizedBox()
                       : SizedBox(
@@ -263,7 +263,7 @@ class _SignInPageState extends State<SignInPage> {
                               shape: WidgetStateProperty.resolveWith(
                                 (states) => RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
-                                    ThemeConfig.spacingSmall,
+                                    ThemeConfig.spacingSM,
                                   ),
                                 ),
                               ),
@@ -281,7 +281,7 @@ class _SignInPageState extends State<SignInPage> {
                                         ).colorScheme.onPrimary,
                                         size: ThemeConfig.iconSizeExtraLarge,
                                       ),
-                                      SizedBox(width: ThemeConfig.spacingSmall),
+                                      SizedBox(width: ThemeConfig.spacingSM),
                                       Text(
                                         'sign_in.sign_in_with_apple'.tr(),
                                         style: Theme.of(context)
@@ -298,7 +298,7 @@ class _SignInPageState extends State<SignInPage> {
                                 : Center(child: CircularProgressIndicator()),
                           ),
                         ),
-                  SizedBox(height: ThemeConfig.spacingSmall),
+                  SizedBox(height: ThemeConfig.spacingSM),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 ],
               ),

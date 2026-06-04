@@ -24,7 +24,7 @@ class HighlightHeader extends StatelessWidget {
                 context,
               ).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
             ),
-            SizedBox(width: ThemeConfig.spacingSmall),
+            SizedBox(width: ThemeConfig.spacingSM),
             Transform.translate(
               offset: Offset(0, 0),
               child: Icon(

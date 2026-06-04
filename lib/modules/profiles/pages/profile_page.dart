@@ -17,9 +17,9 @@ class ProfilePage extends StatelessWidget {
             children: [
               // Theme Settings Section
               _buildSectionTitle(context, 'Settings'),
-              const SizedBox(height: ThemeConfig.spacingSmall),
+              const SizedBox(height: ThemeConfig.spacingSM),
               _buildThemeToggle(context, themeNotifier),
-              const SizedBox(height: ThemeConfig.spacingMedium),
+              const SizedBox(height: ThemeConfig.spacingMD),
 
               ElevatedButton(
                 onPressed: () {
@@ -34,21 +34,21 @@ class ProfilePage extends StatelessWidget {
                 },
                 child: const Text('Delete Account'),
               ),
-              const SizedBox(height: ThemeConfig.spacingMedium),
+              const SizedBox(height: ThemeConfig.spacingMD),
               TextField(
                 decoration: const InputDecoration(
                   labelText: 'Username',
                   border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: ThemeConfig.spacingMedium),
+              const SizedBox(height: ThemeConfig.spacingMD),
               TextField(
                 decoration: const InputDecoration(
                   labelText: 'Username',
                   border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: ThemeConfig.spacingMedium),
+              const SizedBox(height: ThemeConfig.spacingMD),
               DropdownButtonFormField<String>(
                 decoration: const InputDecoration(
                   labelText: 'Language',
@@ -62,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                   // Handle language change logic here
                 },
               ),
-              const SizedBox(height: ThemeConfig.spacingMedium),
+              const SizedBox(height: ThemeConfig.spacingMD),
             ],
           );
         },

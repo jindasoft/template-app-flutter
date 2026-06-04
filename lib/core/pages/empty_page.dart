@@ -21,13 +21,13 @@ class EmptyPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(icon, size: 100),
-          SizedBox(height: ThemeConfig.spacingMedium),
+          SizedBox(height: ThemeConfig.spacingMD),
           Text(
             message,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.displaySmall,
           ),
-          SizedBox(height: ThemeConfig.spacingExtraSmall),
+          SizedBox(height: ThemeConfig.spacingXS),
           Text(
             description,
             textAlign: TextAlign.center,

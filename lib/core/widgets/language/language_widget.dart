@@ -25,7 +25,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
         centerTitle: false,
       ),
       body: ListView.builder(
-        padding: EdgeInsets.all(ThemeConfig.spacingMedium),
+        padding: EdgeInsets.all(ThemeConfig.spacingMD),
         itemCount: AppConfig().languages.length,
         itemBuilder: (BuildContext context, int index) {
           return _itemList(AppConfig().languages[index], index);
@@ -49,7 +49,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
             Navigator.pop(context);
           },
         ),
-        Divider(height: ThemeConfig.spacingSmall),
+        Divider(height: ThemeConfig.spacingSM),
       ],
     );
   }
