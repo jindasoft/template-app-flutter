@@ -10,6 +10,40 @@ import 'package:template_app_flutter/modules/auth/repositories/auth_repository.d
 
 import 'app_page.dart';
 
+class _ThemePalette {
+  const _ThemePalette({
+    required this.brightness,
+    required this.colorScheme,
+    required this.textTheme,
+    required this.iconColor,
+    required this.scaffoldBackgroundColor,
+    required this.appBarBackgroundColor,
+    required this.appBarTextColor,
+    required this.inputFillColor,
+    required this.inputBorderColor,
+    required this.inputLabelColor,
+    required this.inputHintColor,
+    required this.surfaceColor,
+    required this.switchThumbColor,
+    required this.switchTrackColor,
+  });
+
+  final Brightness brightness;
+  final ColorScheme colorScheme;
+  final TextTheme textTheme;
+  final Color iconColor;
+  final Color scaffoldBackgroundColor;
+  final Color appBarBackgroundColor;
+  final Color appBarTextColor;
+  final Color inputFillColor;
+  final Color inputBorderColor;
+  final Color inputLabelColor;
+  final Color inputHintColor;
+  final Color surfaceColor;
+  final Color switchThumbColor;
+  final Color switchTrackColor;
+}
+
 class App extends StatefulWidget {
   const App({super.key});
 
@@ -18,41 +52,28 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  ThemeData _buildTheme({
-    required Brightness brightness,
-    required ColorScheme colorScheme,
-    required TextTheme textTheme,
-    required Color iconColor,
-    required Color scaffoldBackgroundColor,
-    required Color appBarBackgroundColor,
-    required Color appBarTextColor,
-    required Color inputFillColor,
-    required Color inputBorderColor,
-    required Color inputLabelColor,
-    required Color inputHintColor,
-    required Color bottomSheetAndCardBackgroundColor,
-    required Color switchThumbColor,
-    required Color switchTrackColor,
-  }) {
+  ThemeData _buildTheme(_ThemePalette palette) {
     return ThemeData(
       useMaterial3: false,
-      brightness: brightness,
-      colorScheme: colorScheme,
+      brightness: palette.brightness,
+      colorScheme: palette.colorScheme,
       primaryColor: ThemeConfig.colorPrimary,
-      textTheme: textTheme,
-      iconTheme: IconThemeData(color: iconColor),
+      textTheme: palette.textTheme,
+      iconTheme: IconThemeData(color: palette.iconColor),
       fontFamily: 'Manrope',
-      scaffoldBackgroundColor: scaffoldBackgroundColor,
+      scaffoldBackgroundColor: palette.scaffoldBackgroundColor,
       appBarTheme: AppBarTheme(
-        backgroundColor: appBarBackgroundColor,
+        backgroundColor: palette.appBarBackgroundColor,
         elevation: 0,
-        iconTheme: IconThemeData(color: iconColor),
-        titleTextStyle: textTheme.titleLarge?.copyWith(color: appBarTextColor),
+        iconTheme: IconThemeData(color: palette.iconColor),
+        titleTextStyle: palette.textTheme.titleLarge?.copyWith(
+          color: palette.appBarTextColor,
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: ThemeConfig.colorPrimary,
-          foregroundColor: colorScheme.onPrimary,
+          foregroundColor: palette.colorScheme.onPrimary,
           padding: EdgeInsets.all(ThemeConfig.spacingBase),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(ThemeConfig.spacingMD),
@@ -71,13 +92,13 @@ class _AppState extends State<App> {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: inputFillColor,
+        fillColor: palette.inputFillColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(ThemeConfig.spacingMD),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(ThemeConfig.spacingMD),
-          borderSide: BorderSide(color: inputBorderColor),
+          borderSide: BorderSide(color: palette.inputBorderColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(ThemeConfig.spacingMD),
@@ -87,8 +108,8 @@ class _AppState extends State<App> {
           horizontal: ThemeConfig.spacingLG,
           vertical: ThemeConfig.spacingMD,
         ),
-        labelStyle: TextStyle(color: inputLabelColor),
-        hintStyle: TextStyle(color: inputHintColor),
+        labelStyle: TextStyle(color: palette.inputLabelColor),
+        hintStyle: TextStyle(color: palette.inputHintColor),
       ),
       dividerTheme: DividerThemeData(
         color: ThemeConfig.colorBorderDark,
@@ -96,11 +117,11 @@ class _AppState extends State<App> {
         space: ThemeConfig.spacingXS,
       ),
       switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.all(switchThumbColor),
-        trackColor: WidgetStateProperty.all(switchTrackColor),
+        thumbColor: WidgetStateProperty.all(palette.switchThumbColor),
+        trackColor: WidgetStateProperty.all(palette.switchTrackColor),
       ),
       bottomSheetTheme: BottomSheetThemeData(
-        backgroundColor: bottomSheetAndCardBackgroundColor,
+        backgroundColor: palette.surfaceColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(ThemeConfig.spacingBase),
@@ -108,13 +129,13 @@ class _AppState extends State<App> {
         ),
       ),
       dialogTheme: DialogThemeData(
-        backgroundColor: bottomSheetAndCardBackgroundColor,
+        backgroundColor: palette.surfaceColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
         ),
       ),
       cardTheme: CardThemeData(
-        color: bottomSheetAndCardBackgroundColor,
+        color: palette.surfaceColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
         ),
@@ -133,6 +154,40 @@ class _AppState extends State<App> {
       seedColor: ThemeConfig.colorPrimary,
       brightness: Brightness.dark,
     );
+    final lightPalette = _ThemePalette(
+      brightness: Brightness.light,
+      colorScheme: lightColorScheme,
+      textTheme: TextThemeConfig.lightTextTheme,
+      iconColor: ThemeConfig.colorGreyDark,
+      scaffoldBackgroundColor: ThemeConfig.colorBgLightSecondary,
+      appBarBackgroundColor: ThemeConfig.colorBgLightPrimary,
+      appBarTextColor: ThemeConfig.colorTextLightPrimary,
+      inputFillColor: ThemeConfig.colorGreyLight,
+      inputBorderColor: ThemeConfig.colorBorderLight,
+      inputLabelColor: ThemeConfig.colorTextLightPrimary,
+      inputHintColor: ThemeConfig.colorTextLightSecondary,
+      surfaceColor: ThemeConfig.colorBgLightPrimary,
+      switchThumbColor: ThemeConfig.colorGreyMedium,
+      switchTrackColor: ThemeConfig.colorGreyMedium.withAlpha(
+        (255 * 0.5).toInt(),
+      ),
+    );
+    final darkPalette = _ThemePalette(
+      brightness: Brightness.dark,
+      colorScheme: darkColorScheme,
+      textTheme: TextThemeConfig.darkTextTheme,
+      iconColor: ThemeConfig.colorGreyLight,
+      scaffoldBackgroundColor: ThemeConfig.colorBgDarkSecondary,
+      appBarBackgroundColor: ThemeConfig.colorBgDarkPrimary,
+      appBarTextColor: ThemeConfig.colorTextDarkPrimary,
+      inputFillColor: ThemeConfig.colorBgDarkPrimary,
+      inputBorderColor: ThemeConfig.colorBorderDark,
+      inputLabelColor: ThemeConfig.colorTextDarkPrimary,
+      inputHintColor: ThemeConfig.colorTextDarkSecondary,
+      surfaceColor: ThemeConfig.colorBgDarkPrimary,
+      switchThumbColor: ThemeConfig.colorPrimary,
+      switchTrackColor: ThemeConfig.colorPrimary.withAlpha((255 * 0.5).toInt()),
+    );
 
     return MultiBlocProvider(
       providers: [
@@ -146,42 +201,8 @@ class _AppState extends State<App> {
         localizationsDelegates: context.localizationDelegates,
         locale: context.locale,
         // navigatorObservers: [firebaseObserver],
-        theme: _buildTheme(
-          brightness: Brightness.light,
-          colorScheme: lightColorScheme,
-          textTheme: TextThemeConfig.lightTextTheme,
-          iconColor: ThemeConfig.colorGreyDark,
-          scaffoldBackgroundColor: ThemeConfig.colorBgLightSecondary,
-          appBarBackgroundColor: ThemeConfig.colorBgLightPrimary,
-          appBarTextColor: ThemeConfig.colorTextLightPrimary,
-          inputFillColor: ThemeConfig.colorGreyLight,
-          inputBorderColor: ThemeConfig.colorBorderLight,
-          inputLabelColor: ThemeConfig.colorTextLightPrimary,
-          inputHintColor: ThemeConfig.colorTextLightSecondary,
-          bottomSheetAndCardBackgroundColor: ThemeConfig.colorBgLightPrimary,
-          switchThumbColor: ThemeConfig.colorGreyMedium,
-          switchTrackColor: ThemeConfig.colorGreyMedium.withAlpha(
-            (255 * 0.5).toInt(),
-          ),
-        ),
-        darkTheme: _buildTheme(
-          brightness: Brightness.dark,
-          colorScheme: darkColorScheme,
-          textTheme: TextThemeConfig.darkTextTheme,
-          iconColor: ThemeConfig.colorGreyLight,
-          scaffoldBackgroundColor: ThemeConfig.colorBgDarkSecondary,
-          appBarBackgroundColor: ThemeConfig.colorBgDarkPrimary,
-          appBarTextColor: ThemeConfig.colorTextDarkPrimary,
-          inputFillColor: ThemeConfig.colorBgDarkPrimary,
-          inputBorderColor: ThemeConfig.colorBorderDark,
-          inputLabelColor: ThemeConfig.colorTextDarkPrimary,
-          inputHintColor: ThemeConfig.colorTextDarkSecondary,
-          bottomSheetAndCardBackgroundColor: ThemeConfig.colorBgDarkPrimary,
-          switchThumbColor: ThemeConfig.colorPrimary,
-          switchTrackColor: ThemeConfig.colorPrimary.withAlpha(
-            (255 * 0.5).toInt(),
-          ),
-        ),
+        theme: _buildTheme(lightPalette),
+        darkTheme: _buildTheme(darkPalette),
         themeMode: themeNotifier.themeMode,
         home: AppPage(),
       ),

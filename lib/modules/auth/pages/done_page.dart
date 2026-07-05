@@ -19,7 +19,6 @@ class _DonePageState extends State<DonePage> {
     Future.delayed(Duration(milliseconds: 2000)).then(
       (value) => {
         if (mounted) {nextScreenCloseOthers(context, AppPage())},
-        // if (mounted) {nextScreenCloseOthers(context, IntroPage())},
       },
     );
   }
