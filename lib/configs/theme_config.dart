@@ -25,8 +25,8 @@ class ThemeConfig {
   static const double spacingXS = 4;
   static const double spacingSM = 8;
   static const double spacingMD = 12;
-  static const double spacingBase = 16;
-  static const double spacingLG = 24;
+  static const double spacingBase = 20;
+  static const double spacingLG = 28;
   static const double spacingXL = 32;
   static const double spacingXXL = 64;
 
