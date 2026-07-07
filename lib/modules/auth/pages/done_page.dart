@@ -3,8 +3,6 @@ import 'package:template_app_flutter/core/utils/next_screen_util.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-// import 'intro_page.dart';
-
 class DonePage extends StatefulWidget {
   const DonePage({super.key});
 

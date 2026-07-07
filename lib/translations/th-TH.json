@@ -1,7 +1,177 @@
 {
+  "app": {
+    "title": "Template App Flutter",
+    "subtitle": "subtitle1\nsubtitle2",
+    "tagline": "tagline tagline tagline",
+    "description": "Template App Flutter description"
+  },
   "navigation": {
-    "home": "หน้าแรก",
-    "center": "เกเตอร์",
+    "explore": "สำรวจ",
+    "center": "ศูนย์กลาง",
     "profile": "โปรไฟล์"
+  },
+  "common": {
+    "delete": "ลบ",
+    "cancel": "ยกเลิก",
+    "save": "บันทึก",
+    "back": "ย้อนกลับ",
+    "next": "ถัดไป",
+    "submit": "ส่ง",
+    "confirm": "ยืนยัน"
+  },
+  "loader": {
+    "loading": "กำลังโหลด..."
+  },
+  "error": {
+    "network": "ข้อผิดพลาดเครือข่าย: ไม่สามารถดึงข้อมูลได้",
+    "unknown": "เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ"
+  },
+  "language": {
+    "title": "ภาษา",
+    "selection": "เลือกภาษา",
+    "change_language": "เปลี่ยนภาษา"
+  },
+  "image_picker": {
+    "camera": "กล้อง",
+    "gallery": "แกลเลอรี่",
+    "select_image": "เลือกภาพ",
+    "image_pick_error": "ไม่สามารถเลือกภาพได้ กรุณาลองใหม่อีกครั้ง"
+  },
+  "map": {
+    "location": "ตำแหน่งบนแผนที่",
+    "loading": "กำลังโหลดแผนที่...",
+    "map_picker": {
+      "confirm_location": "ยืนยันตำแหน่ง",
+      "location_disabled": "บริการตำแหน่งถูกปิดใช้งาน",
+      "permission_denied": "การอนุญาตตำแหน่งถูกปฏิเสธ",
+      "location_error": "ไม่สามารถรับตำแหน่งปัจจุบันได้"
+    },
+    "map_viewer": {
+      "open_in_google_maps": "เปิดใน Google Maps",
+      "open_error": "ไม่สามารถเปิด Google Maps ได้",
+      "cancel": "ยกเลิก"
+    }
+  },
+  "setting": {
+    "title": "การตั้งค่า",
+    "notifications": "การแจ้งเตือน",
+    "dark_mode": "โหมดมืด"
+  },
+  "info": {
+    "title": "ข้อมูล",
+    "app_version": {
+      "title": "เวอร์ชันแอป",
+      "version": "เวอร์ชันแอป",
+      "build_number": "หมายเลขบิลด์",
+      "error": "เกิดข้อผิดพลาดในการดึงเวอร์ชัน"
+    },
+    "about": {
+      "title": "เกี่ยวกับเกเตอร์"
+    }
+  },
+  "sign_in": {
+    "title": "เข้าสู่ระบบ",
+    "welcome_to": "ยินดีต้อนรับสู่",
+    "explore_as_guest": "เข้าสู่ระบบแบบผู้เยี่ยมชม",
+    "sign_in_with_google": "เข้าสู่ระบบด้วย Google",
+    "sign_in_with_apple": "เข้าสู่ระบบด้วย Apple"
+  },
+  "account": {
+    "title": "ข้อมูลบัญชี",
+    "my_account": "บัญชีของฉัน",
+    "delete_account": "ลบบัญชี",
+    "delete_account_title": "คุณแน่ใจหรือว่าต้องการลบบัญชีของคุณ? การกระทำนี้ไม่สามารถย้อนกลับได้",
+    "delete_account_description": "การลบบัญชีของคุณจะลบข้อมูลทั้งหมดของคุณออกจากแพลตฟอร์มของเรา คุณจะสูญเสียการเข้าถึงโปรไฟล์ กิจกรรม และเนื้อหาใด ๆ ที่คุณได้แชร์ กรุณาพิจารณาการกระทำนี้อย่างรอบคอบก่อนดำเนินการ",
+    "delete_account_confirm": "ใช่, ลบบัญชีของฉัน",
+    "sign_in": "เข้าสู่ระบบ",
+    "sign_out": "ออกจากระบบ",
+    "sign_out_confirmation": "คุณแน่ใจหรือว่าต้องการออกจากระบบ?",
+    "guest": "ผู้เยี่ยมชม",
+    "guest_welcome": "ยินดีต้อนรับ, เข้าสู่ระบบเพื่อใช้งานฟีเจอร์ทั้งหมดของแอปของเรา."
+  },
+  "profile": {
+    "title": "โปรไฟล์",
+    "no_bio": "ไม่มีข้อมูลแนะนำตัว",
+    "profile_edit": {
+      "title": "แก้ไขโปรไฟล์",
+      "display_name": "ชื่อที่แสดง",
+      "display_name_hint": "กรอกชื่อที่จะแสดง",
+      "bio": "แนะนำตัว",
+      "bio_hint": "กรอกข้อมูลแนะนำตัว"
+    },
+    "profile_image": {
+      "title": "ภาพโปรไฟล์",
+      "upload_new_image": "อัปโหลดภาพโปรไฟล์ใหม่"
+    },
+    "profile_image_edit": {
+      "title": "แก้ไขภาพโปรไฟล์",
+      "no_image_selected": "ยังไม่ได้เลือกภาพ"
+    }
+  },
+  "explore": {
+    "nearby": "ใกล้เคียง"
+  },
+  "place": {
+    "add_pin": "ปักหมุด",
+    "add_pin_step": {
+      "step1": "ข้อมูล",
+      "step2": "ตำแหน่ง",
+      "step3": "ภาพปก",
+      "step4": "รีวิว"
+    },
+    "label": {
+      "category": "ประเภทสถานที่",
+      "category_hint": "เลือกประเภทสถานที่",
+      "name": "ชื่อสถานที่",
+      "name_hint": "กรอกชื่อสถานที่",
+      "description": "คำอธิบาย",
+      "description_hint": "กรอกคำอธิบาย",
+      "description_empty": "-",
+      "map_location": "ตำแหน่งบนแผนที่",
+      "map_tap_hint": "แตะเพื่อเลือกตำแหน่ง",
+      "latitude": "ละติจูด",
+      "latitude_hint": "กรอกละติจูด",
+      "longitude": "ลองจิจูด",
+      "longitude_hint": "กรอกลองจิจูด",
+      "address": "ที่อยู่",
+      "address_hint": "กรอกที่อยู่",
+      "cover_image": "ภาพปก",
+      "cover_image_hint": "เลือกภาพปก",
+      "select_image": "เลือกภาพ"
+    },
+    "add_pin_parking": {
+      "label": "ที่จอดรถ (ไม่บังคับ)",
+      "enable_title": "เปิดใช้งานจุดที่จอดรถ",
+      "enable_subtitle": "เพิ่มตำแหน่งที่จอดรถอย่างน้อยหนึ่งจุดสำหรับสถานที่นี้",
+      "use_main": "ใช้ตำแหน่งเดียวกับสถานที่หลัก",
+      "add_button": "เพิ่มจุดที่จอดรถ",
+      "empty": "ยังไม่มีจุดที่จอดรถ",
+      "item_title": "ที่จอดรถ {}",
+      "lat_short": "ละติจูด",
+      "lng_short": "ลองจิจูด",
+      "name_hint": "กรอกชื่อจุดที่จอดรถ (ไม่บังคับ)",
+      "edit_name_title": "แก้ไขชื่อจุดที่จอดรถ",
+      "edit_name_tooltip": "แก้ไขชื่อจุดที่จอดรถ",
+      "cancel": "ยกเลิก",
+      "save": "บันทึก",
+      "edit_tooltip": "แก้ไขจุดที่จอดรถ",
+      "remove_tooltip": "ลบจุดที่จอดรถ"
+    },
+    "add_pin_validation": {
+      "parking_required": "กรุณาเพิ่มจุดที่จอดรถอย่างน้อย 1 จุด",
+      "language_required": "กรุณาเลือกภาษา",
+      "place_type_required": "กรุณาเลือกประเภทสถานที่",
+      "name_required": "กรุณากรอกชื่อสถานที่",
+      "image_required": "กรุณาเลือกภาพปก",
+      "parking_name_too_long": "ชื่อจุดที่จอดรถต้องไม่เกิน {} ตัวอักษร"
+    },
+    "add_pin_submit": {
+      "success": "บันทึกสถานที่เรียบร้อยแล้ว"
+    }
+  },
+  "activity": {
+    "title": "กิจกรรม",
+    "upcoming": "กำลังจะมาถึง",
+    "wishlist": "รายการที่ชื่นชอบ"
   }
 }

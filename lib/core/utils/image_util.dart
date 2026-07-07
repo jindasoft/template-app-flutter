@@ -25,7 +25,7 @@ Future<String> fixImageOrientation(String imagePath) async {
     }
 
     // Resize image if too large
-    final maxSize = AppConfig().imageSizeOriginal;
+    final maxSize = AppConfig.imageSizeOriginal;
     img.Image resizedImage = image;
     if (image.width > maxSize || image.height > maxSize) {
       final aspectRatio = image.width / image.height;
@@ -48,7 +48,7 @@ Future<String> fixImageOrientation(String imagePath) async {
     // Encode with quality from config
     final correctedFile = File(correctedImagePath);
     await correctedFile.writeAsBytes(
-      img.encodeJpg(resizedImage, quality: AppConfig().imageQuality),
+      img.encodeJpg(resizedImage, quality: AppConfig.imageQuality),
     );
 
     return correctedImagePath;

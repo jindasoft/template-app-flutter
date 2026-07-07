@@ -3,8 +3,8 @@ import 'package:template_app_flutter/core/pages/center_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:template_app_flutter/modules/explores/pages/explore_page.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:template_app_flutter/modules/home/pages/home_page.dart';
 import 'package:template_app_flutter/modules/profiles/pages/profile_page.dart';
 
 class AppPage extends StatefulWidget {
@@ -83,12 +83,12 @@ class _AppPageState extends State<AppPage> {
           type: BottomNavigationBarType.fixed,
           selectedFontSize: ThemeConfig.fontSize12,
           unselectedFontSize: ThemeConfig.fontSize12,
-          selectedItemColor: Theme.of(context).colorScheme.primary,
+          selectedItemColor: ThemeConfig.colorPrimary,
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(LineIcons.home),
-              label: 'navigation.home'.tr(),
+              icon: Icon(LineIcons.compass),
+              label: 'navigation.explore'.tr(),
             ),
 
             BottomNavigationBarItem(
@@ -105,7 +105,7 @@ class _AppPageState extends State<AppPage> {
         body: PageView(
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
-          children: <Widget>[HomePage(), ProfilePage()],
+          children: <Widget>[ExplorePage(), ProfilePage()],
         ),
       ),
     );

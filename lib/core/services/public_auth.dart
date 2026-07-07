@@ -2,6 +2,8 @@ import 'package:template_app_flutter/configs/env_config.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import 'http_logger.dart';
+
 import 'public_interceptor.dart';
 
 class PublicAuth {
@@ -20,6 +22,7 @@ class PublicAuth {
     // Interceptors
     _dio.interceptors.add(PublicInterceptor());
     _dio.options.extra['context'] = context;
+    HttpLogger.attach(_dio);
   }
 
   Dio get dio => _dio;

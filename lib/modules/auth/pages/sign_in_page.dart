@@ -1,25 +1,30 @@
 import 'dart:io';
 
-import 'package:template_app_flutter/configs/app_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:template_app_flutter/configs/theme_config.dart';
+import 'package:template_app_flutter/core/language/language_sheet.dart';
 import 'package:template_app_flutter/core/utils/next_screen_util.dart';
 import 'package:template_app_flutter/app/app_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:template_app_flutter/core/widgets/language/language_widget.dart';
 
 import '../blocs/apple_provider_bloc.dart';
 import '../blocs/apple_provider_event.dart';
-import '../blocs/apple_provider_state.dart';
+// import '../blocs/apple_provider_state.dart';
 import '../blocs/auth_bloc.dart';
 import '../blocs/auth_event.dart';
-import '../blocs/auth_state.dart';
+// import '../blocs/auth_state.dart';
+// import '../blocs/firebase_bloc.dart';
 import '../blocs/google_provider_bloc.dart';
 import '../blocs/google_provider_event.dart';
-import '../blocs/google_provider_state.dart';
+// import '../blocs/google_provider_state.dart';
 import '../models/user_firebase.dart';
+import '../repositories/apple_provider_repository.dart';
+import '../repositories/google_provider_repository.dart';
+import '../repositories/provider_repository.dart';
+import '../widgets/sign_in_button_widget.dart';
 import 'done_page.dart';
 
 class SignInPage extends StatefulWidget {
@@ -37,275 +42,219 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<GoogleProviderBloc, GoogleProviderState>(
-          listener: (context, state) {
-            if (state is GoogleSignInLoading) {
-              setState(() => googleSignInStarted = true);
-            } else {
-              setState(() => googleSignInStarted = false);
-            }
-            if (state is GoogleSignInSuccess) {
-              handleSignIn(state.userFirebase);
-            } else if (state is GoogleProviderFailure) {
-              if (mounted) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(state.error)));
-              }
-            }
-          },
-        ),
-        BlocListener<AppleProviderBloc, AppleProviderState>(
-          listener: (context, state) {
-            if (state is AppleSignInLoading) {
-              setState(() => appleSignInStarted = true);
-            } else {
-              setState(() => appleSignInStarted = false);
-            }
-            if (state is AppleSignInSuccess) {
-              handleSignIn(state.userFirebase);
-            } else if (state is AppleProviderFailure) {
-              if (mounted) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(state.error)));
-                Text(state.error);
-              }
-            }
-          },
-        ),
-        BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is AuthSuccess) {
-              afterSignIn();
-            } else if (state is AuthFailure) {
-              if (mounted) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(state.error)));
-              }
-            }
-          },
+    return Scaffold(
+      appBar: _buildAppBar(context),
+      // body: SafeArea(child: _blocProvider(_blocListener(_buildContent(context)))),
+      body: SafeArea(child: _buildContent(context)),
+    );
+  }
+
+  // Widget _blocProvider(Widget child) {
+  //   return MultiBlocProvider(
+  //     providers: [
+  //       BlocProvider(
+  //         create: (context) => FirebaseBloc(getProviderRepository()),
+  //       ),
+  //       BlocProvider(
+  //         create: (context) => GoogleProviderBloc(GoogleProviderRepository()),
+  //       ),
+  //       BlocProvider(
+  //         create: (context) => AppleProviderBloc(AppleProviderRepository()),
+  //       ),
+  //     ],
+  //     child: child,
+  //   );
+  // }
+
+  // Widget _blocListener(Widget child) {
+  //   return MultiBlocListener(
+  //     listeners: [
+  //       BlocListener<GoogleProviderBloc, GoogleProviderState>(
+  //         listener: (context, state) {
+  //           if (state is GoogleSignInLoading) {
+  //             setState(() => googleSignInStarted = true);
+  //           } else {
+  //             setState(() => googleSignInStarted = false);
+  //           }
+  //           if (state is GoogleSignInSuccess) {
+  //             handleSignIn(state.userFirebase);
+  //           } else if (state is GoogleProviderFailure) {
+  //             if (mounted) {
+  //               ScaffoldMessenger.of(
+  //                 context,
+  //               ).showSnackBar(SnackBar(content: Text(state.error)));
+  //             }
+  //           }
+  //         },
+  //       ),
+  //       BlocListener<AppleProviderBloc, AppleProviderState>(
+  //         listener: (context, state) {
+  //           if (state is AppleSignInLoading) {
+  //             setState(() => appleSignInStarted = true);
+  //           } else {
+  //             setState(() => appleSignInStarted = false);
+  //           }
+  //           if (state is AppleSignInSuccess) {
+  //             handleSignIn(state.userFirebase);
+  //           } else if (state is AppleProviderFailure) {
+  //             if (mounted) {
+  //               ScaffoldMessenger.of(
+  //                 context,
+  //               ).showSnackBar(SnackBar(content: Text(state.error)));
+  //               Text(state.error);
+  //             }
+  //           }
+  //         },
+  //       ),
+  //       BlocListener<AuthBloc, AuthState>(
+  //         listener: (context, state) {
+  //           if (state is AuthSuccess) {
+  //             afterSignIn();
+  //           } else if (state is AuthFailure) {
+  //             if (mounted) {
+  //               ScaffoldMessenger.of(
+  //                 context,
+  //               ).showSnackBar(SnackBar(content: Text(state.error)));
+  //             }
+  //           }
+  //         },
+  //       ),
+  //     ],
+  //     child: child,
+  //   );
+  // }
+
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
+    return AppBar(
+      actions: [
+        TextButton(
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              horizontal: ThemeConfig.spacingBase,
+            ),
+          ),
+          onPressed: () => showLanguageSheet(context),
+          child: Row(
+            children: [
+              Icon(
+                LineIcons.language,
+                color: Theme.of(context).iconTheme.color,
+              ),
+              SizedBox(width: ThemeConfig.spacingXS),
+              Text(
+                'language.change_language'.tr(),
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ],
+          ),
         ),
       ],
-      child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            widget.tag != null
-                ? Container()
-                : TextButton(
-                    onPressed: () => handleSkip(),
-                    child: Text(
-                      'sign_in.skip'.tr(),
-                      style: TextStyle(
-                        fontSize: Theme.of(
-                          context,
-                        ).textTheme.bodyLarge?.fontSize,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? ThemeConfig.colorTextDarkPrimary
-                            : ThemeConfig.colorTextLightPrimary,
-                      ),
-                    ),
-                  ),
+    );
+  }
 
-            IconButton(
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(0),
-              iconSize: 22,
-              icon: Icon(Icons.language),
-              onPressed: () {
-                nextScreenPopup(context, LanguageWidget());
-              },
-            ),
-          ],
+  Widget _buildContent(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Flexible(
+          flex: 1,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'sign_in.welcome_to'.tr(),
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+
+              Text(
+                'app.title'.tr(),
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+              const SizedBox(height: ThemeConfig.spacingXS),
+
+              Text(
+                'app.subtitle'.tr(),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ],
+          ),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Flexible(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'sign_in.welcome_to'.tr(),
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? ThemeConfig.colorTextDarkSecondary
-                          : ThemeConfig.colorTextLightSecondary,
-                    ),
+
+        Flexible(
+          flex: 2,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'app.tagline'.tr(),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: ThemeConfig.spacingMD),
+                Container(
+                  height: 1,
+                  width: MediaQuery.of(context).size.width * 0.30,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
                   ),
-                  SizedBox(height: 5),
-                  Text(
-                    AppConfig.appName,
-                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: -0.5,
-                      wordSpacing: 1,
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? ThemeConfig.colorTextDarkPrimary
-                          : ThemeConfig.colorTextLightPrimary,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: ThemeConfig.spacingXXL),
+              ],
             ),
-            Flexible(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 40, right: 40),
-                    child: Text(
-                      'sign_in.welcome_message'.tr(),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? ThemeConfig.colorTextDarkSecondary
-                            : ThemeConfig.colorTextLightSecondary,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    height: 2,
-                    width: MediaQuery.of(context).size.width * 0.30,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Flexible(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * 0.80,
-                    child: TextButton(
-                      onPressed: handleGoogleSignIn,
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.resolveWith(
-                          (states) =>
-                              Theme.of(context).brightness == Brightness.dark
-                              ? Colors.grey[100]
-                              : Colors.white,
-                        ),
-                        side: WidgetStateProperty.resolveWith(
-                          (states) => BorderSide(
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                ? Colors.grey[700]!
-                                : Colors.grey.shade300,
-                            width: 1,
-                          ),
-                        ),
-                        shape: WidgetStateProperty.resolveWith(
-                          (states) => RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                      child: googleSignInStarted == false
-                          ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/logo/google_logo.webp',
-                                  height: ThemeConfig.iconSizeBase,
-                                ),
-                                SizedBox(width: ThemeConfig.spacingSM),
-                                Text(
-                                  'sign_in.sign_in_with_google'.tr(),
-                                  style: Theme.of(context).textTheme.bodyLarge
-                                      ?.copyWith(
-                                        color:
-                                            Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? ThemeConfig.colorTextDarkPrimary
-                                            : ThemeConfig.colorTextLightPrimary,
-                                      ),
-                                ),
-                              ],
-                            )
-                          : Center(child: CircularProgressIndicator()),
-                    ),
-                  ),
-                  SizedBox(height: ThemeConfig.spacingSM),
-                  Platform.isAndroid
-                      ? SizedBox()
-                      : SizedBox(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width * 0.80,
-                          child: TextButton(
-                            onPressed: handleAppleSignIn,
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.resolveWith(
-                                (states) => Colors.grey[900],
-                              ),
-                              side: WidgetStateProperty.resolveWith(
-                                (states) => BorderSide(
-                                  color: ThemeConfig.colorGreyMedium,
-                                  width: 1,
-                                ),
-                              ),
-                              shape: WidgetStateProperty.resolveWith(
-                                (states) => RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    ThemeConfig.spacingSM,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            child: appleSignInStarted == false
-                                ? Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        LineIcons.apple,
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onPrimary,
-                                        size: ThemeConfig.iconSizeExtraLarge,
-                                      ),
-                                      SizedBox(width: ThemeConfig.spacingSM),
-                                      Text(
-                                        'sign_in.sign_in_with_apple'.tr(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(
-                                              color: Theme.of(
-                                                context,
-                                              ).colorScheme.onPrimary,
-                                            ),
-                                      ),
-                                    ],
-                                  )
-                                : Center(child: CircularProgressIndicator()),
-                          ),
-                        ),
-                  SizedBox(height: ThemeConfig.spacingSM),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(ThemeConfig.spacingBase),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // google sign in
+              SignInButtonWidget(
+                onPressed: handleGoogleSignIn,
+                isLoading: googleSignInStarted,
+                backgroundColor: Colors.white,
+                textColor: Colors.grey[900]!,
+                label: 'sign_in.sign_in_with_google'.tr(),
+                icon: Image.asset('assets/logo/google_logo.webp', height: 24),
+              ),
+              const SizedBox(height: ThemeConfig.spacingMD),
+
+              // apple sign in
+              Platform.isIOS
+                  ? SignInButtonWidget(
+                      onPressed: handleAppleSignIn,
+                      isLoading: appleSignInStarted,
+                      backgroundColor: Colors.grey[900]!,
+                      textColor: Colors.grey[50]!,
+                      label: 'sign_in.sign_in_with_apple'.tr(),
+                      icon: Icon(
+                        LineIcons.apple,
+                        color: Colors.grey[50]!,
+                        size: ThemeConfig.iconSizeExtraLarge,
+                      ),
+                    )
+                  : SizedBox.shrink(),
+              const SizedBox(height: ThemeConfig.spacingMD),
+
+              // explore as guest
+              TextButton(
+                onPressed: handleSkip,
+                child: Text(
+                  'sign_in.explore_as_guest'.tr(),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: ThemeConfig.colorPrimary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -334,4 +283,18 @@ class _SignInPageState extends State<SignInPage> {
       nextScreenReplace(context, AppPage());
     }
   }
+}
+
+ProviderRepository getProviderRepository() {
+  final user = FirebaseAuth.instance.currentUser;
+  if (user != null && user.providerData.isNotEmpty) {
+    final providerId = user.providerData.first.providerId;
+    if (providerId == 'google.com') {
+      return GoogleProviderRepository();
+    } else if (providerId == 'apple.com') {
+      return AppleProviderRepository();
+    }
+  }
+  // fallback
+  return GoogleProviderRepository();
 }

@@ -3,27 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
 class HighlightHeader extends StatelessWidget {
-  final String label;
+  final String title;
   final VoidCallback onTap;
 
-  const HighlightHeader({super.key, required this.label, required this.onTap});
+  const HighlightHeader({super.key, required this.title, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.only(top: ThemeConfig.spacingBase),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: ThemeConfig.spacingBase,
+          vertical: ThemeConfig.spacingXXS,
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: <Widget>[
-            Text(
-              label,
-              style: Theme.of(
-                context,
-              ).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
-            ),
+            Text(title, style: Theme.of(context).textTheme.titleLarge),
             SizedBox(width: ThemeConfig.spacingSM),
             Transform.translate(
               offset: Offset(0, 0),

@@ -1,6 +1,8 @@
 import 'package:template_app_flutter/configs/env_config.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+
+import 'http_logger.dart';
 import 'private_interceptor.dart';
 
 class PrivateImage {
@@ -20,10 +22,8 @@ class PrivateImage {
     final privateInterceptor = PrivateInterceptor();
     privateInterceptor.setDio(_dio);
     _dio.interceptors.add(privateInterceptor);
-    // _dio.interceptors.add(PrettyDioLogger());
-
-    // Store context for interceptor to use for locale
     _dio.options.extra['context'] = context;
+    HttpLogger.attach(_dio);
   }
 
   Dio get dio => _dio;

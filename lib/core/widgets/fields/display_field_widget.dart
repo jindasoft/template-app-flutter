@@ -1,0 +1,12 @@
+import 'package:flutter/material.dart';
+
+class DisplayFieldWidget extends StatelessWidget {
+  final String text;
+
+  const DisplayFieldWidget({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text, style: Theme.of(context).textTheme.titleMedium);
+  }
+}
