@@ -1,5 +1,16 @@
-abstract class GoogleProviderEvent {}
+import 'package:equatable/equatable.dart';
 
-class GoogleSignInRequested extends GoogleProviderEvent {}
+sealed class GoogleProviderEvent extends Equatable {
+  const GoogleProviderEvent();
 
-class GoogleSignOutRequested extends GoogleProviderEvent {}
+  @override
+  List<Object?> get props => [];
+}
+
+class GoogleSignInRequested extends GoogleProviderEvent {
+  const GoogleSignInRequested();
+}
+
+class GoogleSignOutRequested extends GoogleProviderEvent {
+  const GoogleSignOutRequested();
+}

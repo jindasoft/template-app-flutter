@@ -1,4 +1,5 @@
 import 'package:template_app_flutter/configs/app_config.dart';
+import 'package:template_app_flutter/core/services/public_auth.dart';
 import 'package:template_app_flutter/modules/auth/models/refresh_token_request.dart';
 import 'package:template_app_flutter/modules/auth/repositories/auth_repository.dart';
 import 'package:template_app_flutter/modules/auth/services/token_service.dart';
@@ -24,10 +25,10 @@ class PrivateInterceptor extends Interceptor {
         AppConfig.defaultLanguage;
     final accessToken = await TokenService.getAccessToken();
 
-    options.headers.addAll({
-      'Accept-Language': locale.toLanguageTag(),
-      'Authorization': 'Bearer $accessToken',
-    });
+    options.headers['Accept-Language'] = locale.toLanguageTag();
+    if (accessToken != null && accessToken.isNotEmpty) {
+      options.headers['Authorization'] = 'Bearer $accessToken';
+    }
 
     handler.next(options);
   }
@@ -50,12 +51,16 @@ class PrivateInterceptor extends Interceptor {
     try {
       final BuildContext? context =
           err.requestOptions.extra['context'] as BuildContext?;
-      final AuthRepository authRepository = AuthRepository(context: context!);
+      final PublicAuth publicAuth = PublicAuth(context: context!);
+      final AuthRepository authRepository = AuthRepository(
+        publicAuth: publicAuth,
+      );
 
       // refresh token
+      final credentials = await TokenService.getRequiredRefreshCredentials();
       final tokenRequest = RefreshTokenRequest(
-        refreshToken: await TokenService.getRefreshToken() ?? '',
-        verifierCode: await TokenService.getVerifierCode() ?? '',
+        refreshToken: credentials.refreshToken,
+        verifierCode: credentials.verifierCode,
       );
       final token = await authRepository.postRefreshToken(tokenRequest);
 
@@ -69,6 +74,9 @@ class PrivateInterceptor extends Interceptor {
       final response = await _dioInstance!.fetch(opts);
       handler.resolve(response);
     } catch (e) {
+      if (e is StateError) {
+        await TokenService.clearSession();
+      }
       handler.next(err);
     } finally {
       _isRefreshing = false;

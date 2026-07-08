@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:template_app_flutter/configs/app_config.dart';
 import 'package:template_app_flutter/core/services/app_logger.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,82 +23,99 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   bool get isSignedIn => _isSignedIn;
   Future<void> get initialized => _initCompleter.future;
 
-  AuthBloc(this.authRepository) : super(AuthInitial(Token.empty())) {
+  AuthBloc(this.authRepository) : super(const AuthInitial(Token.empty())) {
     _initSignInStatus();
 
-    on<AuthSignInRequested>((event, emit) async {
-      emit(AuthLoading(Token.empty()));
-      try {
-        final verifierCode = PkceService().generateCodeVerifier();
-        final challengeCode = PkceService().generateCodeChallenge(verifierCode);
+    on<AuthSignInRequested>(_onAuthSignInRequested, transformer: droppable());
+    on<AuthSignOutRequested>(_onAuthSignOutRequested, transformer: droppable());
+    on<AuthRemoveRequested>(_onAuthRemoveRequested, transformer: droppable());
+    on<AuthStatusLoaded>(_onAuthStatusLoaded);
+  }
 
-        final userFirebase = event.userFirebase;
-        final authRequest = AuthorizeRequest(
-          firebaseUid: userFirebase.uid,
-          email: userFirebase.email,
-          name: userFirebase.displayName ?? "-",
-          provider: userFirebase.provider,
-          challengeCode: challengeCode,
-          userSource: AppConfig.userSource,
-        );
+  Future<void> _onAuthSignInRequested(
+    AuthSignInRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    final previousToken = state.token;
+    emit(AuthSignInLoading(previousToken));
+    try {
+      final verifierCode = PkceService().generateCodeVerifier();
+      final challengeCode = PkceService().generateCodeChallenge(verifierCode);
 
-        final authorize = await authRepository.postAuthorize(
-          authRequest,
-          userFirebase.idToken,
-        );
+      final userFirebase = event.userFirebase;
+      final authRequest = AuthorizeRequest(
+        firebaseUid: userFirebase.uid,
+        email: userFirebase.email,
+        name: userFirebase.displayName ?? "-",
+        provider: userFirebase.provider,
+        challengeCode: challengeCode,
+        userSource: AppConfig.userSource,
+      );
 
-        final tokenRequest = TokenRequest(
-          authorizeToken: authorize.authorizeToken,
-          verifierCode: verifierCode,
-        );
-        final token = await authRepository.postToken(tokenRequest);
+      final authorize = await authRepository.postAuthorize(
+        authRequest,
+        userFirebase.idToken,
+      );
 
-        // Save the access token to secure storage
-        TokenService.saveAccessToken(token.accessToken);
-        TokenService.saveRefreshToken(token.refreshToken);
-        TokenService.saveVerifierCode(verifierCode);
+      final tokenRequest = TokenRequest(
+        authorizeToken: authorize.authorizeToken,
+        verifierCode: verifierCode,
+      );
+      final token = await authRepository.postToken(tokenRequest);
 
-        await setSignIn();
+      // Persist session tokens for subsequent authenticated requests.
+      await TokenService.saveAccessToken(token.accessToken);
+      await TokenService.saveRefreshToken(token.refreshToken);
+      await TokenService.saveVerifierCode(verifierCode);
 
-        emit(AuthSuccess(token));
-      } catch (e) {
-        emit(AuthFailure(e.toString(), Token.empty()));
-      }
-    });
+      await setSignIn();
 
-    on<AuthSignOutRequested>((event, emit) async {
-      emit(AuthSignOutLoading(Token.empty()));
-      try {
-        TokenService.deleteAccessToken();
-        TokenService.deleteRefreshToken();
-        TokenService.deleteVerifierCode();
+      emit(AuthSignInSuccess(token));
+    } catch (e) {
+      emit(AuthSignInFailure(e.toString(), previousToken));
+    }
+  }
 
-        await setSignOut();
+  Future<void> _onAuthSignOutRequested(
+    AuthSignOutRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    final previousToken = state.token;
+    emit(AuthSignOutLoading(previousToken));
+    try {
+      await TokenService.deleteAccessToken();
+      await TokenService.deleteRefreshToken();
+      await TokenService.deleteVerifierCode();
 
-        emit(AuthSignOutSuccess(Token.empty()));
-      } catch (e) {
-        emit(AuthFailure(e.toString(), Token.empty()));
-      }
-    });
+      await setSignOut();
 
-    on<AuthRemoveRequested>((event, emit) async {
-      emit(AuthRemoveLoading(Token.empty()));
-      try {
-        TokenService.deleteAccessToken();
-        TokenService.deleteRefreshToken();
-        TokenService.deleteVerifierCode();
+      emit(const AuthSignOutSuccess(Token.empty()));
+    } catch (e) {
+      emit(AuthSignOutFailure(e.toString(), previousToken));
+    }
+  }
 
-        await setSignOut();
+  Future<void> _onAuthRemoveRequested(
+    AuthRemoveRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    final previousToken = state.token;
+    emit(AuthRemoveLoading(previousToken));
+    try {
+      await TokenService.deleteAccessToken();
+      await TokenService.deleteRefreshToken();
+      await TokenService.deleteVerifierCode();
 
-        emit(AuthRemoveSuccess(Token.empty()));
-      } catch (e) {
-        emit(AuthFailure(e.toString(), Token.empty()));
-      }
-    });
+      await setSignOut();
 
-    on<AuthStatusLoaded>((event, emit) {
-      emit(AuthInitial(Token.empty()));
-    });
+      emit(const AuthRemoveSuccess(Token.empty()));
+    } catch (e) {
+      emit(AuthRemoveFailure(e.toString(), previousToken));
+    }
+  }
+
+  void _onAuthStatusLoaded(AuthStatusLoaded event, Emitter<AuthState> emit) {
+    emit(AuthInitial(state.token));
   }
 
   Future<void> _initSignInStatus() async {
@@ -111,21 +129,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await prefs.setBool('signed_in', _isSignedIn);
     }
 
-    add(AuthStatusLoaded());
+    add(const AuthStatusLoaded());
     if (!_initCompleter.isCompleted) {
       _initCompleter.complete();
     }
   }
 
-  Future setSignIn() async {
+  Future<void> setSignIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('signed_in', true);
+    await prefs.setBool('signed_in', true);
     _isSignedIn = true;
   }
 
-  Future setSignOut() async {
+  Future<void> setSignOut() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('signed_in', false);
+    await prefs.setBool('signed_in', false);
     _isSignedIn = false;
   }
 }

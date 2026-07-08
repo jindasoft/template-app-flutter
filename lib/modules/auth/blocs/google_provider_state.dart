@@ -12,7 +12,7 @@ abstract class GoogleProviderState extends Equatable {
 }
 
 class GoogleProviderInitial extends GoogleProviderState {
-  GoogleProviderInitial() : super(UserFirebase.empty());
+  const GoogleProviderInitial() : super(const UserFirebase.empty());
 }
 
 class GoogleSignInLoading extends GoogleProviderState {
@@ -23,9 +23,9 @@ class GoogleSignInSuccess extends GoogleProviderState {
   const GoogleSignInSuccess(super.userFirebase);
 }
 
-class GoogleProviderFailure extends GoogleProviderState {
+class GoogleSignInFailure extends GoogleProviderState {
   final String error;
-  const GoogleProviderFailure(this.error, userFirebase) : super(userFirebase);
+  const GoogleSignInFailure(this.error, super.userFirebase);
 
   @override
   List<Object?> get props => [error, userFirebase];
@@ -36,5 +36,13 @@ class GoogleSignOutLoading extends GoogleProviderState {
 }
 
 class GoogleSignOutSuccess extends GoogleProviderState {
-  GoogleSignOutSuccess() : super(UserFirebase.empty());
+  const GoogleSignOutSuccess() : super(const UserFirebase.empty());
+}
+
+class GoogleSignOutFailure extends GoogleProviderState {
+  final String error;
+  const GoogleSignOutFailure(this.error, super.userFirebase);
+
+  @override
+  List<Object?> get props => [error, userFirebase];
 }

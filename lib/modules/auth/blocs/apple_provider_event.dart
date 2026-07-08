@@ -1,5 +1,16 @@
-abstract class AppleProviderEvent {}
+import 'package:equatable/equatable.dart';
 
-class AppleSignInRequested extends AppleProviderEvent {}
+sealed class AppleProviderEvent extends Equatable {
+  const AppleProviderEvent();
 
-class AppleSignOutRequested extends AppleProviderEvent {}
+  @override
+  List<Object?> get props => [];
+}
+
+class AppleSignInRequested extends AppleProviderEvent {
+  const AppleSignInRequested();
+}
+
+class AppleSignOutRequested extends AppleProviderEvent {
+  const AppleSignOutRequested();
+}

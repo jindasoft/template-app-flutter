@@ -12,21 +12,21 @@ abstract class FirebaseState extends Equatable {
 }
 
 class FirebaseInitial extends FirebaseState {
-  FirebaseInitial() : super(UserFirebase.empty());
-}
-
-class FirebaseFailure extends FirebaseState {
-  final String error;
-  const FirebaseFailure(this.error, userFirebase) : super(userFirebase);
-
-  @override
-  List<Object?> get props => [error, userFirebase];
+  const FirebaseInitial(super.userFirebase);
 }
 
 class FirebaseAccountRemoving extends FirebaseState {
   const FirebaseAccountRemoving(super.userFirebase);
 }
 
-class FirebaseAccountRemoved extends FirebaseState {
-  FirebaseAccountRemoved() : super(UserFirebase.empty());
+class FirebaseAccountRemoveSuccess extends FirebaseState {
+  const FirebaseAccountRemoveSuccess() : super(const UserFirebase.empty());
+}
+
+class FirebaseAccountRemoveFailure extends FirebaseState {
+  final String error;
+  const FirebaseAccountRemoveFailure(this.error, super.userFirebase);
+
+  @override
+  List<Object?> get props => [error, userFirebase];
 }

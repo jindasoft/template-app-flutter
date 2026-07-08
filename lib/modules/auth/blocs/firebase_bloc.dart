@@ -1,3 +1,4 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -8,32 +9,41 @@ import 'firebase_state.dart';
 
 class FirebaseBloc extends Bloc<FirebaseEvent, FirebaseState> {
   final ProviderRepository providerRepository;
-  final UserFirebase userFirebase = UserFirebase.empty();
   bool _isRemovingAccount = false;
 
-  FirebaseBloc(this.providerRepository) : super(FirebaseInitial()) {
-    on<FirebaseAccountRemoveRequested>((event, emit) async {
-      if (_isRemovingAccount) {
-        return;
-      }
-      _isRemovingAccount = true;
+  FirebaseBloc(this.providerRepository)
+    : super(const FirebaseInitial(UserFirebase.empty())) {
+    on<FirebaseAccountRemoveRequested>(
+      _onFirebaseAccountRemoveRequested,
+      transformer: droppable(),
+    );
+  }
 
-      emit(FirebaseAccountRemoving(userFirebase));
-      try {
-        await providerRepository.removeAccount();
-        emit(FirebaseAccountRemoved());
-      } on GoogleSignInException catch (e) {
-        if (e.code == GoogleSignInExceptionCode.canceled) {
-          // User canceled — silently return to initial state
-          emit(FirebaseInitial());
-        } else {
-          emit(FirebaseFailure(e.toString(), userFirebase));
-        }
-      } catch (e) {
-        emit(FirebaseFailure(e.toString(), userFirebase));
-      } finally {
-        _isRemovingAccount = false;
+  Future<void> _onFirebaseAccountRemoveRequested(
+    FirebaseAccountRemoveRequested event,
+    Emitter<FirebaseState> emit,
+  ) async {
+    if (_isRemovingAccount) {
+      return;
+    }
+    _isRemovingAccount = true;
+    final previousUser = state.userFirebase;
+
+    emit(FirebaseAccountRemoving(previousUser));
+    try {
+      await providerRepository.removeAccount();
+      emit(const FirebaseAccountRemoveSuccess());
+    } on GoogleSignInException catch (e) {
+      if (e.code == GoogleSignInExceptionCode.canceled) {
+        // User canceled — silently return to initial state
+        emit(FirebaseInitial(previousUser));
+      } else {
+        emit(FirebaseAccountRemoveFailure(e.toString(), previousUser));
       }
-    });
+    } catch (e) {
+      emit(FirebaseAccountRemoveFailure(e.toString(), previousUser));
+    } finally {
+      _isRemovingAccount = false;
+    }
   }
 }

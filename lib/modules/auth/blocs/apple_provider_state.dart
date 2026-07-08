@@ -12,15 +12,7 @@ abstract class AppleProviderState extends Equatable {
 }
 
 class AppleProviderInitial extends AppleProviderState {
-  AppleProviderInitial() : super(UserFirebase.empty());
-}
-
-class AppleProviderFailure extends AppleProviderState {
-  final String error;
-  const AppleProviderFailure(this.error, userFirebase) : super(userFirebase);
-
-  @override
-  List<Object?> get props => [error, userFirebase];
+  const AppleProviderInitial() : super(const UserFirebase.empty());
 }
 
 class AppleSignInLoading extends AppleProviderState {
@@ -31,10 +23,26 @@ class AppleSignInSuccess extends AppleProviderState {
   const AppleSignInSuccess(super.userFirebase);
 }
 
+class AppleSignInFailure extends AppleProviderState {
+  final String error;
+  const AppleSignInFailure(this.error, super.userFirebase);
+
+  @override
+  List<Object?> get props => [error, userFirebase];
+}
+
 class AppleSignOutLoading extends AppleProviderState {
   const AppleSignOutLoading(super.userFirebase);
 }
 
 class AppleSignOutSuccess extends AppleProviderState {
-  AppleSignOutSuccess() : super(UserFirebase.empty());
+  const AppleSignOutSuccess() : super(const UserFirebase.empty());
+}
+
+class AppleSignOutFailure extends AppleProviderState {
+  final String error;
+  const AppleSignOutFailure(this.error, super.userFirebase);
+
+  @override
+  List<Object?> get props => [error, userFirebase];
 }

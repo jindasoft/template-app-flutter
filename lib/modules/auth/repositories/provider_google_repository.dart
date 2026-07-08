@@ -1,7 +1,5 @@
-import 'dart:convert' show json;
+import 'dart:async';
 import 'package:template_app_flutter/configs/env_config.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:template_app_flutter/core/services/app_logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -9,18 +7,17 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../models/user_firebase.dart';
 import 'provider_repository.dart';
 
-const List<String> scopes = <String>[
-  'https://www.googleapis.com/auth/contacts.readonly',
-];
-
-class GoogleProviderRepository implements ProviderRepository {
+class ProviderGoogleRepository implements ProviderRepository {
   final logger = AppLogger.instance;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
   GoogleSignInAccount? _currentGoogleUser;
+  StreamSubscription<GoogleSignInAuthenticationEvent>?
+  _authenticationSubscription;
+  Future<void>? _initializationFuture;
 
-  GoogleProviderRepository() {
-    _initializeGoogleSignIn();
+  ProviderGoogleRepository() {
+    _initializationFuture = _initializeGoogleSignIn();
   }
 
   Future<void> _initializeGoogleSignIn() async {
@@ -29,14 +26,24 @@ class GoogleProviderRepository implements ProviderRepository {
       await _googleSignIn.initialize(
         serverClientId: envConfig.googleServerClientId,
       );
-      _googleSignIn.authenticationEvents.listen(_handleAuthenticationEvent);
+      await _authenticationSubscription?.cancel();
+      _authenticationSubscription = _googleSignIn.authenticationEvents.listen(
+        _handleAuthenticationEvent,
+        onError: (Object error, StackTrace stackTrace) {
+          logger.e('Google authentication event error: $error');
+        },
+      );
       await _googleSignIn.attemptLightweightAuthentication();
     } catch (e) {
       logger.e('Google Sign-In initialization failed: $e');
     }
   }
 
-  Future<void> initializeGoogleSignIn() async => _initializeGoogleSignIn();
+  Future<void> _ensureInitialized() async {
+    await (_initializationFuture ??= _initializeGoogleSignIn());
+  }
+
+  Future<void> initializeGoogleSignIn() async => _ensureInitialized();
 
   bool get hasActiveSession => _currentGoogleUser != null;
 
@@ -48,67 +55,10 @@ class GoogleProviderRepository implements ProviderRepository {
       GoogleSignInAuthenticationEventSignOut() => null,
     };
     _currentGoogleUser = user;
-
-    final GoogleSignInClientAuthorization? authorization = await user
-        ?.authorizationClient
-        .authorizationForScopes(scopes);
-
-    if (user != null && authorization != null) {
-      await _fetchContact(user);
-    }
-  }
-
-  Future<void> _fetchContact(GoogleSignInAccount user) async {
-    try {
-      final headers = await user.authorizationClient.authorizationHeaders(
-        scopes,
-      );
-      if (headers == null) {
-        throw Exception('Failed to construct authorization headers.');
-      }
-
-      final response = await http.get(
-        Uri.parse(
-          '${EnvConfig().googlePeopleApiUrl}?requestMask.includeField=person.names',
-        ),
-        headers: headers,
-      );
-
-      if (response.statusCode != 200) {
-        throw Exception('People API error: ${response.statusCode}');
-      }
-
-      final data = json.decode(response.body) as Map<String, dynamic>;
-      _extractContactName(data);
-    } catch (e) {
-      logger.e('Fetching contact failed: $e');
-    }
-  }
-
-  String? _extractContactName(Map<String, dynamic> data) {
-    final connections = data['connections'] as List<dynamic>?;
-    final contact =
-        connections?.firstWhere(
-              (contact) => (contact as Map<String, dynamic>)['names'] != null,
-              orElse: () => null,
-            )
-            as Map<String, dynamic>?;
-
-    if (contact != null) {
-      final names = contact['names'] as List<dynamic>;
-      final name =
-          names.firstWhere(
-                (name) => (name as Map<String, dynamic>)['displayName'] != null,
-                orElse: () => null,
-              )
-              as Map<String, dynamic>?;
-
-      return name?['displayName'] as String?;
-    }
-    return null;
   }
 
   Future<UserFirebase> signInWithGoogle() async {
+    await _ensureInitialized();
     try {
       // Trigger the Google Sign-In flow
       final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
@@ -141,6 +91,7 @@ class GoogleProviderRepository implements ProviderRepository {
     try {
       await _googleSignIn.signOut();
       await _firebaseAuth.signOut();
+      _currentGoogleUser = null;
     } catch (e) {
       logger.e('Sign out failed: $e');
       throw Exception('Sign out failed: $e');
@@ -149,6 +100,7 @@ class GoogleProviderRepository implements ProviderRepository {
 
   @override
   Future<void> removeAccount() async {
+    await _ensureInitialized();
     try {
       final user = _firebaseAuth.currentUser;
       if (user == null) {
@@ -184,6 +136,7 @@ class GoogleProviderRepository implements ProviderRepository {
       await user.reauthenticateWithCredential(credential);
       await user.delete();
       await _googleSignIn.disconnect();
+      _currentGoogleUser = null;
     } on GoogleSignInException catch (e) {
       if (e.code == GoogleSignInExceptionCode.canceled) {
         logger.e('Account removal canceled by user');
@@ -191,6 +144,9 @@ class GoogleProviderRepository implements ProviderRepository {
       }
       logger.e('GoogleSignInException during removeAccount: $e');
       throw Exception('Remove account failed: $e');
+    } on FirebaseAuthException catch (e) {
+      logger.e('FirebaseAuthException during removeAccount: $e');
+      rethrow;
     } catch (e) {
       logger.e('Remove account failed: $e');
       throw Exception('Remove account failed: $e');

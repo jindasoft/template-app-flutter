@@ -5,7 +5,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../models/user_firebase.dart';
 import 'provider_repository.dart';
 
-class AppleProviderRepository implements ProviderRepository {
+class ProviderAppleRepository implements ProviderRepository {
   final logger = AppLogger.instance;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
@@ -54,9 +54,10 @@ class AppleProviderRepository implements ProviderRepository {
   Future<void> removeAccount() async {
     try {
       final user = _firebaseAuth.currentUser;
-      if (user != null) {
-        await user.delete();
+      if (user == null) {
+        throw Exception('No user currently signed in to delete');
       }
+      await user.delete();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
         final user = _firebaseAuth.currentUser;

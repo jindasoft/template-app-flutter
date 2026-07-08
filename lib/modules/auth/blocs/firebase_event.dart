@@ -1,3 +1,12 @@
-abstract class FirebaseEvent {}
+import 'package:equatable/equatable.dart';
 
-class FirebaseAccountRemoveRequested extends FirebaseEvent {}
+sealed class FirebaseEvent extends Equatable {
+  const FirebaseEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class FirebaseAccountRemoveRequested extends FirebaseEvent {
+  const FirebaseAccountRemoveRequested();
+}

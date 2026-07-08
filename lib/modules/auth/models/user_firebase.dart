@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:equatable/equatable.dart';
 
-class UserFirebase {
+class UserFirebase extends Equatable {
   final String uid;
   final String idToken;
   final String email;
@@ -8,7 +9,7 @@ class UserFirebase {
   final String? photoUrl;
   final List<String> provider;
 
-  UserFirebase({
+  const UserFirebase({
     required this.uid,
     required this.idToken,
     required this.email,
@@ -17,13 +18,23 @@ class UserFirebase {
     required this.provider,
   });
 
-  UserFirebase.empty()
+  const UserFirebase.empty()
     : uid = '',
       idToken = '',
       email = '',
       displayName = null,
       photoUrl = null,
-      provider = [];
+      provider = const [];
+
+  @override
+  List<Object?> get props => [
+    uid,
+    idToken,
+    email,
+    displayName,
+    photoUrl,
+    provider,
+  ];
 
   static Future<UserFirebase> fromUserFirebase(User user) async {
     return UserFirebase(
