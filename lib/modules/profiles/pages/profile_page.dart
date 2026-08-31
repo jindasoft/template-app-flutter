@@ -1,18 +1,27 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:template_app_flutter/app/app_page.dart';
+import 'package:template_app_flutter/core/enums/image_size.dart';
+import 'package:template_app_flutter/core/services/private_api.dart';
 import 'package:template_app_flutter/core/utils/next_screen_util.dart';
+import 'package:template_app_flutter/core/widgets/loading/loading_widget.dart';
+import 'package:template_app_flutter/modules/auth/blocs/auth_blocs/auth_event.dart';
 import 'package:template_app_flutter/modules/auth/pages/sign_in_page.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:template_app_flutter/core/notifiers/theme_notifier.dart';
 import 'package:template_app_flutter/core/language/language_sheet.dart';
-import 'package:template_app_flutter/modules/auth/blocs/auth_bloc.dart';
-import 'package:template_app_flutter/modules/auth/blocs/auth_state.dart';
+import 'package:template_app_flutter/modules/auth/blocs/auth_blocs/auth_bloc.dart';
 
+import '../blocs/profile_blocs/my_profile_bloc.dart';
+import '../blocs/profile_blocs/my_profile_event.dart';
+import '../blocs/profile_blocs/my_profile_state.dart';
+import '../repositories/profile_repository.dart';
 import '../widgets/menu_item.dart';
 import '../widgets/menu_item_value.dart';
 import '../widgets/menu_item_toggle.dart';
@@ -41,26 +50,50 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _buildAppBar(context), body: _buildBody(context));
+    final isLoggedIn = context.select<AuthBloc, bool>(
+      (bloc) => bloc.isSignedIn,
+    );
+
+    if (!isLoggedIn) {
+      return Scaffold(
+        appBar: _buildAppBar(context),
+        body: _buildContent(context, '', false),
+      );
+    }
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<MyProfileBloc>(
+          create: (context) => MyProfileBloc(
+            ProfileRepository(privateApi: PrivateApi(context: context)),
+          )..add(const GetMyProfile()),
+        ),
+      ],
+      child: BlocBuilder<MyProfileBloc, MyProfileState>(
+        builder: (context, state) {
+          final profileId = state.profileDetail.profileId;
+
+          return Scaffold(
+            appBar: _buildAppBar(context),
+            body: _buildContent(context, profileId, true),
+          );
+        },
+      ),
+    );
   }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(title: Text('profile.title'.tr()), centerTitle: true);
   }
 
-  Widget _buildBody(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        final isLoggedIn = context.read<AuthBloc>().isSignedIn;
-        return _buildContent(context, isLoggedIn);
-      },
-    );
-  }
-
-  Widget _buildContent(BuildContext context, bool isLoggedIn) {
+  Widget _buildContent(
+    BuildContext context,
+    String profileId,
+    bool isLoggedIn,
+  ) {
     final accountItems = _buildVisibleMenuItems(
       context,
-      _accountMenuConfigs(),
+      _accountMenuConfigs(profileId),
       isLoggedIn,
     );
     final settingItems = _buildVisibleMenuItems(
@@ -98,67 +131,117 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildProfileHeader(BuildContext context, bool isLoggedIn) {
-    return isLoggedIn ? _buildUserHeader(context) : _buildGuestHeader(context);
+    if (!isLoggedIn) {
+      return _buildGuestHeader(context);
+    }
+
+    return BlocBuilder<MyProfileBloc, MyProfileState>(
+      builder: (context, state) {
+        if (state is MyProfileLoading || state is MyProfileInitial) {
+          return LoadingWidget();
+        }
+
+        if (state is MyProfileFailure) {
+          return _buildUserHeaderFailure(context);
+        }
+
+        return _buildUserHeader(context, state as MyProfileSuccess);
+      },
+    );
   }
 
-  Widget _buildUserHeader(BuildContext context) {
+  Widget _buildUserHeaderFailure(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(ThemeConfig.spacingBase),
+      child: Text(
+        'error.request_failed'.tr(),
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
+  }
+
+  Widget _buildUserHeader(BuildContext context, MyProfileSuccess state) {
+    final profile = state.profileDetail;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(ThemeConfig.spacingBase),
       child: Row(
         children: [
-          // Avatar
           Container(
             decoration: const BoxDecoration(
               color: ThemeConfig.colorPrimary,
               shape: BoxShape.circle,
             ),
             child: GestureDetector(
-              onTap: () {
-                nextScreen(context, ProfileImagePage(avatarUrl: ''));
+              onTap: () async {
+                final avatarUrl = await Navigator.of(context).push<String>(
+                  MaterialPageRoute(
+                    builder: (context) => ProfileImagePage(
+                      profileId: profile.profileId,
+                      avatarUrl:
+                          '${profile.avatarUrl}/${ImageSize.medium.text}',
+                    ),
+                  ),
+                );
+
+                if (avatarUrl != null && context.mounted) {
+                  context.read<MyProfileBloc>().add(const GetMyProfile());
+                }
               },
               child: CircleAvatar(
                 radius: 40,
-                backgroundColor: ThemeConfig.colorPrimary,
-                child: Icon(
-                  LineIcons.user,
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? ThemeConfig.colorTextDarkPrimary
-                      : Colors.white,
-                  size: ThemeConfig.iconSizeLarge,
-                ),
+                backgroundColor: Theme.of(context).primaryColor,
+                backgroundImage: profile.avatarUrl.isEmpty
+                    ? null
+                    : CachedNetworkImageProvider(
+                        '${profile.avatarUrl}/${ImageSize.extraSmall.text}',
+                      ),
+                child: profile.avatarUrl.isEmpty
+                    ? Icon(
+                        LineIcons.user,
+                        color: Colors.white,
+                        size: ThemeConfig.iconSizeLarge,
+                      )
+                    : null,
               ),
             ),
           ),
           const SizedBox(width: ThemeConfig.spacingBase),
-
-          // User info
           Expanded(
             child: GestureDetector(
-              onTap: () {
-                nextScreen(context, const AccountPage());
+              behavior: HitTestBehavior.opaque,
+              onTap: () async {
+                final shouldReload = await Navigator.push<bool>(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        AccountPage(profileId: profile.profileId),
+                  ),
+                );
+
+                if (shouldReload == true && context.mounted) {
+                  context.read<MyProfileBloc>().add(const GetMyProfile());
+                }
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'ThunderDuck',
+                    profile.displayName,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: ThemeConfig.spacingXXS),
                   Text(
-                    'JID: 123-4567-8900',
+                    _formatJID(profile.jid),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? ThemeConfig.colorTextDarkSecondary
-                          : ThemeConfig.colorTextLightSecondary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: ThemeConfig.spacingMD),
-
-                  // bio
                   Text(
-                    'profile.no_bio'.tr(),
+                    profile.bio.isEmpty ? 'profile.no_bio'.tr() : profile.bio,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -208,15 +291,36 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  List<_MenuConfig> _accountMenuConfigs() {
+  String _formatJID(String jid) {
+    // Format as XXX-XXXX-XXXX
+    if (jid.length >= 11) {
+      return 'JID: ${jid.substring(0, 3)}-${jid.substring(3, 7)}-${jid.substring(7, 11)}';
+    }
+    return jid;
+  }
+
+  List<_MenuConfig> _accountMenuConfigs(String profileId) {
+    if (profileId.isEmpty) {
+      return [];
+    }
+
     return [
       _MenuConfig(
         visibility: _MenuVisibility.authOnly,
         builder: (context) => MenuItem(
           icon: LineIcons.user,
           title: 'account.my_account'.tr(),
-          onTap: () {
-            nextScreen(context, const AccountPage());
+          onTap: () async {
+            final shouldReload = await Navigator.push<bool>(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AccountPage(profileId: profileId),
+              ),
+            );
+
+            if (shouldReload == true && context.mounted) {
+              context.read<MyProfileBloc>().add(const GetMyProfile());
+            }
           },
         ),
       ),
@@ -343,6 +447,8 @@ class _ProfilePageState extends State<ProfilePage> {
           onPressed: () {
             // Perform sign out logic here
             Navigator.of(context).pop();
+            context.read<AuthBloc>().add(const SignOutRequested());
+            nextScreenCloseOthers(context, AppPage());
           },
           child: Text('common.confirm'.tr()),
         ),

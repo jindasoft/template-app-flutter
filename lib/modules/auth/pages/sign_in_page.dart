@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:template_app_flutter/core/language/language_sheet.dart';
 import 'package:template_app_flutter/core/utils/next_screen_util.dart';
@@ -8,22 +7,21 @@ import 'package:template_app_flutter/app/app_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:template_app_flutter/core/utils/snackbar_util.dart';
 import 'package:line_icons/line_icons.dart';
 
-import '../blocs/apple_provider_bloc.dart';
-import '../blocs/apple_provider_event.dart';
-// import '../blocs/apple_provider_state.dart';
-import '../blocs/auth_bloc.dart';
-import '../blocs/auth_event.dart';
-// import '../blocs/auth_state.dart';
-// import '../blocs/firebase_bloc.dart';
-import '../blocs/google_provider_bloc.dart';
-import '../blocs/google_provider_event.dart';
-// import '../blocs/google_provider_state.dart';
+import '../blocs/provider_apple_blocs/provider_apple_bloc.dart';
+import '../blocs/provider_apple_blocs/provider_apple_event.dart';
+import '../blocs/provider_apple_blocs/provider_apple_state.dart';
+import '../blocs/auth_blocs/auth_bloc.dart';
+import '../blocs/auth_blocs/auth_event.dart';
+import '../blocs/auth_blocs/auth_state.dart';
+import '../blocs/provider_google_blocs/provider_google_bloc.dart';
+import '../blocs/provider_google_blocs/provider_google_event.dart';
+import '../blocs/provider_google_blocs/provider_google_state.dart';
 import '../models/user_firebase.dart';
 import '../repositories/provider_apple_repository.dart';
 import '../repositories/provider_google_repository.dart';
-import '../repositories/provider_repository.dart';
 import '../widgets/sign_in_button_widget.dart';
 import 'done_page.dart';
 
@@ -45,92 +43,103 @@ class _SignInPageState extends State<SignInPage> {
     return Scaffold(
       appBar: _buildAppBar(context),
       body: SafeArea(
-        // child: _blocProvider(
-        //   Builder(
-        //     builder: (providerContext) {
-        //       return _blocListener(_buildContent(providerContext));
-        //     },
-        //   ),
-        // ),
-        child: _buildContent(context),
+        child: _blocProvider(
+          Builder(
+            builder: (providerContext) {
+              return _blocListener(_buildContent(providerContext));
+            },
+          ),
+        ),
       ),
     );
   }
 
-  // Widget _blocProvider(Widget child) {
-  //   return MultiBlocProvider(
-  //     providers: [
-  //       BlocProvider(
-  //         create: (context) => FirebaseBloc(getProviderRepository()),
-  //       ),
-  //       BlocProvider(
-  //         create: (context) => GoogleProviderBloc(ProviderGoogleRepository()),
-  //       ),
-  //       BlocProvider(
-  //         create: (context) => AppleProviderBloc(ProviderAppleRepository()),
-  //       ),
-  //     ],
-  //     child: child,
-  //   );
-  // }
+  Widget _blocProvider(Widget child) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ProviderGoogleBloc(ProviderGoogleRepository()),
+        ),
+        BlocProvider(
+          create: (context) => ProviderAppleBloc(ProviderAppleRepository()),
+        ),
+      ],
+      child: child,
+    );
+  }
 
-  // Widget _blocListener(Widget child) {
-  //   return MultiBlocListener(
-  //     listeners: [
-  //       BlocListener<GoogleProviderBloc, GoogleProviderState>(
-  //         listener: (context, state) {
-  //           if (state is GoogleSignInLoading) {
-  //             setState(() => googleSignInStarted = true);
-  //           } else {
-  //             setState(() => googleSignInStarted = false);
-  //           }
-  //           if (state is GoogleSignInSuccess) {
-  //             handleSignIn(context, state.userFirebase);
-  //           } else if (state is GoogleSignInFailure) {
-  //             if (mounted) {
-  //               ScaffoldMessenger.of(
-  //                 context,
-  //               ).showSnackBar(SnackBar(content: Text(state.error)));
-  //             }
-  //           }
-  //         },
-  //       ),
-  //       BlocListener<AppleProviderBloc, AppleProviderState>(
-  //         listener: (context, state) {
-  //           if (state is AppleSignInLoading) {
-  //             setState(() => appleSignInStarted = true);
-  //           } else {
-  //             setState(() => appleSignInStarted = false);
-  //           }
-  //           if (state is AppleSignInSuccess) {
-  //             handleSignIn(context, state.userFirebase);
-  //           } else if (state is AppleSignInFailure) {
-  //             if (mounted) {
-  //               ScaffoldMessenger.of(
-  //                 context,
-  //               ).showSnackBar(SnackBar(content: Text(state.error)));
-  //               Text(state.error);
-  //             }
-  //           }
-  //         },
-  //       ),
-  //       BlocListener<AuthBloc, AuthState>(
-  //         listener: (context, state) {
-  //           if (state is AuthSignInSuccess) {
-  //             afterSignIn();
-  //           } else if (state is AuthSignInFailure) {
-  //             if (mounted) {
-  //               ScaffoldMessenger.of(
-  //                 context,
-  //               ).showSnackBar(SnackBar(content: Text(state.error)));
-  //             }
-  //           }
-  //         },
-  //       ),
-  //     ],
-  //     child: child,
-  //   );
-  // }
+  Widget _blocListener(Widget child) {
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ProviderGoogleBloc, ProviderGoogleState>(
+          listener: (context, state) {
+            if (state is GoogleSignInLoading) {
+              setState(() => googleSignInStarted = true);
+            } else if (state is GoogleSignInCanceled ||
+                state is GoogleSignInFailure) {
+              setState(() => googleSignInStarted = false);
+            }
+            // Keep the spinner running through GoogleSignInSuccess — it only
+            // turns off once AuthBloc finishes the backend sign-in below.
+            if (state is GoogleSignInSuccess) {
+              handleSignIn(context, state.userFirebase);
+            } else if (state is GoogleSignInCanceled) {
+              if (mounted) {
+                SnackBarUtils.showWarning(context, 'sign_in.canceled'.tr());
+              }
+            } else if (state is GoogleSignInFailure) {
+              if (mounted) {
+                SnackBarUtils.showError(context, state.error.tr());
+              }
+            }
+          },
+        ),
+        BlocListener<ProviderAppleBloc, ProviderAppleState>(
+          listener: (context, state) {
+            if (state is AppleSignInLoading) {
+              setState(() => appleSignInStarted = true);
+            } else if (state is AppleSignInCanceled ||
+                state is AppleSignInFailure) {
+              setState(() => appleSignInStarted = false);
+            }
+            // Keep the spinner running through AppleSignInSuccess — it only
+            // turns off once AuthBloc finishes the backend sign-in below.
+            if (state is AppleSignInSuccess) {
+              handleSignIn(context, state.userFirebase);
+            } else if (state is AppleSignInCanceled) {
+              if (mounted) {
+                SnackBarUtils.showWarning(context, 'sign_in.canceled'.tr());
+              }
+            } else if (state is AppleSignInFailure) {
+              if (mounted) {
+                SnackBarUtils.showError(context, state.error.tr());
+              }
+            }
+          },
+        ),
+        BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is SignInSuccess) {
+              setState(() {
+                googleSignInStarted = false;
+                appleSignInStarted = false;
+              });
+              afterSignIn();
+            } else if (state is SignInFailure) {
+              setState(() {
+                googleSignInStarted = false;
+                appleSignInStarted = false;
+              });
+              if (mounted) {
+                SnackBarUtils.showError(context, state.error.tr());
+              }
+            }
+          },
+        ),
+      ],
+      child: child,
+    );
+  }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
@@ -273,15 +282,15 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void handleGoogleSignIn(BuildContext context) {
-    context.read<GoogleProviderBloc>().add(GoogleSignInRequested());
+    context.read<ProviderGoogleBloc>().add(GoogleSignInRequested());
   }
 
   void handleAppleSignIn(BuildContext context) {
-    context.read<AppleProviderBloc>().add(AppleSignInRequested());
+    context.read<ProviderAppleBloc>().add(AppleSignInRequested());
   }
 
   void handleSignIn(BuildContext context, UserFirebase userFirebase) {
-    context.read<AuthBloc>().add(AuthSignInRequested(userFirebase));
+    context.read<AuthBloc>().add(SignInRequested(userFirebase));
   }
 
   void afterSignIn() {
@@ -291,18 +300,4 @@ class _SignInPageState extends State<SignInPage> {
       nextScreenReplace(context, AppPage());
     }
   }
-}
-
-ProviderRepository getProviderRepository() {
-  final user = FirebaseAuth.instance.currentUser;
-  if (user != null && user.providerData.isNotEmpty) {
-    final providerId = user.providerData.first.providerId;
-    if (providerId == 'google.com') {
-      return ProviderGoogleRepository();
-    } else if (providerId == 'apple.com') {
-      return ProviderAppleRepository();
-    }
-  }
-  // fallback
-  return ProviderGoogleRepository();
 }

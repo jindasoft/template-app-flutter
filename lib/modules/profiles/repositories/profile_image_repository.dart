@@ -2,30 +2,29 @@ import 'package:dio/dio.dart';
 import 'package:template_app_flutter/core/exceptions/app_exception.dart';
 import 'package:template_app_flutter/core/models/api_response.dart';
 import 'package:template_app_flutter/core/services/app_logger.dart';
-import 'package:template_app_flutter/core/services/private_image.dart';
-import 'package:template_app_flutter/core/utils/image_util.dart';
+import 'package:template_app_flutter/core/services/private_api.dart';
 
 import '../models/profile_image.dart';
 
 class ProfileImageRepository {
+  final PrivateApi _privateApi;
   static final _logger = AppLogger.instance;
-  final PrivateImage _privateImage;
+  static const _baseEndpoint = '/v1/profile-images';
 
-  ProfileImageRepository({required PrivateImage privateImage})
-    : _privateImage = privateImage;
+  ProfileImageRepository({required PrivateApi privateApi})
+    : _privateApi = privateApi;
 
   Future<ProfileImage> uploadProfileImage({
-    required String filePath,
-    required String fileName,
     required String profileId,
+    required String filePath,
   }) async {
     try {
-      final url = '/v1/profile-images';
+      final endpoint = '$_baseEndpoint/$profileId';
       final formData = FormData.fromMap({
-        'image': await MultipartFile.fromFile(filePath, filename: fileName),
+        'file': await MultipartFile.fromFile(filePath),
       });
 
-      final response = await _privateImage.dio.post(url, data: formData);
+      final response = await _privateApi.dio.post(endpoint, data: formData);
 
       final res = ApiResponse<ProfileImage>.fromJson(
         response.data,
@@ -39,34 +38,34 @@ class ProfileImageRepository {
         try {
           return await _retryUploadAfterTokenRefresh(
             filePath: filePath,
-            fileName: fileName,
+            profileId: profileId,
           );
         } catch (refreshError) {
-          throw Exception('Token refresh failed: $refreshError');
+          throw Exception('Token refresh failed');
         }
       }
 
-      _logger.e('DioError: ${e.message}');
-      throw AppException('error.network');
-    } on Exception catch (e) {
-      _logger.e('Unknown error: $e');
-      throw AppException('error.unknown');
+      _logger.e('request_failed: upload profile image request failed');
+      throw AppException('error.request_failed');
+    } on Exception {
+      _logger.e('unexpected: upload profile image request failed');
+      throw AppException('error.unexpected');
     }
   }
 
   Future<ProfileImage> _retryUploadAfterTokenRefresh({
+    required String profileId,
     required String filePath,
-    required String fileName,
   }) async {
     try {
-      final url = "/v1/profile-images";
-      final additionalFields = {'feature': 'feature_moments'};
-      final formData = await createFormData(
-        filePath,
-        fileName,
-        additionalFields: additionalFields,
+      final endpoint = '$_baseEndpoint/$profileId';
+      final formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(filePath),
+      });
+      final retryResponse = await _privateApi.dio.post(
+        endpoint,
+        data: formData,
       );
-      final retryResponse = await _privateImage.dio.post(url, data: formData);
 
       final res = ApiResponse<ProfileImage>.fromJson(
         retryResponse.data,
@@ -74,12 +73,12 @@ class ProfileImageRepository {
       );
 
       return res.data;
-    } on DioException catch (e) {
-      _logger.e('DioError: ${e.message}');
-      throw AppException('error.network');
-    } on Exception catch (e) {
-      _logger.e('Unknown error: $e');
-      throw AppException('error.unknown');
+    } on DioException {
+      _logger.e('request_failed: retry upload profile image request failed');
+      throw AppException('error.request_failed');
+    } on Exception {
+      _logger.e('unexpected: retry upload profile image request failed');
+      throw AppException('error.unexpected');
     }
   }
 }

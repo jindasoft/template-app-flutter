@@ -1,4 +1,5 @@
 import 'package:template_app_flutter/configs/app_config.dart';
+import 'package:template_app_flutter/core/constants/http_header.dart';
 import 'package:template_app_flutter/core/services/public_auth.dart';
 import 'package:template_app_flutter/modules/auth/models/refresh_token_request.dart';
 import 'package:template_app_flutter/modules/auth/repositories/auth_repository.dart';
@@ -20,15 +21,16 @@ class PrivateInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final Locale locale =
+    final locale =
         EasyLocalization.of(options.extra['context'])?.locale ??
         AppConfig.defaultLanguage;
     final accessToken = await TokenService.getAccessToken();
 
-    options.headers['Accept-Language'] = locale.toLanguageTag();
-    if (accessToken != null && accessToken.isNotEmpty) {
-      options.headers['Authorization'] = 'Bearer $accessToken';
-    }
+    final headers = {
+      HttpHeader.acceptLanguage: locale.toLanguageTag(),
+      HttpHeader.authorization: 'Bearer $accessToken',
+    };
+    options.headers.addAll(headers);
 
     handler.next(options);
   }
@@ -57,10 +59,8 @@ class PrivateInterceptor extends Interceptor {
       );
 
       // refresh token
-      final credentials = await TokenService.getRequiredRefreshCredentials();
       final tokenRequest = RefreshTokenRequest(
-        refreshToken: credentials.refreshToken,
-        verifierCode: credentials.verifierCode,
+        refreshToken: await TokenService.getRefreshToken(),
       );
       final token = await authRepository.postRefreshToken(tokenRequest);
 

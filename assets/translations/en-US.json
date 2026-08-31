@@ -17,14 +17,16 @@
     "back": "Back",
     "next": "Next",
     "submit": "Submit",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "ok": "OK"
   },
   "loader": {
     "loading": "Loading..."
   },
   "error": {
-    "network": "Network error: Failed to fetch data",
-    "unknown": "An unknown error occurred"
+    "request_failed": "Unable to complete the request. Please try again.",
+    "unexpected": "An unexpected error occurred",
+    "unauthorize": "You are not authorized to perform this action"
   },
   "language": {
     "title": "Language",
@@ -101,7 +103,9 @@
     },
     "profile_image": {
       "title": "Profile Image",
-      "upload_new_image": "Upload new profile image"
+      "upload_new_image": "Upload new profile image",
+      "upload_success": "Profile image uploaded successfully",
+      "upload_error": "Error uploading profile image"
     },
     "profile_image_edit": {
       "title": "Edit Profile Image",
@@ -174,5 +178,4 @@
     "upcoming": "Upcoming",
     "wishlist": "Wishlist"
   }
-
 }

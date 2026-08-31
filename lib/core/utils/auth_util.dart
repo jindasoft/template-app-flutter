@@ -1,5 +1,5 @@
 import 'package:template_app_flutter/core/widgets/dialogs/sign_in_required_dialog.dart';
-import 'package:template_app_flutter/modules/auth/blocs/auth_bloc.dart';
+import 'package:template_app_flutter/modules/auth/blocs/auth_blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

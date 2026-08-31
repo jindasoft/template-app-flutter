@@ -1,13 +1,13 @@
 class ProfileImage {
-  final String imageId;
+  final String avatarUrl;
 
-  ProfileImage({required this.imageId});
+  ProfileImage({required this.avatarUrl});
 
   factory ProfileImage.fromJson(Map<String, dynamic> json) {
-    return ProfileImage(imageId: json['image_id']);
+    return ProfileImage(avatarUrl: json['avatar_url']);
   }
 
   Map<String, dynamic> toJson() {
-    return {'image_id': imageId};
+    return {'avatar_url': avatarUrl};
   }
 }

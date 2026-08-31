@@ -1,24 +1,24 @@
-class Token {
+class TokenResponse {
   final String tokenType;
   final String accessToken;
   final int expireIn;
   final String refreshToken;
 
-  Token({
+  TokenResponse({
     required this.tokenType,
     required this.accessToken,
     required this.expireIn,
     required this.refreshToken,
   });
 
-  const Token.empty()
+  const TokenResponse.empty()
     : tokenType = '',
       accessToken = '',
       expireIn = 0,
       refreshToken = '';
 
-  factory Token.fromJson(Map<String, dynamic> json) {
-    return Token(
+  factory TokenResponse.fromJson(Map<String, dynamic> json) {
+    return TokenResponse(
       tokenType: json['token_type'] as String,
       accessToken: json['access_token'] as String,
       expireIn: json['expire_in'] as int,

@@ -1,3 +1,3 @@
 abstract class ProviderRepository {
-  Future<void> removeAccount();
+  Future<void> deleteAccount();
 }

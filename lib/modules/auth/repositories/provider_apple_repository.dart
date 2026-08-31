@@ -35,9 +35,12 @@ class ProviderAppleRepository implements ProviderRepository {
       final userFirebase = await UserFirebase.fromUserFirebase(userDetails);
 
       return userFirebase;
+    } on SignInWithAppleAuthorizationException catch (e) {
+      logger.e('Apple Sign-In canceled/failed from SDK: ${e.code.name}');
+      rethrow;
     } catch (e) {
-      logger.e('Apple Sign-In failed: $e');
-      throw Exception('Apple Sign-In failed: $e');
+      logger.e('Apple Sign-In failed');
+      throw Exception('Apple Sign-In failed');
     }
   }
 
@@ -45,13 +48,13 @@ class ProviderAppleRepository implements ProviderRepository {
     try {
       await _firebaseAuth.signOut();
     } catch (e) {
-      logger.e('Sign out failed: $e');
-      throw Exception('Sign out failed: $e');
+      logger.e('Sign out failed');
+      throw Exception('Sign out failed');
     }
   }
 
   @override
-  Future<void> removeAccount() async {
+  Future<void> deleteAccount() async {
     try {
       final user = _firebaseAuth.currentUser;
       if (user == null) {
@@ -80,8 +83,8 @@ class ProviderAppleRepository implements ProviderRepository {
         rethrow;
       }
     } catch (e) {
-      logger.e('Remove account failed: $e');
-      throw Exception('Remove account failed: $e');
+      logger.e('Delete account failed');
+      throw Exception('Delete account failed');
     }
   }
 }

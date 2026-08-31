@@ -1,7 +1,7 @@
 import 'package:template_app_flutter/configs/env_config.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
+import 'package:template_app_flutter/core/constants/http_header.dart';
 import 'http_logger.dart';
 
 import 'public_interceptor.dart';
@@ -15,7 +15,7 @@ class PublicAuth {
         baseUrl: EnvConfig.authUrl!,
         connectTimeout: Duration(seconds: 5),
         receiveTimeout: Duration(seconds: 5),
-        headers: {'Content-Type': 'application/json'},
+        headers: {HttpHeader.contentType: 'application/json'},
       ),
     );
 

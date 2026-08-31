@@ -25,7 +25,7 @@ Future<String> fixImageOrientation(String imagePath) async {
     }
 
     // Resize image if too large
-    final maxSize = AppConfig.imageSizeOriginal;
+    final maxSize = AppConfig.imageDimensionWidth;
     img.Image resizedImage = image;
     if (image.width > maxSize || image.height > maxSize) {
       final aspectRatio = image.width / image.height;

@@ -8,6 +8,13 @@ import '../models/user_firebase.dart';
 import 'provider_repository.dart';
 
 class ProviderGoogleRepository implements ProviderRepository {
+  static final ProviderGoogleRepository _instance =
+      ProviderGoogleRepository._internal();
+
+  // GoogleSignIn.instance is itself a singleton; sharing one repository instance
+  // avoids re-initializing it and leaking duplicate authenticationEvents listeners.
+  factory ProviderGoogleRepository() => _instance;
+
   final logger = AppLogger.instance;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
@@ -16,7 +23,7 @@ class ProviderGoogleRepository implements ProviderRepository {
   _authenticationSubscription;
   Future<void>? _initializationFuture;
 
-  ProviderGoogleRepository() {
+  ProviderGoogleRepository._internal() {
     _initializationFuture = _initializeGoogleSignIn();
   }
 
@@ -30,22 +37,18 @@ class ProviderGoogleRepository implements ProviderRepository {
       _authenticationSubscription = _googleSignIn.authenticationEvents.listen(
         _handleAuthenticationEvent,
         onError: (Object error, StackTrace stackTrace) {
-          logger.e('Google authentication event error: $error');
+          logger.e('Google authentication event error');
         },
       );
       await _googleSignIn.attemptLightweightAuthentication();
     } catch (e) {
-      logger.e('Google Sign-In initialization failed: $e');
+      logger.e('Google Sign-In initialization failed');
     }
   }
 
   Future<void> _ensureInitialized() async {
     await (_initializationFuture ??= _initializeGoogleSignIn());
   }
-
-  Future<void> initializeGoogleSignIn() async => _ensureInitialized();
-
-  bool get hasActiveSession => _currentGoogleUser != null;
 
   Future<void> _handleAuthenticationEvent(
     GoogleSignInAuthenticationEvent event,
@@ -81,25 +84,29 @@ class ProviderGoogleRepository implements ProviderRepository {
       final userFirebase = await UserFirebase.fromUserFirebase(userDetails);
 
       return userFirebase;
+    } on GoogleSignInException catch (e) {
+      logger.e('Google Sign-In canceled/failed from SDK: ${e.code.name}');
+      rethrow;
     } catch (e) {
-      logger.e('Google Sign-In failed: $e');
-      throw Exception('Google Sign-In failed: $e');
+      logger.e('Google Sign-In failed');
+      throw Exception('Google Sign-In failed');
     }
   }
 
   Future<void> signOut() async {
+    await _ensureInitialized();
     try {
       await _googleSignIn.signOut();
       await _firebaseAuth.signOut();
       _currentGoogleUser = null;
     } catch (e) {
-      logger.e('Sign out failed: $e');
-      throw Exception('Sign out failed: $e');
+      logger.e('Sign out failed');
+      throw Exception('Sign out failed');
     }
   }
 
   @override
-  Future<void> removeAccount() async {
+  Future<void> deleteAccount() async {
     await _ensureInitialized();
     try {
       final user = _firebaseAuth.currentUser;
@@ -142,14 +149,14 @@ class ProviderGoogleRepository implements ProviderRepository {
         logger.e('Account removal canceled by user');
         rethrow;
       }
-      logger.e('GoogleSignInException during removeAccount: $e');
-      throw Exception('Remove account failed: $e');
+      logger.e('Google Sign-In delete account failed: ${e.code.name}');
+      throw Exception('Delete account failed');
     } on FirebaseAuthException catch (e) {
-      logger.e('FirebaseAuthException during removeAccount: $e');
+      logger.e('Firebase delete account failed: ${e.code}');
       rethrow;
     } catch (e) {
-      logger.e('Remove account failed: $e');
-      throw Exception('Remove account failed: $e');
+      logger.e('Delete account failed');
+      throw Exception('Delete account failed');
     }
   }
 }

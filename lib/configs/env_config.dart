@@ -26,7 +26,6 @@ class EnvConfig {
 
   static final String? authUrl = dotenv.env['AUTH_URL'];
   static final String? apiUrl = dotenv.env['API_URL'];
-  static final String? imgUrl = dotenv.env['IMG_URL'];
   static final String? maptilerApiKey = dotenv.env['MAPTILER_API_KEY'];
 
   static bool get logHttpEnabled {

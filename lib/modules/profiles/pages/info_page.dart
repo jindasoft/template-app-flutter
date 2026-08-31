@@ -36,7 +36,7 @@ class InfoPage extends StatelessWidget {
               return MenuItemValue(
                 icon: LineIcons.infoCircle,
                 title: 'info.app_version.title'.tr(),
-                value: snapshot.data ?? 'error.unknown'.tr(),
+                value: snapshot.data ?? 'error.unexpected'.tr(),
                 onTap: () {
                   nextScreen(context, const AppVersionPage());
                 },
