@@ -8,8 +8,10 @@ class ThemeConfig {
   static const double fontSize16 = 16;
   static const double fontSize18 = 18;
   static const double fontSize20 = 20;
+  static const double fontSize22 = 22;
   static const double fontSize24 = 24;
-  static const double fontSize32 = 32;
+  static const double fontSize28 = 28;
+  static const double fontSize36 = 36;
 
   // Icon Sizes
   static const double iconSizeSmall = 16;
@@ -19,12 +21,14 @@ class ThemeConfig {
   static const double iconSizeExtraLarge = 32;
 
   // Spacing
-  static const double spacingExtraSmall = 2;
-  static const double spacingSmall = 4;
-  static const double spacingMedium = 8;
-  static const double spacingBase = 16;
-  static const double spacingLarge = 32;
-  static const double spacingExtraLarge = 64;
+  static const double spacingXXS = 2;
+  static const double spacingXS = 4;
+  static const double spacingSM = 8;
+  static const double spacingMD = 12;
+  static const double spacingBase = 20;
+  static const double spacingLG = 28;
+  static const double spacingXL = 32;
+  static const double spacingXXL = 64;
 
   // Colors - Primary
   static const Color colorPrimary = Color(0xFF007AFF);
@@ -41,10 +45,10 @@ class ThemeConfig {
   static const Color colorGreyDark = Color(0xFF606060);
 
   // Colors - Status
-  static const Color colorSuccess = Color(0xFF34C759);
-  static const Color colorWarning = Color(0xFFFF9500);
-  static const Color colorInfo = Color(0xFF5AC8FA);
-  static const Color colorError = Color(0xFFFF3B30);
+  static const Color colorSuccess = Color(0xFF81C784);
+  static const Color colorWarning = Color(0xFFFFCC80);
+  static const Color colorInfo = Color(0xFF81D4FA);
+  static const Color colorError = Color(0xFFEF9A9A);
   static const Color colorDisabled = Color(0xFF9CA3AF);
 
   // Colors - Background

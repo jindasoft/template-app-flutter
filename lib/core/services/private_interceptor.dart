@@ -1,4 +1,6 @@
 import 'package:template_app_flutter/configs/app_config.dart';
+import 'package:template_app_flutter/core/constants/http_header.dart';
+import 'package:template_app_flutter/core/services/public_auth.dart';
 import 'package:template_app_flutter/modules/auth/models/refresh_token_request.dart';
 import 'package:template_app_flutter/modules/auth/repositories/auth_repository.dart';
 import 'package:template_app_flutter/modules/auth/services/token_service.dart';
@@ -19,15 +21,16 @@ class PrivateInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final Locale locale =
+    final locale =
         EasyLocalization.of(options.extra['context'])?.locale ??
         AppConfig.defaultLanguage;
     final accessToken = await TokenService.getAccessToken();
 
-    options.headers.addAll({
-      'Accept-Language': locale.toLanguageTag(),
-      'Authorization': 'Bearer $accessToken',
-    });
+    final headers = {
+      HttpHeader.acceptLanguage: locale.toLanguageTag(),
+      HttpHeader.authorization: 'Bearer $accessToken',
+    };
+    options.headers.addAll(headers);
 
     handler.next(options);
   }
@@ -50,12 +53,14 @@ class PrivateInterceptor extends Interceptor {
     try {
       final BuildContext? context =
           err.requestOptions.extra['context'] as BuildContext?;
-      final AuthRepository authRepository = AuthRepository(context: context!);
+      final PublicAuth publicAuth = PublicAuth(context: context!);
+      final AuthRepository authRepository = AuthRepository(
+        publicAuth: publicAuth,
+      );
 
       // refresh token
       final tokenRequest = RefreshTokenRequest(
-        refreshToken: await TokenService.getRefreshToken() ?? '',
-        verifierCode: await TokenService.getVerifierCode() ?? '',
+        refreshToken: await TokenService.getRefreshToken(),
       );
       final token = await authRepository.postRefreshToken(tokenRequest);
 
@@ -69,6 +74,9 @@ class PrivateInterceptor extends Interceptor {
       final response = await _dioInstance!.fetch(opts);
       handler.resolve(response);
     } catch (e) {
+      if (e is StateError) {
+        await TokenService.clearSession();
+      }
       handler.next(err);
     } finally {
       _isRefreshing = false;

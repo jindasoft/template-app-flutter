@@ -18,7 +18,7 @@ class LoadingCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: skeletonColor,
-            borderRadius: BorderRadius.circular(ThemeConfig.spacingSmall),
+            borderRadius: BorderRadius.circular(ThemeConfig.spacingSM),
           ),
           height: height,
           width: MediaQuery.of(context).size.width,

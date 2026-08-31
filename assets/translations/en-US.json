@@ -1,0 +1,181 @@
+{
+  "app": {
+    "title": "Template App Flutter",
+    "subtitle": "subtitle1\nsubtitle2",
+    "tagline": "tagline. tagline. tagline.",
+    "description": "Template App Flutter description"
+  },
+  "navigation": {
+    "explore": "Explore",
+    "center": "Center",
+    "profile": "Profile"
+  },
+  "common": {
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "ok": "OK"
+  },
+  "loader": {
+    "loading": "Loading..."
+  },
+  "error": {
+    "request_failed": "Unable to complete the request. Please try again.",
+    "unexpected": "An unexpected error occurred",
+    "unauthorize": "You are not authorized to perform this action"
+  },
+  "language": {
+    "title": "Language",
+    "selection": "Select Language",
+    "change_language": "Change Language"
+  },
+  "image_picker": {
+    "camera": "Camera",
+    "gallery": "Gallery",
+    "select_image": "Select Image",
+    "image_pick_error": "Failed to pick image. Please try again."
+  },
+  "map": {
+    "location": "Map Location",
+    "loading": "Loading map...",
+    "map_picker": {
+      "confirm_location": "Confirm Location",
+      "location_disabled": "Location services are disabled",
+      "permission_denied": "Location permission denied",
+      "location_error": "Unable to get current location"
+    },
+    "map_viewer": {
+      "open_in_google_maps": "Open in Google Maps",
+      "open_error": "Unable to open Google Maps",
+      "cancel": "Cancel"
+    }
+  },
+  "setting": {
+    "title": "Settings",
+    "notifications": "Notifications",
+    "dark_mode": "Dark Mode"
+  },
+  "info": {
+    "title": "Info",
+    "app_version": {
+      "title": "App Version",
+      "version": "App Version",
+      "build_number": "Build Number",
+      "error": "Error fetching version"
+    },
+    "about": {
+      "title": "About Gator"
+    }
+  },
+  "sign_in": {
+    "title": "Sign In",
+    "welcome_to": "Welcome to",
+    "explore_as_guest": "Explore as Guest",
+    "sign_in_with_google": "Sign in with Google",
+    "sign_in_with_apple": "Sign in with Apple"
+  },
+  "account": {
+    "title": "Account Info",
+    "my_account": "My Account",
+    "delete_account": "Delete Account",
+    "delete_account_title": "Are you sure you want to delete your account? This action cannot be undone.",
+    "delete_account_description": "Deleting your account will remove all your data from our platform. You will lose access to your profile, activities, and any content you have shared. Please consider this action carefully before proceeding.",
+    "delete_account_confirm": "Yes, delete my account",
+    "sign_in": "Sign In",
+    "sign_out": "Logout",
+    "sign_out_confirmation": "Are you sure you want to logout?",
+    "guest": "Guest",
+    "guest_welcome": "Welcome, please sign in to access all features of our app."
+  },
+  "profile": {
+    "title": "Profile",
+    "no_bio": "No bio",
+    "profile_edit": {
+      "title": "Edit Profile",
+      "display_name": "Display Name",
+      "display_name_hint": "Enter your display name",
+      "bio": "Bio",
+      "bio_hint": "Enter your bio"
+    },
+    "profile_image": {
+      "title": "Profile Image",
+      "upload_new_image": "Upload new profile image",
+      "upload_success": "Profile image uploaded successfully",
+      "upload_error": "Error uploading profile image"
+    },
+    "profile_image_edit": {
+      "title": "Edit Profile Image",
+      "no_image_selected": "No image selected"
+    }
+  },
+  "explore": {
+    "nearby": "Nearby"
+  },
+  "place": {
+    "add_pin": "Add Pin",
+    "add_pin_step": {
+      "step1": "Information",
+      "step2": "Location",
+      "step3": "Image",
+      "step4": "Review"
+    },
+    "label": {
+      "category": "Category",
+      "category_hint": "Select category",
+      "name": "Place Name",
+      "name_hint": "Enter place name",
+      "description": "Description",
+      "description_hint": "Enter description",
+      "description_empty": "-",
+      "map_location": "Map Location",
+      "map_tap_hint": "Tap to choose location",
+      "latitude": "Latitude",
+      "latitude_hint": "Enter latitude",
+      "longitude": "Longitude",
+      "longitude_hint": "Enter longitude",
+      "address": "Address",
+      "address_hint": "Enter address",
+      "cover_image": "Cover Image",
+      "cover_image_hint": "Select cover image",
+      "select_image": "Select Image"
+    },
+    "add_pin_parking": {
+      "label": "Parking (optional)",
+      "enable_title": "Enable parking points",
+      "enable_subtitle": "Add one or more parking locations for this place",
+      "use_main": "Use main location",
+      "add_button": "Add parking point",
+      "empty": "No parking points added",
+      "item_title": "Parking {}",
+      "lat_short": "Lat",
+      "lng_short": "Lng",
+      "name_hint": "Enter parking name (optional)",
+      "edit_name_title": "Edit parking name",
+      "edit_name_tooltip": "Edit parking name",
+      "cancel": "Cancel",
+      "save": "Save",
+      "edit_tooltip": "Edit parking point",
+      "remove_tooltip": "Remove parking point"
+    },
+    "add_pin_validation": {
+      "parking_required": "Please add at least one parking point",
+      "language_required": "Please select language",
+      "place_type_required": "Please select place type",
+      "name_required": "Please enter place name",
+      "image_required": "Please select a cover image",
+      "parking_name_too_long": "Parking name must be at most {} characters"
+    },
+    "add_pin_submit": {
+      "success": "Place saved successfully!"
+    }
+  },
+  "activity": {
+    "title": "Activity",
+    "upcoming": "Upcoming",
+    "wishlist": "Wishlist"
+  }
+}

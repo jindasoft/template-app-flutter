@@ -26,27 +26,15 @@ class CenterPage extends StatelessWidget {
               crossAxisCount: 3,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: ThemeConfig.spacingMedium,
-              crossAxisSpacing: ThemeConfig.spacingMedium,
+              mainAxisSpacing: ThemeConfig.spacingMD,
+              crossAxisSpacing: ThemeConfig.spacingMD,
               children: [
                 _buildGridButton(
                   context,
-                  LineIcons.clock,
-                  "navigation.center".tr(),
-                  onTap: () async {
-                    // final result = await Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const Page(),
-                    //   ),
-                    // );
-
-                    // if (context.mounted && result == true) {
-                    //   Navigator.pop(
-                    //     context,
-                    //     true,
-                    //   ); // Close the bottom sheet and pass success
-                    // }
+                  LineIcons.mapMarker,
+                  "place.add_pin".tr(),
+                  onTap: () {
+                    // nextScreenPopup(context, const PlaceCreatePinPage());
                   },
                 ),
               ],
@@ -69,8 +57,8 @@ class CenterPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: ThemeConfig.iconSizeExtraLarge),
-          SizedBox(height: ThemeConfig.spacingExtraSmall),
-          Text(label, style: Theme.of(context).textTheme.labelSmall),
+          SizedBox(height: ThemeConfig.spacingXS),
+          Text(label, style: Theme.of(context).textTheme.labelMedium),
         ],
       ),
     );

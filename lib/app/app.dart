@@ -1,13 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:template_app_flutter/configs/env_config.dart';
 import 'package:provider/provider.dart';
-import 'package:template_app_flutter/configs/text_theme_config.dart';
-import 'package:template_app_flutter/configs/theme_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template_app_flutter/core/notifiers/theme_notifier.dart';
-import 'package:template_app_flutter/modules/auth/blocs/auth_bloc.dart';
-import 'package:template_app_flutter/modules/auth/repositories/auth_repository.dart';
+import 'package:template_app_flutter/modules/auth/pages/sign_in_page.dart';
+import 'package:template_app_flutter/modules/welcome/pages/welcome.dart';
 
+import 'app_bloc_providers.dart';
+import 'app_theme.dart';
 import 'app_page.dart';
 
 class App extends StatefulWidget {
@@ -18,232 +20,78 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  static const String _firstLaunchKey = 'first_launch';
+  final bool _forceWelcomeForDev = EnvConfig.forceWelcomeEnabled;
+  bool _isLoadingLaunchState = true;
+  bool _isFirstLaunch = true;
+  bool _devWelcomeDismissed = false;
+  bool _showSignInAfterWelcome = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFirstLaunchState();
+  }
+
+  Future<void> _loadFirstLaunchState() async {
+    final prefs = await SharedPreferences.getInstance();
+    final stored = prefs.getBool(_firstLaunchKey);
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _isFirstLaunch = stored ?? true;
+      _isLoadingLaunchState = false;
+    });
+  }
+
+  Future<void> _completeFirstLaunch() async {
+    if (!_forceWelcomeForDev) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_firstLaunchKey, false);
+    }
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _isFirstLaunch = false;
+      _devWelcomeDismissed = true;
+      _showSignInAfterWelcome = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
+    final lightPalette = AppTheme.buildLightPalette();
+    final darkPalette = AppTheme.buildDarkPalette();
+    final shouldShowWelcome =
+        _isFirstLaunch || (_forceWelcomeForDev && !_devWelcomeDismissed);
+
+    final home = _isLoadingLaunchState
+        ? const Scaffold(body: Center(child: CircularProgressIndicator()))
+        : shouldShowWelcome
+        ? Welcome(onContinue: _completeFirstLaunch)
+        : _showSignInAfterWelcome
+        ? const SignInPage()
+        : AppPage();
 
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => AuthBloc(AuthRepository(context: context)),
-        ),
-      ],
+      providers: buildAppBlocProviders(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
         locale: context.locale,
         // navigatorObservers: [firebaseObserver],
-        theme: ThemeData(
-          useMaterial3: false,
-          brightness: Brightness.light,
-          primarySwatch:
-              MaterialColor(ThemeConfig.colorPrimary.toARGB32(), <int, Color>{
-                50: ThemeConfig.colorPrimary.withValues(alpha: 0.05),
-                100: ThemeConfig.colorPrimary.withValues(alpha: 0.1),
-                200: ThemeConfig.colorPrimary.withValues(alpha: 0.2),
-                300: ThemeConfig.colorPrimary.withValues(alpha: 0.3),
-                400: ThemeConfig.colorPrimary.withValues(alpha: 0.4),
-                500: ThemeConfig.colorPrimary.withValues(alpha: 0.5),
-                600: ThemeConfig.colorPrimary.withValues(alpha: 0.6),
-                700: ThemeConfig.colorPrimary.withValues(alpha: 0.7),
-                800: ThemeConfig.colorPrimary.withValues(alpha: 0.8),
-                900: ThemeConfig.colorPrimary.withValues(alpha: 0.9),
-              }),
-          primaryColor: ThemeConfig.colorPrimary,
-          textTheme: TextThemeConfig.lightTextTheme,
-          iconTheme: IconThemeData(color: ThemeConfig.colorGreyDark),
-          fontFamily: 'Manrope',
-          scaffoldBackgroundColor: ThemeConfig.colorBgLightSecondary,
-          appBarTheme: AppBarTheme(
-            backgroundColor: ThemeConfig.colorBgLightPrimary,
-            elevation: 0,
-            iconTheme: IconThemeData(color: ThemeConfig.colorGreyDark),
-            titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: ThemeConfig.colorTextLightPrimary,
-            ),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: ThemeConfig.colorPrimary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: ThemeConfig.spacingLarge,
-                vertical: ThemeConfig.spacingMedium,
-              ),
-            ),
-          ),
-          outlinedButtonTheme: OutlinedButtonThemeData(
-            style: OutlinedButton.styleFrom(
-              foregroundColor: ThemeConfig.colorPrimary,
-              side: BorderSide(color: ThemeConfig.colorPrimary),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
-              ),
-            ),
-          ),
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            fillColor: ThemeConfig.colorGreyLight,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
-              borderSide: BorderSide(color: ThemeConfig.colorBorderLight),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
-              borderSide: BorderSide(color: ThemeConfig.colorPrimary),
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: ThemeConfig.spacingLarge,
-              vertical: ThemeConfig.spacingMedium,
-            ),
-            labelStyle: TextStyle(color: ThemeConfig.colorTextLightPrimary),
-            hintStyle: TextStyle(color: ThemeConfig.colorTextLightSecondary),
-          ),
-          dividerTheme: DividerThemeData(
-            color: ThemeConfig.colorGreyMedium,
-            thickness: 1,
-            space: ThemeConfig.spacingLarge,
-          ),
-          switchTheme: SwitchThemeData(
-            thumbColor: WidgetStateProperty.all(ThemeConfig.colorGreyMedium),
-            trackColor: WidgetStateProperty.all(
-              ThemeConfig.colorGreyMedium.withAlpha((255 * 0.5).toInt()),
-            ),
-          ),
-          bottomSheetTheme: BottomSheetThemeData(
-            backgroundColor: ThemeConfig.colorBgLightPrimary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(ThemeConfig.spacingBase),
-              ),
-            ),
-          ),
-          dialogTheme: DialogThemeData(
-            backgroundColor: ThemeConfig.colorBgLightPrimary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
-            ),
-          ),
-          cardTheme: CardThemeData(
-            color: ThemeConfig.colorBgLightPrimary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
-            ),
-          ),
-        ),
-        darkTheme: ThemeData(
-          useMaterial3: false,
-          brightness: Brightness.dark,
-          primarySwatch:
-              MaterialColor(ThemeConfig.colorPrimary.toARGB32(), <int, Color>{
-                50: ThemeConfig.colorPrimary.withValues(alpha: 0.05),
-                100: ThemeConfig.colorPrimary.withValues(alpha: 0.1),
-                200: ThemeConfig.colorPrimary.withValues(alpha: 0.2),
-                300: ThemeConfig.colorPrimary.withValues(alpha: 0.3),
-                400: ThemeConfig.colorPrimary.withValues(alpha: 0.4),
-                500: ThemeConfig.colorPrimary.withValues(alpha: 0.5),
-                600: ThemeConfig.colorPrimary.withValues(alpha: 0.6),
-                700: ThemeConfig.colorPrimary.withValues(alpha: 0.7),
-                800: ThemeConfig.colorPrimary.withValues(alpha: 0.8),
-                900: ThemeConfig.colorPrimary.withValues(alpha: 0.9),
-              }),
-          primaryColor: ThemeConfig.colorPrimary,
-          textTheme: TextThemeConfig.darkTextTheme,
-          iconTheme: IconThemeData(color: ThemeConfig.colorGreyLight),
-          fontFamily: 'Manrope',
-          scaffoldBackgroundColor: ThemeConfig.colorBgDarkSecondary,
-          appBarTheme: AppBarTheme(
-            backgroundColor: ThemeConfig.colorBgDarkPrimary,
-            elevation: 0,
-            iconTheme: IconThemeData(color: ThemeConfig.colorGreyLight),
-            titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: ThemeConfig.colorTextDarkPrimary,
-            ),
-          ),
-          switchTheme: SwitchThemeData(
-            thumbColor: WidgetStateProperty.all(ThemeConfig.colorPrimary),
-            trackColor: WidgetStateProperty.all(
-              ThemeConfig.colorPrimary.withAlpha((255 * 0.5).toInt()),
-            ),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: ThemeConfig.colorPrimary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: ThemeConfig.spacingLarge,
-                vertical: ThemeConfig.spacingMedium,
-              ),
-            ),
-          ),
-          outlinedButtonTheme: OutlinedButtonThemeData(
-            style: OutlinedButton.styleFrom(
-              foregroundColor: ThemeConfig.colorPrimary,
-              side: BorderSide(color: ThemeConfig.colorPrimary),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
-              ),
-            ),
-          ),
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            fillColor: ThemeConfig.colorBgDarkPrimary,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
-              borderSide: BorderSide(color: ThemeConfig.colorBorderDark),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingMedium),
-              borderSide: BorderSide(color: ThemeConfig.colorPrimary),
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: ThemeConfig.spacingLarge,
-              vertical: ThemeConfig.spacingMedium,
-            ),
-            labelStyle: TextStyle(color: ThemeConfig.colorTextDarkPrimary),
-            hintStyle: TextStyle(color: ThemeConfig.colorTextDarkSecondary),
-          ),
-          dividerTheme: DividerThemeData(
-            color: ThemeConfig.colorGreyDark,
-            thickness: 1,
-            space: ThemeConfig.spacingLarge,
-          ),
-          bottomSheetTheme: BottomSheetThemeData(
-            backgroundColor: ThemeConfig.colorBgDarkPrimary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(ThemeConfig.spacingBase),
-              ),
-            ),
-          ),
-          dialogTheme: DialogThemeData(
-            backgroundColor: ThemeConfig.colorBgDarkPrimary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
-            ),
-          ),
-          cardTheme: CardThemeData(
-            color: ThemeConfig.colorBgDarkPrimary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(ThemeConfig.spacingBase),
-            ),
-          ),
-        ),
+        theme: AppTheme.buildTheme(lightPalette),
+        darkTheme: AppTheme.buildTheme(darkPalette),
         themeMode: themeNotifier.themeMode,
-        home: AppPage(),
+        home: home,
       ),
     );
   }

@@ -56,7 +56,7 @@ class LoadingOverlay extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   if (onRetry != null) ...[
-                    SizedBox(height: ThemeConfig.spacingSmall),
+                    SizedBox(height: ThemeConfig.spacingSM),
                     ElevatedButton(
                       onPressed: onRetry,
                       style: ElevatedButton.styleFrom(
@@ -64,8 +64,8 @@ class LoadingOverlay extends StatelessWidget {
                           context,
                         ).colorScheme.onPrimary,
                         padding: EdgeInsets.symmetric(
-                          horizontal: ThemeConfig.spacingMedium,
-                          vertical: ThemeConfig.spacingSmall,
+                          horizontal: ThemeConfig.spacingMD,
+                          vertical: ThemeConfig.spacingSM,
                         ),
                       ),
                       child: Text(

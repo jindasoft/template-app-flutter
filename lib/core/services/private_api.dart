@@ -1,7 +1,9 @@
 import 'package:template_app_flutter/configs/env_config.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:template_app_flutter/core/constants/http_header.dart';
 
+import 'http_logger.dart';
 import 'private_interceptor.dart';
 
 class PrivateApi {
@@ -13,7 +15,7 @@ class PrivateApi {
         baseUrl: EnvConfig.apiUrl!,
         connectTimeout: Duration(seconds: 5),
         receiveTimeout: Duration(seconds: 5),
-        headers: {'Content-Type': 'application/json'},
+        headers: {HttpHeader.contentType: 'application/json'},
       ),
     );
 
@@ -21,9 +23,8 @@ class PrivateApi {
     final privateInterceptor = PrivateInterceptor();
     privateInterceptor.setDio(_dio);
     _dio.interceptors.add(privateInterceptor);
-    // _dio.interceptors.add(PrettyDioLogger());
-
     _dio.options.extra['context'] = context;
+    HttpLogger.attach(_dio);
   }
 
   Dio get dio => _dio;

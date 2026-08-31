@@ -2,49 +2,54 @@ import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:flutter/material.dart';
 
 class InfoItemButtonWidget extends StatelessWidget {
-  final String title;
   final IconData icon;
-  final String value;
+  final String title;
+  final String subtitle;
   final VoidCallback onPressed;
 
   const InfoItemButtonWidget({
     super.key,
-    required this.title,
     required this.icon,
-    required this.value,
+    required this.title,
+    required this.subtitle,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    final textColor = Theme.of(context).brightness == Brightness.dark
-        ? ThemeConfig.colorTextDarkPrimary
-        : ThemeConfig.colorTextLightPrimary;
     return GestureDetector(
       onTap: onPressed,
-      child: Column(
-        children: [
-          Text(
-            title.toUpperCase(),
-            style: TextStyle(
-              fontSize: 13,
-              color: textColor,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1.2,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: ThemeConfig.spacingSM,
+          vertical: ThemeConfig.spacingXS,
+        ),
+        child: Column(
+          children: [
+            Text(
+              title.toUpperCase(),
+              strutStyle: const StrutStyle(forceStrutHeight: true),
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: 6),
-          Icon(icon, size: 32, color: textColor),
-          const SizedBox(height: 2),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 16,
-              color: textColor,
-              fontWeight: FontWeight.w500,
+            const SizedBox(height: ThemeConfig.spacingXS),
+            Icon(
+              icon,
+              size: ThemeConfig.iconSizeLarge,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
-          ),
-        ],
+            const SizedBox(height: ThemeConfig.spacingXS),
+            Text(
+              subtitle,
+              strutStyle: const StrutStyle(forceStrutHeight: true),
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
