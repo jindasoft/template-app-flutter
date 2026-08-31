@@ -45,10 +45,10 @@ class ThemeConfig {
   static const Color colorGreyDark = Color(0xFF606060);
 
   // Colors - Status
-  static const Color colorSuccess = Color(0xFF34C759);
-  static const Color colorWarning = Color(0xFFFF9500);
-  static const Color colorInfo = Color(0xFF5AC8FA);
-  static const Color colorError = Color(0xFFFF3B30);
+  static const Color colorSuccess = Color(0xFF81C784);
+  static const Color colorWarning = Color(0xFFFFCC80);
+  static const Color colorInfo = Color(0xFF81D4FA);
+  static const Color colorError = Color(0xFFEF9A9A);
   static const Color colorDisabled = Color(0xFF9CA3AF);
 
   // Colors - Background
