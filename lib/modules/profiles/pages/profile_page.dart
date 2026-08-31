@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 import 'package:template_app_flutter/app/app_page.dart';
 import 'package:template_app_flutter/core/enums/image_size.dart';
 import 'package:template_app_flutter/core/services/private_api.dart';
@@ -11,8 +13,6 @@ import 'package:template_app_flutter/core/utils/next_screen_util.dart';
 import 'package:template_app_flutter/core/widgets/loading/loading_widget.dart';
 import 'package:template_app_flutter/modules/auth/blocs/auth_blocs/auth_event.dart';
 import 'package:template_app_flutter/modules/auth/pages/sign_in_page.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:provider/provider.dart';
 import 'package:template_app_flutter/configs/theme_config.dart';
 import 'package:template_app_flutter/core/notifiers/theme_notifier.dart';
 import 'package:template_app_flutter/core/language/language_sheet.dart';
@@ -168,6 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
       width: double.infinity,
       padding: const EdgeInsets.all(ThemeConfig.spacingBase),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             decoration: const BoxDecoration(
@@ -243,6 +244,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   Text(
                     profile.bio.isEmpty ? 'profile.no_bio'.tr() : profile.bio,
                     style: Theme.of(context).textTheme.bodyMedium,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
